@@ -16,7 +16,7 @@ def login_request(request):
             if user is not None:
                 login(request, user)
                 messages.info(request, f"You are now looged in as {username}")
-                return redirect(reverse("user-account"))
+                return redirect(reverse("home"))
             else:
                 messages.error(request, "Invalid username or password.")
 
@@ -30,12 +30,3 @@ def logout_request(request):
     messages.info(request, "Logged out successfully!")
     return redirect(reverse("home"))
 
-
-def error404(request, exception):
-    """ Custom 404 errors handler. """
-    return render(request, "errors/not_found.html", {})
-
-
-def error500(request):
-    """ Custrom 500 errors handler. """
-    return render(request, "errors/internal.html", {})

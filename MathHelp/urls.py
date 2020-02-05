@@ -5,10 +5,6 @@ from django.views.generic.base import TemplateView
 
 from .views import login_request, logout_request
 
-# Custom error handlers
-handler404 = 'MathHelp.views.error404'
-handler500 = 'MathHelp.views.error500'
-
 
 urlpatterns = [
     path('', TemplateView.as_view(template_name="home.html"), name="home"),
