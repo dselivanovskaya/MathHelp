@@ -1,38 +1,52 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
+{% load static %}
+
+{% block icon %}
+  <link rel="shortcut icon" href="static/img/logo-icon.png" type="image/x-icon">
+{% endblock %}
 
 {% block title %} Home {% endblock %}
 
 {% block content %}
+    <header class="main-header">
+      <div class="container">
+        <div class="header-top">
+          <div class="logo">
+          <img src="{% static 'img/MathHelpLogo.png' %}" width="150" height="150" alt="MathHelp">
+          </div>
+          <nav class="main-menu">
+            <ul>
+              <li><a href={% url 'home' %}>Главная</a></li>
+              <li><a href="#">О нас</a></li>
+            </ul>
+          </nav>
+          </div>
+          <div class="promo">
+            <div class="promo-title">Математика - это интересно!</div>
+          <p>Ты можешь больше, чем ты думаешь</p>
+          <a href="{% url 'register' %}" class="btn btn-blue">Зарегистрироваться</a>
+        </div>
+      </div>
+    </header>
 
-    {% if user.is_authenticated %}
+      <section class="choice">
+        <div class="container">
+          <div class="choice-item">
+            <div class="choice-icon choice-icon-theory"></div>
+            <h2 class="choice-title"><a href="#">Теория</a></h2>
+            <p>Даст тебе необходимые знания</p>
+          </div>
+          <div class="choice-item">
+            <div class="choice-icon choice-icon-practice"></div>
+            <h2 class="choice-title"><a href="#">Практика</a></h2>
+            <p>Поможет отработать навык решения задач</p>
+          </div>
+          <div class="choice-item">
+            <div class="choice-icon choice-icon-matherials"></div>
+            <h2 class="choice-title"><a href="#">Полезные материалы</a></h2>
+            <p>Учебники и задачники для самостоятельного изучения</p>
+          </div>
+        </div>
+      </section>
 
-      <h2>Hi {{ user.username }}!</h2>
-
-      <ul>
-        <li>
-          Take a look at the
-          <a href="{% url 'theory' %}"><strong>Tickets here</strong></a>
-        </li>
-        <li>
-          <a href="{% url 'logout' %}"><strong>Logout</strong></a>
-        </li>
-      </ul>
-
-    {% else %}
-
-      <h2>You are not logged in!</h2>
-
-      <ul>
-        <li>
-          Already have an account?
-          <a href="{% url 'login' %}"><strong>Login here</strong></a>
-        </li>
-        <li>
-          Don't have an account?
-          <a href="{% url 'register' %}"><strong>Register here</strong></a>
-        </li>
-      </ul>
-
-    {% endif %}
-
-{% endblock %}
+{% endblock %} 
