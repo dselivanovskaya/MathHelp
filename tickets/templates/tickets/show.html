@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %} Tickets {% endblock %}
+
+{% block content %}
+
+  <ul>
+  {% for ticket in tickets %}
+    <li><a href="{% url 'show-ticket-pdf' ticket.id %}">{{ ticket.name }}</a></li>
+  {% endfor %}
+  </ul>
+
+{% endblock %}

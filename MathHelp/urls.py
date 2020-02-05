@@ -14,6 +14,6 @@ urlpatterns = [
     path('logout/', logout_request, name='logout'),
 
     path('register/', include('registration.urls')),
-    path('theory/', include('theory.urls')),
+    path('tickets/', include('tickets.urls')),
 
 ]
