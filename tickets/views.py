@@ -15,6 +15,6 @@ def show_ticket_pdf(request, uid):
     ticket = Ticket.objects.get(id=uid)
     try:
         return FileResponse(open(os.path.abspath(os.path.join('tickets',
-        ticket.path)), 'rb'), content_type='application/pdf')
+                                ticket.path)), 'rb'), content_type='application/pdf')
     except FileNotFoundError:
         raise Http404

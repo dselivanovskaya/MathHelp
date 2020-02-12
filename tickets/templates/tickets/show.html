@@ -4,10 +4,29 @@
 
 {% block content %}
 
-  <ul>
-  {% for ticket in tickets %}
-    <li><a href="{% url 'show-ticket-pdf' ticket.id %}">{{ ticket.name }}</a></li>
-  {% endfor %}
-  </ul>
+<div class="blue">
+  <div class="container">
+    {% for ticket in tickets %}
 
+<table>
+  <tr>
+    <td>
+      <a>{{ ticket.id }}</a>
+    </td>
+    <td>
+      <a href="{% url 'show-ticket-pdf' ticket.id %}">{{ ticket.name }}</a>
+    </td>
+    <td> 
+      <a>{{ ticket.level }}</a>
+    </td>
+  </tr>
+  <td> 
+    <a>практика</a>
+  </td>
+</tr>
+</table>
+{% endfor %}
+  </div>
+</div>
+ 
 {% endblock %}
