@@ -5,14 +5,18 @@
 <html lang="rus">
 
   <head>
-
     <meta charset="utf-8">
     <title>{% block title %} {% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+    <link rel="shortcut icon" href="{% static 'img/logo-icon.png' %}" type="image/x-icon">
     {% block icon %} {% endblock %}
   </head>
 
   <body>
+    {% block header %}
+    {% include 'header.html' %}
+    {% endblock header %}
+
     {% block content %} {% endblock %}
 
     {% include 'footer.html' %}

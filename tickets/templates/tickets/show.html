@@ -4,29 +4,23 @@
 
 {% block content %}
 
-<div class="blue">
+<div class="gray">
   <div class="container">
-    {% for ticket in tickets %}
-
-<table>
-  <tr>
-    <td>
-      <a>{{ ticket.id }}</a>
-    </td>
-    <td>
-      <a href="{% url 'show-ticket-pdf' ticket.id %}">{{ ticket.name }}</a>
-    </td>
-    <td> 
-      <a>{{ ticket.level }}</a>
-    </td>
-  </tr>
-  <td> 
-    <a>практика</a>
-  </td>
-</tr>
-</table>
-{% endfor %}
-  </div>
+    <table class="catalog">
+      {% for ticket in tickets %}
+      <tr>
+        <td>{{ ticket.id }}</td>
+        <td>
+          <p><a href="{% url 'show-ticket-pdf' ticket.id %}">{{ ticket.name }}</a></p>
+          <td width="150px"><h5>{{ ticket.level }}</h5></td>
+        </td>
+        <td>
+          <a href="#" class="btn btn-blue btn-blue-small">Практика</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+    </div>
 </div>
  
 {% endblock %}

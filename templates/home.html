@@ -7,46 +7,50 @@
 
 {% block title %} Home {% endblock %}
 
-{% block content %}
-    <header class="main-header">
-      <div class="container">
-        <div class="header-top">
-          <div class="logo">
-          <img src="{% static 'img/MathHelpLogo.png' %}" width="150" height="150" alt="MathHelp">
-          </div>
-          <nav class="main-menu">
-            <ul>
-              <li><a href={% url 'home' %}>Главная</a></li>
-              <li><a href="#">О нас</a></li>
-            </ul>
-          </nav>
-          </div>
-          <div class="promo">
-            <div class="promo-title">Математика - это интересно!</div>
-          <p>Ты можешь больше, чем ты думаешь</p>
-          <a href="{% url 'register' %}" class="btn btn-blue">Зарегистрироваться</a>
-        </div>
+{% block header %}
+<header class="main-header">
+  <div class="container">
+    <div class="header-top">
+      <div class="logo">
+      <img src="{% static 'img/MathHelpLogo.png' %}" width="150" height="150" alt="MathHelp">
       </div>
-    </header>
+      <nav class="main-menu">
+        <ul>
+          <li><a href="{% url 'home' %}">Главная</a></li>
+          <li><a href="#">О нас</a></li>
+        </ul>
+      </nav>
+      </div>
+      <div class="promo">
+        <div class="promo-title">Математика - это интересно!</div>
+      <p>Ты можешь больше, чем ты думаешь</p>
+      <a href="{% url 'register' %}" class="btn btn-blue">Зарегистрироваться</a>
+    </div>
+  </div>
+</header>
+{% endblock header %}
 
-      <section class="choice">
-        <div class="container">
-          <div class="choice-item">
-            <div class="choice-icon choice-icon-theory"></div>
-            <h2 class="choice-title"><a href="{% url 'show-tickets' %}">Теория</a></h2>
-            <p>Даст тебе необходимые знания</p>
-          </div>
-          <div class="choice-item">
-            <div class="choice-icon choice-icon-practice"></div>
-            <h2 class="choice-title"><a href="#">Практика</a></h2>
-            <p>Поможет отработать навык решения задач</p>
-          </div>
-          <div class="choice-item">
-            <div class="choice-icon choice-icon-matherials"></div>
-            <h2 class="choice-title"><a href="#">Полезные материалы</a></h2>
-            <p>Учебники и задачники для самостоятельного изучения</p>
-          </div>
-        </div>
-      </section>
+{% block content %}
+
+
+<section class="choice">
+  <div class="container">
+    <div class="choice-item">
+      <div class="choice-icon choice-icon-theory"></div>
+      <h2 class="choice-title"><a href="{% url 'show-tickets' %}">Теория</a></h2>
+      <p>Даст тебе необходимые знания</p>
+    </div>
+    <div class="choice-item">
+      <div class="choice-icon choice-icon-practice"></div>
+      <h2 class="choice-title"><a href="#">Практика</a></h2>
+      <p>Поможет отработать навык решения задач</p>
+    </div>
+    <div class="choice-item">
+      <div class="choice-icon choice-icon-matherials"></div>
+      <h2 class="choice-title"><a href="#">Полезные материалы</a></h2>
+      <p>Учебники и задачники для самостоятельного изучения</p>
+    </div>
+  </div>
+</section>
 
 {% endblock %} 
