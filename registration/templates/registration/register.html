@@ -10,7 +10,15 @@
   <div class="container">
     <h2 class="contacts-title">Регистрация</h2>
     <form action="{% url 'register' %}" class="contacts-form" method="post">{% csrf_token %}
+
+        {% if messages %}
+          {% for message in messages %}
+            {{ message }}
+          {% endfor %}
+        {% endif %}
+
       {{ form.as_p }}
+
       <input type="submit" value="Register" class="contacts-form btn btn-blue ">
       <p>
       Если вы уже имеете аккаунт

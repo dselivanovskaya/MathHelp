@@ -6,6 +6,9 @@ from django.contrib.auth import authenticate, login
 from django.contrib import messages
 
 from django import forms
+from django.forms import ValidationError
+
+from django.contrib import messages
 
 from .forms import UserRegistrationForm
 
@@ -19,17 +22,18 @@ def register(request):
             username = user_object["username"]
             email    = user_object["email"]
             password = user_object["password"]
+
             if not (User.objects.filter(username=username).exists() or
                 User.objects.filter(email=email).exists()):
                 User.objects.create_user(username, email, password)
                 user = authenticate(username=username, password=password)
                 login(request, user)
                 return redirect(reverse("home"))
-            else:
-                error_msg = "A User with that username or email alreafy exists!"
-                return render(request, "registration/register_error.html",
-                {"error_msg": error_msg})
+            else: # user with 'username' or 'email' exists
+                msg = "User with that 'username' or 'email' already exists:("
+                messages.error(request, msg)
+    else:
+        form = UserRegistrationForm()
 
-    form = UserRegistrationForm()
     return render(request, "registration/register.html", {"form": form})
 
