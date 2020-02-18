@@ -453,11 +453,25 @@ body {
 
 .contacts-form {
   float: left;
-  width: 640px;
+  width: 500px;
 }
 
-.contacts-form td {
+.contacts-form p {
+  display: block;
   padding-bottom: 16px;
+  width: 500px;
+}
+
+.contacts-form label {
+  color: #404040;
+  font-size: 18px;
+  line-height: 24px;
+  font-family: Arial, sans-serif;
+}
+
+.contacts-form input {
+  width: 500px;
+  height: 30px;
 }
 
 .contacts-form .title {
@@ -467,70 +481,24 @@ body {
   text-align: right;
   font-weight: 700;
   font-size: 18px;
-  line-height: 54px;
-}
-
-.contacts-form .field {
-  width: 470px;
-}
-
-.contacts-form input[type="text"],
-.contacts-form textarea {
-  width: 100%;
-  padding: 13px 23px;
-  font-weight: 400;
-  font-size: 18px;
+  line-height: 60px;
   font-family: Arial, sans-serif;
-  line-height: 24px;
-  outline: none;
-  border: 2px solid #b2b2b2;
-  border-radius: 2px;
-}
-
-.contacts-form input[type="text"]:hover,
-.contacts-form textarea:hover {
-  border: 2px solid #7f7f7f;
-}
-
-.contacts-form input[type="text"]:focus,
-.contacts-form textarea:focus {
-  border: 2px solid #FF7D9E;
-}
-
-.contacts-form textarea {
-  min-height: 105px;
-  resize: none;
 }
 
 .contacts-form .btn {
-  width: 100%;
+  width: 504px;
+  height: 60px;
   border-radius: 3px;
 }
 
-.contacts-instruction {
-  float: right;
-  width: 300px;
-}
-
-.contacts-instruction h3 {
-  margin: 0;
-  margin-bottom: 25px;
-  text-transform: uppercase;
-  font-size: 18px;
-  line-height: 24px;
-}
-
-.contacts-instruction p {
-  margin: 0;
-  margin-bottom: 25px;
+.contacts-instruction{
+  display:block;
+  padding-top: 80px;
   color: #404040;
   font-size: 18px;
   line-height: 24px;
-}
-
-.contacts-instruction  {
-  margin-top: 120px;
-  margin-bottom: 0;
+  margin-top: 5px;
+  font-family: Arial, sans-serif;
 }
 
 /*INNER-CONTENT*/

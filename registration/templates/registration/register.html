@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %} Registration {% endblock %}
 
@@ -8,7 +9,7 @@
 
 <section class="contacts">
   <div class="container">
-    <h2 class="contacts-title">Регистрация</h2>
+    <h2 class="contacts-form title">Регистрация</h2>
     <form action="{% url 'register' %}" class="contacts-form" method="post">{% csrf_token %}
 
         {% if messages %}
@@ -20,8 +21,8 @@
       {{ form.as_p }}
 
       <input type="submit" value="Register" class="contacts-form btn btn-blue ">
-      <p>
-      Если вы уже имеете аккаунт
+      <p class="contacts-instruction">
+      Если вы уже имеете аккаунт:
       <a href="{% url 'login' %}"><strong>Войти</strong></a>
       </p>
     </form>
