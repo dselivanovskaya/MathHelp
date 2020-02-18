@@ -16,7 +16,8 @@ def login_request(request):
             if user is not None:
                 login(request, user)
                 messages.info(request, f"You are now looged in as {username}")
-                return redirect(reverse("home"))
+                return redirect(reverse("show-user-profile",
+                kwargs={'username':username}))
             else:
                 messages.error(request, "Invalid username or password.")
 

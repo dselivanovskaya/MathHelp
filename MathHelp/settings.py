@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # Own
+    'profiles',
     'registration',
     'tickets',
 ]
@@ -78,12 +79,12 @@ DATABASES = {
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'registration.validators.CustomPasswordValidator',
-        'OPTIONS': {
-            'min_length': 8,
-        }
-    },
+    #{
+    #    'NAME': 'registration.validators.CustomPasswordValidator',
+    #    'OPTIONS': {
+    #        'min_length': 8,
+    #    }
+    #},
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
