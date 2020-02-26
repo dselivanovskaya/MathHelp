@@ -11,8 +11,8 @@ def show_tickets(request):
     return render(request, "tickets/show.html", {"tickets": tickets})
 
 
-def show_ticket_pdf(request, uid):
-    ticket = Ticket.objects.get(id=uid)
+def show_ticket_pdf(request, slug: str):
+    ticket = Ticket.objects.get(slug=slug)
     try:
         return FileResponse(open(os.path.abspath(os.path.join('tickets',
                                 ticket.path)), 'rb'), content_type='application/pdf')

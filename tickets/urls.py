@@ -4,5 +4,5 @@ from .views import show_tickets, show_ticket_pdf
 
 urlpatterns = [
     path('', show_tickets, name='show-tickets'),
-    path('<int:uid>', show_ticket_pdf, name='show-ticket-pdf'),
+    path('<slug:slug>', show_ticket_pdf, name='show-ticket-pdf'),
 ]
