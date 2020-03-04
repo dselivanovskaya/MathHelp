@@ -22,7 +22,7 @@ def login_request(request):
                 messages.error(request, "Invalid username or password.")
 
     form = AuthenticationForm()
-    return render(request, "registration/login.html", {"form": form})
+    return render(request, "login.html", {"form": form})
 
 
 def logout_request(request):

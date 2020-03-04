@@ -7,31 +7,30 @@
 
 {% block title %} Home {% endblock %}
 
-{% block header %}
-<header class="main-header">
-  <div class="container">
-    <div class="header-top">
-      <div class="logo">
-      <img src="{% static 'img/MathHelpLogo.png' %}" width="150" height="150" alt="MathHelp">
-      </div>
-      <nav class="main-menu">
-        <ul>
-          <li><a href="{% url 'home' %}">Главная</a></li>
-          <li><a href="#">О нас</a></li>
-        </ul>
-      </nav>
-      </div>
-      <div class="promo">
-        <div class="promo-title">Математика - это интересно!</div>
-      <p>Ты можешь больше, чем ты думаешь</p>
-      <a href="{% url 'register' %}" class="btn btn-blue">Зарегистрироваться</a>
-    </div>
-  </div>
-</header>
-{% endblock header %}
-
 {% block content %}
 
+{% if user.is_authenticated %}
+<header class="main-header">
+  <div class="container">
+    <div class="header-top"></div>
+      <div class="promo">
+        <div class="promo-title">Математика - это интересно!</div>
+        <p>Ты можешь больше, чем ты думаешь</p>
+      </div>
+  </div>
+</header> 
+{% else %}
+<header class="main-header">
+  <div class="container">
+     <div class="header-top"></div> 
+      <div class="promo">
+        <div class="promo-title">Математика - это интересно!</div>
+        <p>Ты можешь больше, чем ты думаешь</p>
+        <a href="{% url 'register' %}" class="btn btn-blue">Зарегистрироваться</a>
+      </div>
+  </div>
+</header>
+{% endif %}
 
 <section class="choice">
   <div class="container">

@@ -13,8 +13,12 @@
   </head>
 
   <body>
-    {% block header %}
-    {% include 'header.html' %}
+    {% block header %} 
+      {% if user.is_authenticated %}
+        {% include 'auth_header.html' %}
+      {% else %}    
+        {% include 'not_auth_header.html' %}
+      {% endif %}
     {% endblock header %}
 
     {% block content %} {% endblock %}

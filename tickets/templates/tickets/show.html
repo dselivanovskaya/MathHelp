@@ -9,7 +9,6 @@
     <table class="catalog">
       {% for ticket in tickets %}
       <tr>
-        <td>{{ ticket.id }}</td>
         <td>
           <p><a href="{% url 'show-ticket-pdf' ticket.slug %}">{{ ticket.name }}</a></p>
           <td width="150px"><h5>{{ ticket.level }}</h5></td>
