@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block title %} Tickets {% endblock %}
 
 {% block content %}
@@ -11,7 +13,19 @@
       <tr>
         <td>
           <p><a href="{% url 'show-ticket-pdf' ticket.slug %}">{{ ticket.name }}</a></p>
-          <td width="150px"><h5>{{ ticket.level }}</h5></td>
+          <td width="150px">
+            {% if ticket.level == 1 %}
+            <img src="{% static 'img/1.png' %}">
+            {% elif ticket.level == 2 %}
+            <img src="{% static 'img/2.png' %}">
+            {% elif ticket.level == 3 %}
+            <img src="{% static 'img/3.png' %}">
+            {% elif ticket.level == 4 %}
+            <img src="{% static 'img/4.png' %}">
+            {% elif ticket.level == 5 %}
+            <img src="{% static 'img/5.png' %}">
+            {% endif %}
+          </td>
         </td>
         <td>
           <a href="#" class="btn btn-blue btn-blue-small">Практика</a>

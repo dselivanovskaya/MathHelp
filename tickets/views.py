@@ -13,6 +13,11 @@ def show_tickets(request):
 
 def show_ticket_pdf(request, slug: str):
     ticket = Ticket.objects.get(slug=slug)
+
+    watched_tickets = request.session.get('watched_tickets', [])
+    watched_tickets.append(ticket.name)
+    request.session['watched_tickets'] = watched_tickets
+
     try:
         return FileResponse(open(os.path.abspath(os.path.join('tickets',
                                 ticket.path)), 'rb'), content_type='application/pdf')

@@ -15,19 +15,18 @@ def login_request(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                messages.info(request, f"You are now looged in as {username}")
-                return redirect(reverse("show-user-profile",
-                kwargs={'username':username}))
+                # messages.info(request, f"You are now looged in as {username}")
+                return redirect(reverse("show-user-profile", kwargs={'username':username}))
             else:
                 messages.error(request, "Invalid username or password.")
-
-    form = AuthenticationForm()
+    else:
+        form = AuthenticationForm()
+    
     return render(request, "login.html", {"form": form})
 
 
 def logout_request(request):
     """ Log out user. """
     logout(request)
-    messages.info(request, "Logged out successfully!")
     return redirect(reverse("home"))
 
