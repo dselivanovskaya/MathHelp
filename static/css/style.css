@@ -195,7 +195,7 @@ body {
 .promo::after{
   content: "";
   position: absolute;
-  top: -240px;
+  top: -200px;
   left: 450px;
   width: 900px;
   height: 600px;
