@@ -10,7 +10,10 @@ from django.forms import ValidationError
 
 from django.contrib import messages
 
+from rest_framework import generics
+
 from .forms import UserRegistrationForm
+from .serializers import UserSerializer
 
 from profiles.models import UserProfile
 
@@ -40,3 +43,8 @@ def register(request):
 
     return render(request, "registration/register.html", {"form": form})
 
+
+class ListUsersView(generics.ListAPIView):
+
+    queryset = User.objects.all()
+    serializer_class = UserSerializer

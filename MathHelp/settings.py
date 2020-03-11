@@ -27,6 +27,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # Third Party
+    'rest_framework',
+
     # Own
     'profiles',
     'registration',
@@ -138,3 +142,10 @@ LOGOUT_REDIRECT_URL="home"
 SESSION_SAVE_EVERY_REQUEST = True
 
 AUTH_PROFILE_MODULE = 'profiles.UserProfile'
+
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    ]
+}
