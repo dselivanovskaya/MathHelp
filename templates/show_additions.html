@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %} Additions {% endblock %}
+
+{% block content %}
+
+<div class="toc">
+    <div class="container">
+ <h2 id="start">Оглавление</h2>
+ <ul>
+  <li><a href="#t1">Учебные пособия</a></li>
+  <li><a href="#t2">Задачники</a></li>
+  <li><a href="#t3">Таблицы</a></li>
+  <li><a href="#t4"></a></li>
+  <li><a href="#t5"></a></li>
+ </ul>
+</div>
+</div>
+
+<div class="gray">
+<div class="container">
+      <h2 id="t1">Учебники</h2>
+        <table class="catalog">
+          <tr>
+            <td><img src="prod/1p.jpg" width="150" height="150" title="кудрявцев"></td>
+            <td>
+            <h5>Кудрявцев</h5>
+            <p>описание</p>
+            <td width="150px"><h5>объем<h5></td>
+          </td>
+          </tr>
+          </table>
+      <a href="#start">Перейти к оглавлению</a>
+      </div>
+       
+</div>
+
+
+{% endblock %}

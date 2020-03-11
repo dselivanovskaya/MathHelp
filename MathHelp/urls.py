@@ -8,6 +8,7 @@ from .views import login_request, logout_request
 
 urlpatterns = [
     path('', TemplateView.as_view(template_name="home.html"), name="home"),
+    
     path('<slug:username>', include('profiles.urls')),
 
     path('admin/', admin.site.urls),
@@ -16,5 +17,5 @@ urlpatterns = [
 
     path('register/', include('registration.urls')),
     path('tickets/', include('tickets.urls')),
-
+    path('additions/', TemplateView.as_view(template_name="show_additions.html"), name="additions"),
 ]
