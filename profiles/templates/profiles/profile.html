@@ -4,13 +4,21 @@
 
 {% block content %}
 
-<b> Hi, {{ user.username }}! </b>
-<button><a href="{% url 'show-tickets' %}">Учить теорию</a></button>
-{% if user.watched_tickets %}
-    <ul>
-    {% for ticket in user.watched_tickets %}
-        <li>{{ ticket }}</li>
-    {% endfor %}
-    </ul>
-{% endif %}
+<div class="gray">
+    <div class="container">
+        <b> Привет, {{ user.username }}! </b>
+        <button><a href="{% url 'show-tickets' %}">Учить теорию</a></button>
+            {% if user.watched_tickets %}
+            <ul>
+                {% for ticket in user.watched_tickets %}
+                <li>{{ ticket }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+    </div>
+</div>
+
+
+
+
 {% endblock %}
