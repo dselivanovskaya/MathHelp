@@ -1,5 +1,7 @@
 from django import forms
 
+from profiles.models import UserProfile
+
 class UserRegistrationForm(forms.Form):
 
     username = forms.CharField(
@@ -9,8 +11,11 @@ class UserRegistrationForm(forms.Form):
         error_messages = {
             "required": "Please enter your username :)",
             "invalid": "Please enter a valid username :("
-            #"max_length": "Username can be at most 32 characters long :(",
         }
+    )
+
+    gender = forms.ChoiceField(
+        choices = UserProfile.GENDER_CHOICES
     )
 
     email = forms.EmailField(
@@ -20,7 +25,6 @@ class UserRegistrationForm(forms.Form):
         error_messages = {
             "required": "Please enter your email address :)",
             "invalid": "Please enter a valid email address :(",
-            #"max_length": "Email can be at most 32 characters long :(",
         }
     )
 

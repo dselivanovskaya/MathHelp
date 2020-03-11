@@ -12,6 +12,7 @@ from django.contrib import messages
 
 from .forms import UserRegistrationForm
 
+from profiles.models import UserProfile
 
 def register(request):
 
@@ -20,12 +21,13 @@ def register(request):
         if form.is_valid():
             user_object = form.cleaned_data
             username = user_object["username"]
+            gender = user_object["gender"]
             email    = user_object["email"]
             password = user_object["password"]
 
-            if not (User.objects.filter(username=username).exists() or
-                User.objects.filter(email=email).exists()):
-                User.objects.create_user(username, email, password)
+            if not (User.objects.filter(username=username).exists() or User.objects.filter(email=email).exists()):
+                user = User.objects.create_user(username, email, password)
+                UserProfile.objects.create(user=user, gender=gender)
                 user = authenticate(username=username, password=password)
                 login(request, user)
                 return redirect(reverse("show-user-profile", kwargs={"username":

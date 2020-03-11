@@ -9,11 +9,14 @@
         <b> Привет, {{ user.username }}! </b>
         <button><a href="{% url 'show-tickets' %}">Учить теорию</a></button>
             {% if user.watched_tickets %}
+            <b>Сегодня ты посмотрел:</b>
             <ul>
                 {% for ticket in user.watched_tickets %}
                 <li>{{ ticket }}</li>
                 {% endfor %}
             </ul>
+            {% else %}
+            <b>Сегодня ты еще не занимался :( Давай исправим это!</b>
             {% endif %}
     </div>
 </div>
