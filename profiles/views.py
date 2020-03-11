@@ -9,6 +9,5 @@ def show_user_profile(request, username):
 
     watched_tickets = request.session.get('watched_tickets', [])
     user.watched_tickets = watched_tickets
-    
     return render(request, "profiles/profile.html", {"user": user})
 

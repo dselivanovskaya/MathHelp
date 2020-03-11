@@ -9,19 +9,29 @@
         <b> Привет, {{ user.username }}! </b>
         <button><a href="{% url 'show-tickets' %}">Учить теорию</a></button>
             {% if user.watched_tickets %}
-            <b>Сегодня ты посмотрел:</b>
-            <ul>
+                
+                {% if user.userprofile.gender == 1 %}
+                    <b>Сегодня ты посмотрел:</b>
+                {% elif user.userprofile.gender == 2 %}
+                    <b>Сегодня ты посмотрела:</b>
+                {% endif %}
+                
+                <ul>
                 {% for ticket in user.watched_tickets %}
-                <li>{{ ticket }}</li>
+                    <li>{{ ticket }}</li>
                 {% endfor %}
-            </ul>
+                </ul>
+
             {% else %}
-            <b>Сегодня ты еще не занимался :( Давай исправим это!</b>
+                
+                {% if user.userprofile.gender == 1 %}
+                    <b>Сегодня ты еще не занимался :( Давай исправим это!</b>
+                {% elif user.userprofile.gender == 2 %}
+                    <b>Сегодня ты еще не занималась :( Давай исправим это!</b>
+                {% endif %}
+
             {% endif %}
     </div>
 </div>
-
-
-
 
 {% endblock %}
