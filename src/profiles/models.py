@@ -10,10 +10,9 @@ class Profile(models.Model):
     )
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)  
-    gender = models.PositiveSmallIntegerField('gender',
-                                              choices=GENDER_CHOICES,
-                                              blank=True,
-                                              null=True)
+    gender = models.PositiveSmallIntegerField('gender', choices=GENDER_CHOICES,
+                                              blank=True, null=True)
+    login_count = models.IntegerField(default=0)
 
     def __str__(self):  
           return f"{self.user}'s profile"

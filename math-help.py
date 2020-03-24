@@ -3,7 +3,6 @@ import urllib.request as urlreq  # To send a request
 
 from typing import Dict, List
 
-
 HOST = '127.0.0.1'
 PORT = 8000
 SUCCESS = 200
@@ -37,6 +36,10 @@ class Extractor:
         return len([user['gender'] for user in self.data
                     if user['gender'] == FEMALE])
 
+    def get_login_counts(self) -> Dict[str, int]:
+        ''' Return number of logins per each user. '''
+        return {user['username']: user['login_count'] for user in self.data}
+
 
 def main():
     response = urlreq.urlopen(url=f'http://{HOST}:{PORT}/api/users/')
@@ -47,6 +50,7 @@ def main():
         print(extractor.get_user_emails())
         print(f'Males: {extractor.get_male_count()}')
         print(f'Females: {extractor.get_female_count()}')
+        print(extractor.get_login_counts())
 
 
 if __name__ == '__main__':
