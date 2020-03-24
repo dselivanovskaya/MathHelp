@@ -2,9 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 
-
-
-class UserProfile(models.Model):
+class Profile(models.Model):
 
     GENDER_CHOICES = (
         (1, 'Male'),
@@ -17,7 +15,6 @@ class UserProfile(models.Model):
                                               blank=True,
                                               null=True)
 
-    
     def __str__(self):  
           return f"{self.user}'s profile"
 

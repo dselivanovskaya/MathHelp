@@ -1,17 +1,15 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
-
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
-
 from django import forms
 from django.forms import ValidationError
 
-from django.contrib import messages
+from profiles.models import Profile
 
-from .forms import UserRegistrationForm
-from profiles.models import UserProfile
+from django.contrib.auth.models import User
+
 
 def register(request):
 
@@ -26,7 +24,7 @@ def register(request):
 
             if not (User.objects.filter(username=username).exists() or User.objects.filter(email=email).exists()):
                 user = User.objects.create_user(username, email, password)
-                UserProfile.objects.create(user=user, gender=gender)
+                Profile.objects.create(user=user, gender=gender)
                 user = authenticate(username=username, password=password)
                 login(request, user)
                 return redirect(reverse("show-user-profile", kwargs={"username":
