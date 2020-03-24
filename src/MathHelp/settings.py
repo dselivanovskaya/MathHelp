@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'rest_framework',
 
     # Own
+    'api',
     'profiles',
     'registration',
     'tickets',

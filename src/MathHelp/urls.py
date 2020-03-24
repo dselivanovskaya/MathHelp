@@ -12,7 +12,7 @@ urlpatterns = [
     path('<slug:username>', include('profiles.urls')),
 
     path('admin/', admin.site.urls),
-    path('api/', include('registration.urls')),
+    path('api/', include('api.urls')),
 
     path('login/',  login_request,  name='login'),
     path('logout/', logout_request, name='logout'),
