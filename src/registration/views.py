@@ -10,6 +10,7 @@ from profiles.models import Profile
 
 from django.contrib.auth.models import User
 
+from .forms import UserRegistrationForm
 
 def register(request):
 
