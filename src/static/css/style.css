@@ -611,8 +611,7 @@ body {
   line-height: 24px;
 }
 
-.footer-top::after,
-.footer-bottom::after {
+.footer-top::after{
   display: table;
   clear: both;
   content: "";
@@ -624,10 +623,6 @@ body {
   margin-right: 40px;
 }
 
-.footer-address .logo {
-  float: none;
-}
-
 .footer-address p {
   margin: 0;
   margin-top: 60px;
@@ -635,22 +630,29 @@ body {
 
 .copyright {
   float: left;
-  width: 300px;
+  width: 250px;
   height: 40px;
   margin-right: 40px;
 }
 
 .footer-social-promo {
   float: left;
-  width: 420px;
-  height: 160px;
+  width: 380px;
 }
 
 .footer-social {
   float: right;
   width: 260px;
+  height: 50;
   text-align: right;
   font-size: 0;
+}
+
+.footer-social p{
+  color: #ffffff;
+  font-size: 18px;
+  line-height: 24px;
+  margin-top:0px;
 }
 
 /*SOCIAL*/
@@ -681,28 +683,6 @@ body {
 
 .social-btn-fb:hover {
   background-image: url("../img/ico-fb-active.png");
-}
-
-.social-btn-tw {
-  width: 40px;
-  height: 40px;
-  background-image: url("../img/ico-tw.png");
-  background-repeat: no-repeat;
-}
-
-.social-btn-tw:hover {
-  background-image: url("../img/ico-tw-active.png");
-}
-
-.social-btn-inst {
-  width: 40px;
-  height: 40px;
-  background-image: url("../img/ico-inst.png");
-  background-repeat: no-repeat;
-}
-
-.social-btn-inst:hover {
-  background-image: url("../img/ico-inst-active.png");
 }
 
 /*TOC*/
