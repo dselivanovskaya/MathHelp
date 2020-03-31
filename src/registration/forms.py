@@ -2,6 +2,7 @@ from django import forms
 
 from profiles.models import Profile
 
+
 class UserRegistrationForm(forms.Form):
 
     username = forms.CharField(
