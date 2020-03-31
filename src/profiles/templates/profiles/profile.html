@@ -4,18 +4,22 @@
 
 {% block content %}
 
-<div class="gray">
-    <div class="container">
-        <b> Привет, {{ user.username }}! </b>
-        <button><a href="{% url 'show-tickets' %}">Учить теорию</a></button>
+<div class="container">
+        <h2> Привет, {{ user.username }}! </h2>
+        <table class="catalog">
+            <tr>
+                <td><a href="{% url 'show-tickets' %}" class="btn btn-blue btn-blue-small">Учить теорию</a></td>
+                <td><a href="#" class="btn btn-blue btn-blue-small">Решать задачи</a></td>
+            </tr>
+        </table>
             {% if user.watched_tickets %}
-                
-                {% if user.userprofile.gender == 1 %}
+
+                {% if user.profile.gender == 1 %}
                     <b>Сегодня ты посмотрел:</b>
-                {% elif user.userprofile.gender == 2 %}
+                {% elif user.profile.gender == 2 %}
                     <b>Сегодня ты посмотрела:</b>
                 {% endif %}
-                
+
                 <ul>
                 {% for ticket in user.watched_tickets %}
                     <li>{{ ticket }}</li>
@@ -23,15 +27,15 @@
                 </ul>
 
             {% else %}
-                
-                {% if user.userprofile.gender == 1 %}
+
+                {% if user.profile.gender == 1 %}
                     <b>Сегодня ты еще не занимался :( Давай исправим это!</b>
-                {% elif user.userprofile.gender == 2 %}
+                {% elif user.profile.gender == 2 %}
                     <b>Сегодня ты еще не занималась :( Давай исправим это!</b>
                 {% endif %}
 
             {% endif %}
     </div>
-</div>
+
 
 {% endblock %}

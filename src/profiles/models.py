@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models.signals import post_save
+
 
 class Profile(models.Model):
 
@@ -9,11 +9,12 @@ class Profile(models.Model):
         (2, 'Female'),
     )
 
-    user = models.OneToOneField(User, on_delete=models.CASCADE)  
-    gender = models.PositiveSmallIntegerField('gender', choices=GENDER_CHOICES,
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    gender = models.PositiveSmallIntegerField('gender',
+                                              choices=GENDER_CHOICES,
                                               blank=True, null=True)
     login_count = models.IntegerField(default=0)
 
-    def __str__(self):  
+    def __str__(self):
           return f"{self.user}'s profile"
 

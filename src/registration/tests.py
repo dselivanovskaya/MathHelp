@@ -2,21 +2,13 @@ from django.test import Client, TestCase
 
 from django.contrib.auth.models import User
 
-from .forms import UserRegistrationForm
-
-
 class RegisterTestCase(TestCase):
 
-    TAKEN_USERNAME = 'emma'
-    TAKEN_EMAIL = 'watson@hogwart.uk'
-
     def setUp(self):
-        User.objects.create(username = self.TAKEN_USERNAME,
-                            email    = self.TAKEN_EMAIL,
-                            password = 'knowledge2000')
+        self.user = User.objects.create(username = 'emma', 
+        email = 'hogwart@email.uk', password = 'knowledge2000')
 
-    def test_register_url_returns_registration_page(self):
-        ''' Test that /register/ path returns registration form. '''
+    def test_register_url_exists(self):
         response = self.client.get('/register/')
         self.assertEqual(response.status_code, 200)
 
@@ -31,7 +23,7 @@ class RegisterTestCase(TestCase):
 
     def test_registration_fails_if_username_already_exists(self):
         response = self.client.post('/register/',
-                    {'username':self.TAKEN_USERNAME,
+                    {'username':self.user.username,
                      'gender': 1,
                      'email': 'johnsmith@gmail.com',
                      'password': '12345678'
@@ -45,7 +37,7 @@ class RegisterTestCase(TestCase):
         response = self.client.post('/register/',
                     {'username': 'sarah',
                      'gender': 1,
-                     'email': self.TAKEN_EMAIL,
+                     'email': self.user.email,
                      'password': '12345678'
                      })
         messages = list(response.context['messages'])
