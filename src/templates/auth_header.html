@@ -1,3 +1,4 @@
+<!-- This header is shown to authenticated users. -->
 {% load static %}
 
     <header class="second-head">
@@ -11,7 +12,7 @@
               <a href="{% url 'home' %}">Главная</a>
             </li>
             <li>
-              <a href="{% url 'show-user-profile' username=user.username %}">Мой профиль</a>
+                <a href="{% url 'show-user-profile' username=user.username %}">{{ user.username }}</a>
             </li>
             <li>
               <a href="{% url 'logout' %}">Выход</a>
@@ -20,5 +21,3 @@
       </nav>
       </div>
   </header>
- 
-

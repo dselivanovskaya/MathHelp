@@ -1,3 +1,4 @@
+<!-- Home page -->
 {% extends 'base.html' %}
 {% load static %}
 
@@ -8,48 +9,43 @@
 {% block title %} Home {% endblock %}
 
 {% block content %}
+  <header class="main-header">
 
-{% if user.is_authenticated %}
-<header class="main-header">
-  <div class="container">
-    <div class="header-top"></div>
-      <div class="promo">
-        <div class="promo-title">Математика - это интересно!</div>
-        <p>Ты можешь больше, чем ты думаешь</p>
+    <div class="container">
+        <div class="header-top"></div> <!-- Don't remove -->
+        <div class="promo">
+          <div class="promo-title">Математика - это интересно!</div>
+          <p>Ты можешь больше, чем ты думаешь</p>
+          {% if not user.is_authenticated %}
+            <a href="{% url 'register' %}" class='btn btn-blue'>Зарегистрироваться</a>
+          {% endif %}
+        </div>
+    </div>
+
+  </header>
+
+  <section class="choice">
+    <div class="container">
+
+      <div class="choice-item">
+        <div class="choice-icon choice-icon-theory"></div>
+        <h2 class="choice-title"><a href="{% url 'show-tickets' %}">Теория</a></h2>
+        <p>Даст тебе необходимые знания</p>
       </div>
-  </div>
-</header> 
-{% else %}
-<header class="main-header">
-  <div class="container">
-     <div class="header-top"></div> 
-      <div class="promo">
-        <div class="promo-title">Математика - это интересно!</div>
-        <p>Ты можешь больше, чем ты думаешь</p>
-        <a href="{% url 'register' %}" class="btn btn-blue">Зарегистрироваться</a>
+
+      <div class="choice-item">
+        <div class="choice-icon choice-icon-practice"></div>
+        <h2 class="choice-title"><a href="#">Практика</a></h2>
+        <p>Поможет отработать навык решения задач</p>
       </div>
-  </div>
-</header>
-{% endif %}
 
-<section class="choice">
-  <div class="container">
-    <div class="choice-item">
-      <div class="choice-icon choice-icon-theory"></div>
-      <h2 class="choice-title"><a href="{% url 'show-tickets' %}">Теория</a></h2>
-      <p>Даст тебе необходимые знания</p>
-    </div>
-    <div class="choice-item">
-      <div class="choice-icon choice-icon-practice"></div>
-      <h2 class="choice-title"><a href="#">Практика</a></h2>
-      <p>Поможет отработать навык решения задач</p>
-    </div>
-    <div class="choice-item">
-      <div class="choice-icon choice-icon-matherials"></div>
-      <h2 class="choice-title"><a href="{% url 'additions' %}">Полезные материалы</a></h2>
-      <p>Учебники и задачники для самостоятельного изучения</p>
-    </div>
-  </div>
-</section>
+      <div class="choice-item">
+        <div class="choice-icon choice-icon-matherials"></div>
+        <h2 class="choice-title"><a href="{% url 'additions' %}">Полезные материалы</a></h2>
+        <p>Учебники и задачники для самостоятельного изучения</p>
+      </div>
 
-{% endblock %} 
+    </div>
+  </section>
+
+{% endblock %}

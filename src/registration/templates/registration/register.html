@@ -5,28 +5,26 @@
 
 {% block content %}
 
-  
+  <section class="contacts">
+    <div class="container">
+      <h2 class="contacts-form title">Регистрация</h2>
+      <form action="{% url 'register' %}" class="contacts-form" method="post">{% csrf_token %}
 
-<section class="contacts">
-  <div class="container">
-    <h2 class="contacts-form title">Регистрация</h2>
-    <form action="{% url 'register' %}" class="contacts-form" method="post">{% csrf_token %}
+          {% if messages %}
+            {% for message in messages %}
+              {{ message }}
+            {% endfor %}
+          {% endif %}
 
-        {% if messages %}
-          {% for message in messages %}
-            {{ message }}
-          {% endfor %}
-        {% endif %}
+        {{ form.as_p }}
 
-      {{ form.as_p }}
-
-      <input type="submit" value="Register" class="contacts-form btn btn-blue ">
-      <p class="contacts-instruction">
-      Если вы уже имеете аккаунт:
-      <a href="{% url 'login' %}"><strong>Войти</strong></a>
-      </p>
-    </form>
-  </div>
-</section>
+        <input type="submit" value="Register" class="contacts-form btn btn-blue ">
+        <p class="contacts-instruction">
+          Если вы уже имеете аккаунт:
+          <a href="{% url 'login' %}"><strong>Войти</strong></a>
+        </p>
+      </form>
+    </div>
+  </section>
 
 {% endblock %}
