@@ -14,7 +14,7 @@
             <tr>
                 <td>Settings:
                     <a href="{% url 'delete-user-profile' username=user.username %}" class="btn btn-blue btn-blue-small">Удалить профиль</a>
-                    <a href="" class="btn btn-blue btn-blue-small">Изменить профиль</a>
+                    <a href="{% url 'update-user-profile' username=user.username %}" class="btn btn-blue btn-blue-small">Изменить профиль</a>
                 </td>
             </tr>
         </table>
