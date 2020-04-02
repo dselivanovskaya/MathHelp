@@ -27,8 +27,7 @@ def register(request):
                 Profile.objects.create(user=user, gender=gender)
                 user = authenticate(username=username, password=password)
                 login(request, user)
-                return redirect(reverse("show-user-profile", kwargs={"username":
-                username}))
+                return redirect(reverse("show-user-profile", kwargs={"username": username}))
             else: # user with 'username' or 'email' exists
                 msg = "User with that 'username' or 'email' already exists:("
                 messages.error(request, msg)

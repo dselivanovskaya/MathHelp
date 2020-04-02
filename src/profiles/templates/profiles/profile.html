@@ -11,6 +11,12 @@
                 <td><a href="{% url 'show-tickets' %}" class="btn btn-blue btn-blue-small">Учить теорию</a></td>
                 <td><a href="#" class="btn btn-blue btn-blue-small">Решать задачи</a></td>
             </tr>
+            <tr>
+                <td>Settings:
+                    <a href="{% url 'delete-user-profile' username=user.username %}" class="btn btn-blue btn-blue-small">Удалить профиль</a>
+                    <a href="" class="btn btn-blue btn-blue-small">Изменить профиль</a>
+                </td>
+            </tr>
         </table>
             {% if user.watched_tickets %}
 

@@ -9,7 +9,7 @@ from .views import login_request, logout_request
 urlpatterns = [
     path('', TemplateView.as_view(template_name="home.html"), name="home"),
     
-    path('<slug:username>', include('profiles.urls')),
+    path('', include('profiles.urls')),
 
     path('admin/', admin.site.urls),
     path('api/', include('api.urls')),

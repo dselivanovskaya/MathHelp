@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 class RegisterTestCase(TestCase):
 
     def setUp(self):
-        self.user = User.objects.create(username = 'emma', 
+        self.user = User.objects.create_user(username = 'emma', 
         email = 'hogwart@email.uk', password = 'knowledge2000')
 
     def test_register_url_exists(self):

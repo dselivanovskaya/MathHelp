@@ -2,14 +2,15 @@ from django.test import Client, TestCase
 
 from django.contrib.auth.models import User
 
+from profiles.models import Profile
+
 
 class LoginTestCase(TestCase):
 
     def setUp(self):
-        self.user = User.objects.create(username = 'john', 
+        self.user = User.objects.create_user(username = 'john', 
         email = 'john@mail.ru', password = 'knowledge2000')
-        self.user.save()
-        print(self.user)
+        Profile.objects.create(user=self.user, gender=1)
 
     def test_login_url_exists(self):
         response = self.client.get('/login/')
