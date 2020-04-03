@@ -15,7 +15,7 @@ def show_user_profile(request, username):
     watched_tickets = request.session.get('watched_tickets', [])
     user.watched_tickets = set(watched_tickets)
 
-    return render(request, "profiles/profile.html", {"user": user})
+    return render(request, "profiles/user-profile.html", {"user": user})
 
 
 def delete_user_profile(request, username):
@@ -35,9 +35,9 @@ def update_user_profile(request, username):
             new_password = form.cleaned_data['password']
 
             user = User.objects.get(username=username)
-            
+
             if new_username:
-                if not User.objects.filter(username=new_username).exists(): 
+                if not User.objects.filter(username=new_username).exists():
                     user.username = new_username
             if new_email:
                 if not User.objects.filter(email=new_email).exists():
@@ -48,7 +48,7 @@ def update_user_profile(request, username):
             return redirect(reverse("show-user-profile", kwargs={"username": user.username}))
         else:
             ''' error '''
-        
+
     form = ProfileUpdateForm()
     return render(request, 'profiles/update.html', {'form': form})
-    
+

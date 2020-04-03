@@ -1,11 +1,13 @@
 from django.test import Client, TestCase
-
 from django.contrib.auth.models import User
+
+from profiles.constants import MALE, FEMALE
+
 
 class RegisterTestCase(TestCase):
 
     def setUp(self):
-        self.user = User.objects.create_user(username = 'emma', 
+        self.user = User.objects.create_user(username = 'emma',
         email = 'hogwart@email.uk', password = 'knowledge2000')
 
     def test_register_url_exists(self):
@@ -15,7 +17,7 @@ class RegisterTestCase(TestCase):
     def test_successful_registration_redirects_to_user_profile(self):
         response = self.client.post('/register/',
                     {'username':'john',
-                     'gender': 1,
+                     'gender': MALE,
                      'email': 'johnsmith@gmail.com',
                      'password': '12345678'
                      })
@@ -24,7 +26,7 @@ class RegisterTestCase(TestCase):
     def test_registration_fails_if_username_already_exists(self):
         response = self.client.post('/register/',
                     {'username':self.user.username,
-                     'gender': 1,
+                     'gender': MALE,
                      'email': 'johnsmith@gmail.com',
                      'password': '12345678'
                      })
@@ -36,7 +38,7 @@ class RegisterTestCase(TestCase):
     def test_registration_fails_if_email_already_exists(self):
         response = self.client.post('/register/',
                     {'username': 'sarah',
-                     'gender': 1,
+                     'gender': FEMALE,
                      'email': self.user.email,
                      'password': '12345678'
                      })
@@ -48,7 +50,7 @@ class RegisterTestCase(TestCase):
     def test_registration_fails_if_no_email_given(self):
         response = self.client.post('/register/',
                     {'username': 'sarah',
-                        'gender': 1,
+                        'gender': FEMALE,
                         'email': '',
                         'password': '12345678'
                         })
@@ -57,7 +59,7 @@ class RegisterTestCase(TestCase):
     def test_registration_fails_if_invalid_email_given(self):
         response = self.client.post('/register/',
                     {'username': 'sarah',
-                        'gender': 1,
+                        'gender': FEMALE,
                         'email': 'abcde',
                         'password': '12345678'
                         })
@@ -66,7 +68,7 @@ class RegisterTestCase(TestCase):
     def test_registration_fails_if_no_username_given(self):
         response = self.client.post('/register/',
                     {'username': '',
-                        'gender': 1,
+                        'gender': FEMALE,
                         'email': 'sarah@mail.ru',
                         'password': '12345678'
                         })
@@ -75,8 +77,8 @@ class RegisterTestCase(TestCase):
     def test_registration_fails_if_no_password_given(self):
         response = self.client.post('/register/',
                     {'username': 'sarah',
-                        'gender': 1,
+                        'gender': FEMALE,
                         'email': 'sarah@mail.ru',
-                        'password': '' 
+                        'password': ''
                         })
         self.assertFormError(response, 'form', 'password', 'Please enter your password :)')

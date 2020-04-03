@@ -8,13 +8,14 @@
   <div class="container">
     <h2 class="contacts-form title">Вход</h2>
     <form method="post" class="contacts-form" autocomplete="off"> {% csrf_token %}
-      {% if messages %}
-          {% for message in messages %}
-            {{ message }}
-          {% endfor %}
-      {% endif %}
+
+      <!-- Display errors -->
+      {% for message in messages %}
+          {{ message }}
+      {% endfor %}
 
       {{ form.as_p }}
+
       <button type="submit" class="contacts-form btn btn-blue">Login</button>
       <p class="contacts-instruction">
         У Вас еще нет аккаунта?
