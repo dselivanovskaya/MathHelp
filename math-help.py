@@ -1,5 +1,6 @@
 import json                      # To parse response
 import urllib.request as urlreq  # To send a request
+from pprint import pprint
 
 from typing import Dict, List
 
@@ -45,12 +46,13 @@ def main():
     response = urlreq.urlopen(url=f'http://{HOST}:{PORT}/api/users/')
     if response.getcode() == SUCCESS:
         extractor = Extractor(json.loads(response.read()))
-        print(f'Total: {extractor.get_user_count()}')
-        print(extractor.get_usernames())
-        print(extractor.get_user_emails())
-        print(f'Males: {extractor.get_male_count()}')
-        print(f'Females: {extractor.get_female_count()}')
-        print(extractor.get_login_counts())
+        pprint(extractor.data)
+        # print(f'Total: {extractor.get_user_count()}')
+        # print(extractor.get_usernames())
+        # print(extractor.get_user_emails())
+        # print(f'Males: {extractor.get_male_count()}')
+        # print(f'Females: {extractor.get_female_count()}')
+        # print(extractor.get_login_counts())
 
 
 if __name__ == '__main__':

@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from .forms import RegistrationForm
 
 
-def register(request):
+def register_user(request):
 
     if request.method == 'GET':
         form = RegistrationForm()

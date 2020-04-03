@@ -4,53 +4,58 @@ from django.contrib.auth.models import User
 
 from .constants import *
 
+# TODO create validators for not available username email and password
+# validators.
+# https://docs.djangoproject.com/en/3.0/ref/validators/
 
 class RegistrationForm(forms.Form):
+    ''' This form is displayed to user when he clicks on register link. '''
 
     username = forms.CharField(
-        required = True,
-        label    = 'Username',
+        label      = 'Username',
         max_length = USERNAME_MAX_LENGTH,
         error_messages = {
-            'required'  : USERNAME_REQUIRED_ERROR_MESSAGE,
-            'max_length': USERNAME_TOO_LONG_ERROR_MESSAGE,
+            'required'  : USERNAME_REQUIRED,
+            'max_length': USERNAME_TOO_LONG,
         }
     )
 
     email = forms.EmailField(
-        required = True,
-        label    = 'Email',
+        label      = 'Email',
         max_length = EMAIL_MAX_LENGTH,
+        help_text  = 'Valid email address',
         error_messages = {
-            'required'  : EMAIL_REQUIRED_ERROR_MESSAGE,
-            'invalid'   : EMAIL_INVALID_ERROR_MESSAGE,
-            'max_length': EMAIL_TOO_LONG_ERROR_MESSAGE,
+            'required'  : EMAIL_REQUIRED,
+            'invalid'   : EMAIL_INVALID,
+            'max_length': EMAIL_TOO_LONG,
         }
     )
 
     password = forms.CharField(
-        required = True,
-        label    = 'Password',
+        label      = 'Password',
+        widget     = forms.PasswordInput(),
         min_length = PASSWORD_MIN_LENGTH,
         max_length = PASSWORD_MAX_LENGTH,
-        widget = forms.PasswordInput(),
+        help_text  = f'{PASSWORD_MIN_LENGTH} characters min.',
+        # validators = None,
         error_messages = {
-            'required'  : PASSWORD_REQUIRED_ERROR_MESSAGE,
-            'min_length': PASSWORD_TOO_SHORT_ERROR_MESSAGE,
-            'max_length': PASSWORD_TOO_LONG_ERROR_MESSAGE,
+            'required'  : PASSWORD_REQUIRED,
+            'min_length': PASSWORD_TOO_SHORT,
+            'max_length': PASSWORD_TOO_LONG,
         },
     )
 
     password2 = forms.CharField(
-        required = True,
-        label    = 'Repeat password',
+        label      = 'Repeat password',
+        widget     = forms.PasswordInput(),
         min_length = PASSWORD_MIN_LENGTH,
         max_length = PASSWORD_MAX_LENGTH,
-        widget = forms.PasswordInput(),
+        help_text  = f'{PASSWORD_MIN_LENGTH} characters min.',
+        # validators = None,
         error_messages = {
-            'required'  : PASSWORD_REQUIRED_ERROR_MESSAGE,
-            'min_length': PASSWORD_TOO_SHORT_ERROR_MESSAGE,
-            'max_length': PASSWORD_TOO_LONG_ERROR_MESSAGE,
+            'required'  : PASSWORD_REQUIRED,
+            'min_length': PASSWORD_TOO_SHORT,
+            'max_length': PASSWORD_TOO_LONG,
         },
     )
 
@@ -65,12 +70,12 @@ class RegistrationForm(forms.Form):
 
         # If user with 'username' already exists
         if User.objects.filter(username=username).exists():
-            raise ValidationError(USERNAME_NOT_AVAILABLE_ERROR_MESSAGE)
+            raise ValidationError(USERNAME_NOT_AVAILABLE)
 
         # If user with 'email' already exists
         if User.objects.filter(email=email).exists():
-            raise ValidationError(EMAIL_NOT_AVAILABLE_ERROR_MESSAGE)
+            raise ValidationError(EMAIL_NOT_AVAILABLE)
 
         # If passwords don't match
         if password and password2 and password != password2:
-            raise ValidationError(PASSWORDS_NOT_MATCH_ERROR_MESSAGE)
+            raise ValidationError(PASSWORDS_DONT_MATCH)
