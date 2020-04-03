@@ -9,6 +9,7 @@ from django.forms import ValidationError
 from profiles.models import Profile
 
 from .forms import UserRegistrationForm
+from .constants import USERNAME_NOT_AVAILABLE_ERROR_MESSAGE
 
 
 def register(request):
@@ -19,7 +20,6 @@ def register(request):
         if form.is_valid():
 
             username = form.cleaned_data['username']
-            gender   = form.cleaned_data['gender']
             email    = form.cleaned_data['email']
             password = form.cleaned_data['password']
 
@@ -29,22 +29,16 @@ def register(request):
 
                 # Create user
                 user = User.objects.create_user(username, email, password)
-                user.profile.gender = gender
-                user.save()
-
                 # Login user
                 user = authenticate(username=username, password=password)
-
                 # Attach session
                 login(request, user)
 
                 return redirect(reverse('show-user-profile', kwargs={
                                     'username': username
                                 }))
-
-            else: # user with 'username' or 'email' exists
-                msg = "User with that 'username' or 'email' already exists:("
-                messages.error(request, msg)
+            else:
+                messages.error(request, USERNAME_NOT_AVAILABLE_ERROR_MESSAGE)
     else:
         form = UserRegistrationForm()
 

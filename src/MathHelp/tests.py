@@ -22,7 +22,6 @@ class LoginTestCase(TestCase):
         self.user.profile.gender = MALE
         self.user.save()
 
-
     def test_login_url_exists(self):
         response = self.client.get(self.login_url)
         self.assertEqual(response.status_code, 200)

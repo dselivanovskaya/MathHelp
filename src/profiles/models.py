@@ -1,5 +1,5 @@
 from django.db import models
-from django.db.models.signals import post_save
+from django.db.models.signals import pre_save, post_save
 
 from django.contrib.auth.models import User
 from django.dispatch import receiver
@@ -10,8 +10,7 @@ from .constants import MALE, FEMALE, GENDER_CHOICES
 class Profile(models.Model):
 
     user   = models.OneToOneField(User, on_delete=models.CASCADE)
-    gender = models.PositiveSmallIntegerField('gender', choices=GENDER_CHOICES)
-                                              # blank=True, null=True)
+    gender = models.PositiveSmallIntegerField('gender', choices=GENDER_CHOICES, null=True)
     login_count = models.IntegerField(default=0)
 
     def __str__(self):
