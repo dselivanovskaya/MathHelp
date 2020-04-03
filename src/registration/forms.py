@@ -9,43 +9,48 @@ class RegistrationForm(forms.Form):
 
     username = forms.CharField(
         required = True,
-        label = 'Username',
-        max_length = 32,
+        label    = 'Username',
+        max_length = USERNAME_MAX_LENGTH,
         error_messages = {
-            'required': USERNAME_REQUIRED_ERROR_MESSAGE,
-            'invalid': 'Please enter a valid username :('
+            'required'  : USERNAME_REQUIRED_ERROR_MESSAGE,
+            'max_length': USERNAME_TOO_LONG_ERROR_MESSAGE,
         }
     )
 
     email = forms.EmailField(
         required = True,
-        label = 'Email',
-        max_length = 32,
+        label    = 'Email',
+        max_length = EMAIL_MAX_LENGTH,
         error_messages = {
-            'required': EMAIL_REQUIRED_ERROR_MESSAGE,
-            'invalid' : EMAIL_INVALID_ERROR_MESSAGE,
+            'required'  : EMAIL_REQUIRED_ERROR_MESSAGE,
+            'invalid'   : EMAIL_INVALID_ERROR_MESSAGE,
+            'max_length': EMAIL_TOO_LONG_ERROR_MESSAGE,
         }
     )
 
     password = forms.CharField(
         required = True,
-        label = 'Password',
-        max_length = 32,
+        label    = 'Password',
+        min_length = PASSWORD_MIN_LENGTH,
+        max_length = PASSWORD_MAX_LENGTH,
         widget = forms.PasswordInput(),
         error_messages = {
-            'required': PASSWORD_REQUIRED_ERROR_MESSAGE,
-            'invalid': 'Please enter a valid password :(',
+            'required'  : PASSWORD_REQUIRED_ERROR_MESSAGE,
+            'min_length': PASSWORD_TOO_SHORT_ERROR_MESSAGE,
+            'max_length': PASSWORD_TOO_LONG_ERROR_MESSAGE,
         },
     )
 
     password2 = forms.CharField(
         required = True,
-        label = 'Repeat password',
-        max_length = 32,
+        label    = 'Repeat password',
+        min_length = PASSWORD_MIN_LENGTH,
+        max_length = PASSWORD_MAX_LENGTH,
         widget = forms.PasswordInput(),
         error_messages = {
-            'required': PASSWORD_REQUIRED_ERROR_MESSAGE,
-            'invalid': 'Please enter a valid password :(',
+            'required'  : PASSWORD_REQUIRED_ERROR_MESSAGE,
+            'min_length': PASSWORD_TOO_SHORT_ERROR_MESSAGE,
+            'max_length': PASSWORD_TOO_LONG_ERROR_MESSAGE,
         },
     )
 
