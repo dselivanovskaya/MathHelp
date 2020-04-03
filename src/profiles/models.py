@@ -1,21 +1,36 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.db.models.signals import post_save
 
-from .constants import MALE, FEMALE
+from django.contrib.auth.models import User
+from django.dispatch import receiver
+
+from .constants import MALE, FEMALE, GENDER_CHOICES
 
 
 class Profile(models.Model):
 
-    GENDER_CHOICES = ((MALE, 'Male'), (FEMALE, 'Female'))
-
     user   = models.OneToOneField(User, on_delete=models.CASCADE)
-    gender = models.PositiveSmallIntegerField('gender', choices=GENDER_CHOICES,
-                                              blank=True, null=True)
+    gender = models.PositiveSmallIntegerField('gender', choices=GENDER_CHOICES)
+                                              # blank=True, null=True)
     login_count = models.IntegerField(default=0)
 
     def __str__(self):
         return f'{self.user}'
 
     def __repr__(self):
-        return (f'Profile(user={self.user}, gender={self.gender}, '
-               f'login_count={self.login_count})')
+        return (f"Profile(user={self.user}, "
+                f"gender={'Male' if self.gender == MALE else 'Female'}, "
+                f"login_count={self.login_count})")
+
+
+@receiver(post_save, sender=User)
+def create_user_profile(instance, created, **kwargs):
+    ''' Automatically create Profile for every new User. '''
+    if created:
+        Profile.objects.create(user=instance)
+
+
+@receiver(post_save, sender=User)
+def save_user_profile(instance, **kwargs):
+    ''' Save automatically created Profile. '''
+    instance.profile.save()

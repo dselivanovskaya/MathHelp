@@ -1,2 +1,3 @@
-MALE   = 1
-FEMALE = 2
+MALE, FEMALE = 1, 2
+
+GENDER_CHOICES = ((MALE, 'Male'), (FEMALE, 'Female'))

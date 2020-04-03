@@ -5,6 +5,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import AuthenticationForm
 
+from profiles.models import Profile
+
 from .constants import FAIL_LOGIN_ERROR_MESSAGE
 
 
@@ -12,7 +14,7 @@ def login_user(request):
     ''' Log in user. '''
 
     # Redirect already logged-in users to their profiles.
-    if request.user.is_active:
+    if request.user.is_authenticated:
         return redirect(reverse('show-user-profile', kwargs={
                    'username': request.user.username
                }))
@@ -27,14 +29,15 @@ def login_user(request):
             password = form.cleaned_data['password']
 
             user = authenticate(username=username, password=password)
-
             if user is None:
                 messages.error(request, FAIL_LOGIN_ERROR_MESSAGE)
             else:
-                login(request, user)
+                login(request, user)  # attach to the current session
 
-                user.profile.login_count += 1
-                user.profile.save()
+                # Update user login_count
+                Profile.objects.filter(user=user).update(
+                        login_count = user.profile.login_count + 1
+                        )
 
                 return redirect(reverse('show-user-profile', kwargs={
                            'username': username,

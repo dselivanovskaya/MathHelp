@@ -1,6 +1,6 @@
 from django import forms
 
-from profiles.models import Profile
+from profiles.constants import GENDER_CHOICES
 
 
 class UserRegistrationForm(forms.Form):
@@ -16,7 +16,7 @@ class UserRegistrationForm(forms.Form):
     )
 
     gender = forms.ChoiceField(
-        choices = Profile.GENDER_CHOICES
+        choices = GENDER_CHOICES
     )
 
     email = forms.EmailField(

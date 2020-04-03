@@ -11,14 +11,17 @@ class LoginTestCase(TestCase):
 
     def setUp(self):
         ''' Create a new user. '''
+
         self.login_url = '/login/'
-        self.username = 'john'
-        self.email    = 'john@mail.com'
-        self.password = 'knowledge4U'
-        self.user     = User.objects.create_user(username=self.username,
+        self.username  = 'john'
+        self.email     = 'john@mail.com'
+        self.password  = 'knowledge4U'
+        self.user      = User.objects.create_user(username=self.username,
                                                  email=self.email,
                                                  password=self.password)
-        self.profile  = Profile.objects.create(user=self.user, gender=MALE)
+        self.user.profile.gender = MALE
+        self.user.save()
+
 
     def test_login_url_exists(self):
         response = self.client.get(self.login_url)
@@ -66,14 +69,14 @@ class LoginTestCase(TestCase):
         self.assertRedirects(response, f'/{self.username}')
 
     # Doesn't work
-    # def test_successful_login_increments_user_profile_login_count(self):
-    #     login_count_before = self.user.profile.login_count
-    #     response = self.client.post(self.login_url,
-    #                {
-    #                    'username': self.username,
-    #                    'password': self.password,
-    #                })
-    #     self.assertEquals(login_count_before + 1, self.profile.login_count)
+    def test_successful_login_increments_user_profile_login_count(self):
+        login_count_before = self.user.profile.login_count
+        response = self.client.post(self.login_url,
+                   {
+                       'username': self.username,
+                       'password': self.password,
+                   }, follow=True)
+        self.assertEquals(login_count_before + 1, self.user.profile.login_count)
 
 
 class LogoutTestCase(TestCase):
