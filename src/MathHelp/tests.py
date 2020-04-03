@@ -75,7 +75,10 @@ class LoginTestCase(TestCase):
                    {
                        'username': self.username,
                        'password': self.password,
-                   }, follow=True)
+                   })
+        print(response)
+        print(repr(self.user))
+        print(repr(self.user.profile))
         self.assertEquals(login_count_before + 1, self.user.profile.login_count)
 
 
