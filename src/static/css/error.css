@@ -1,0 +1,13 @@
+
+/* Form errors */
+.errorlist {
+    font-weight: 600;
+    color: #D8000C;
+    background-color: #FFD2D2;
+    border: 1px solid;
+    border-radius: .5em;
+    box-shadow: 1px 1px 3px #888;
+    padding: 10px;
+    list-style-type: none;  /* remove bullet points */
+    margin-left: .3em;
+}
