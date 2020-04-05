@@ -10,9 +10,9 @@ class UserRegistrationFormTest(TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.view_url = '/register/'
-        User.objects.create_user(username='john',
-                                 email='john@mail.com',
-                                 password='johnisthebest12')
+        User.objects.create_user(
+            username='john', email='john@mail.com', password='johnisthebest12'
+        )
 
     def test_password_field_help_text(self):
         form = UserRegistrationForm()

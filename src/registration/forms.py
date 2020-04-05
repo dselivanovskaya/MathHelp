@@ -8,8 +8,7 @@ class UserRegistrationForm(forms.Form):
     ''' Form for user registration. '''
 
     username = forms.CharField(label='Username', max_length=64)
-
-    email = forms.EmailField(label='Email', max_length=128)
+    email    = forms.EmailField(label='Email', max_length=128)
 
     password1 = forms.CharField(label='Password', min_length=8, max_length=64,
                                widget=forms.PasswordInput(),

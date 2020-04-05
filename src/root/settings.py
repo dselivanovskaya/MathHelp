@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'api',
     'profiles',
     'registration',
+    'root',
     'tickets',
 ]
 

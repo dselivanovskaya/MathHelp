@@ -1,48 +1,36 @@
-from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth.models import User
+from django.contrib.auth import login, logout
 from django.shortcuts import redirect, render, reverse
 
-from profiles.models import Profile
-
-from .constants import FAIL_LOGIN_ERROR_MESSAGE
+from .forms import LoginForm
 
 
 def login_user(request):
     ''' Log in user. '''
-
     # Redirect already logged-in users to their profiles.
     if request.user.is_authenticated:
-        return redirect(reverse('show-user-profile', kwargs={
-                   'username': request.user.username
-               }))
+        return redirect(reverse('show-user-profile',
+            kwargs={'username': request.user.username}
+        ))
 
-    if request.method == 'POST':
-        form = AuthenticationForm(request, request.POST)
+    if request.method == 'GET':
+        form = LoginForm()
 
-        if not form.is_valid():
-            messages.error(request, FAIL_LOGIN_ERROR_MESSAGE)
-        else:
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
+    elif request.method == 'POST':
+        form = LoginForm(request.POST)
 
-            user = authenticate(username=username, password=password)
-            if user is None:
-                messages.error(request, FAIL_LOGIN_ERROR_MESSAGE)
-            else:
-                login(request, user)  # attach to the current session
+        if form.is_valid():
 
-                # Update user login_count
-                Profile.objects.filter(user=user).update(
-                        login_count = user.profile.login_count + 1
-                        )
+            user = form.cleaned_data['user']
+            login(request, user)
 
-                return redirect(reverse('show-user-profile', kwargs={
-                           'username': username,
-                       }))
+            user.profile.login_count += 1
+            user.save()
 
-    return render(request, 'login.html', {'form': AuthenticationForm})
+            return redirect(
+                reverse('show-user-profile', kwargs={'username': user.username})
+            )
+
+    return render(request, 'root/login.html', {'form': form})
 
 
 def logout_user(request):
