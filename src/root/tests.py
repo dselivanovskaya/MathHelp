@@ -1,8 +1,8 @@
-from django.test import TestCase
 from django.contrib.auth.models import User
+from django.test import TestCase
 
+from profiles.constants import FEMALE, MALE
 from profiles.models import Profile
-from profiles.constants import MALE, FEMALE
 
 from .constants import FAIL_LOGIN_ERROR_MESSAGE
 

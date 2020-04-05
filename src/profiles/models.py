@@ -1,10 +1,9 @@
-from django.db import models
-from django.db.models.signals import pre_save, post_save
-
-from django.dispatch import receiver
 from django.contrib.auth.models import User
+from django.db import models
+from django.db.models.signals import post_save, pre_save
+from django.dispatch import receiver
 
-from .constants import MALE, FEMALE, GENDER_CHOICES
+from .constants import FEMALE, GENDER_CHOICES, MALE
 
 
 class Profile(models.Model):

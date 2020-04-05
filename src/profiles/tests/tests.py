@@ -1,7 +1,5 @@
-from django.test import TestCase
-
 from django.contrib.auth.models import User
-
+from django.test import TestCase
 
 # class ProfilesTestCase(TestCase):
 
@@ -43,4 +41,3 @@ from django.contrib.auth.models import User
 #         self.client.login(username=self.username, password=self.password)
 #         response = self.client.get(f'/{self.username}/delete')
 #         self.assertEquals(before_delete_user_count - 1, User.objects.count())
-

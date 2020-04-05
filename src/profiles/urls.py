@@ -1,6 +1,6 @@
 from django.urls import include, path
 
-from .views import show_user_profile, delete_user_profile, update_user_profile
+from .views import delete_user_profile, show_user_profile, update_user_profile
 
 urlpatterns = [
     path('<slug:username>',        show_user_profile,   name='show-user-profile'),

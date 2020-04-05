@@ -1,7 +1,6 @@
-from django.shortcuts import render, redirect
-from django.urls import reverse
-
 from django.contrib.auth.models import User
+from django.shortcuts import redirect, render
+from django.urls import reverse
 
 from .forms import ProfileUpdateForm
 
@@ -52,4 +51,3 @@ def update_user_profile(request, username):
 
     form = ProfileUpdateForm()
     return render(request, 'profiles/update.html', {'form': form})
-

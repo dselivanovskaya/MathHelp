@@ -4,7 +4,6 @@ from django.views.generic.base import TemplateView
 
 from .views import login_user, logout_user
 
-
 urlpatterns = [
 
     path('', TemplateView.as_view(template_name='home.html'), name='home'),
