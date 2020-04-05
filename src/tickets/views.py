@@ -11,9 +11,9 @@ def list_tickets(request):
     )
 
 
-def get_ticket_pdf(request, slug: str):
+def get_ticket_pdf(request, filename: str):
     ''' Return a ticket in pdf format. '''
-    ticket = Ticket.objects.get(slug=slug)
+    ticket = Ticket.objects.get(filename=filename)
 
     # Update user watched tickets in current session
     watched_tickets = request.session.get('watched_tickets', [])

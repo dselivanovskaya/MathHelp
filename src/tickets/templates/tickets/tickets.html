@@ -12,7 +12,7 @@
       {% for ticket in tickets %}
       <tr>
         <td>
-          <p><a href="{% url 'ticket-pdf' ticket.slug %}" class="ticket">{{ ticket.name }}</a></p>
+          <p><a href="{% url 'ticket-pdf' filename=ticket.filename %}" class="ticket">{{ ticket.name }}</a></p>
           <td class="star">
             {% if ticket.level == 1 %}
             <img src="{% static 'img/1.png' %}">
