@@ -1,11 +1,11 @@
 from django.contrib.auth.models import User
 from django.test import TestCase
 
-from registration.forms import UserRegistrationForm
+from registration.forms import RegistrationForm
 
 
-class UserRegistrationFormTest(TestCase):
-    ''' Tests for UserRegistrationForm. '''
+class RegistrationFormTest(TestCase):
+    ''' Tests for RegistrationForm. '''
 
     @classmethod
     def setUpTestData(cls):
@@ -15,15 +15,15 @@ class UserRegistrationFormTest(TestCase):
         )
 
     def test_password_field_help_text(self):
-        form = UserRegistrationForm()
+        form = RegistrationForm()
         self.assertEqual(form.fields['password1'].help_text, '8 characters min.')
 
     def test_repeat_password_field_help_text(self):
-        form = UserRegistrationForm()
+        form = RegistrationForm()
         self.assertEqual(form.fields['password2'].help_text, '8 characters min.')
 
     def test_is_invalid_if_username_not_available(self):
-        form = UserRegistrationForm({
+        form = RegistrationForm({
                 'username' : 'john',
                 'email'    : 'smith@mail.com',
                 'password1': 'jj12345678',
@@ -32,7 +32,7 @@ class UserRegistrationFormTest(TestCase):
         self.assertFalse(form.is_valid())
 
     def test_is_invalid_if_email_not_available(self):
-        form = UserRegistrationForm({
+        form = RegistrationForm({
                 'username' : 'smith',
                 'email'    : 'john@mail.com',
                 'password1': 'jj12345678',
@@ -41,7 +41,7 @@ class UserRegistrationFormTest(TestCase):
         self.assertFalse(form.is_valid())
 
     def test_is_invalid_if_passwords_dont_match(self):
-        form = UserRegistrationForm({
+        form = RegistrationForm({
                 'username' : 'smith',
                 'email'    : 'smith@mail.com',
                 'password1': 'jj12345678',

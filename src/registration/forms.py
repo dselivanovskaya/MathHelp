@@ -4,21 +4,23 @@ from django.contrib.auth.password_validation import validate_password
 from django.forms import ValidationError
 
 
-class UserRegistrationForm(forms.Form):
+class RegistrationForm(forms.Form):
     ''' Form for user registration. '''
 
     username = forms.CharField(label='Username', max_length=64)
     email    = forms.EmailField(label='Email', max_length=128)
-
-    password1 = forms.CharField(label='Password', min_length=8, max_length=64,
-                               widget=forms.PasswordInput(),
-                               help_text='8 characters min.',
-                               validators=[validate_password])
-
-    password2 = forms.CharField(label='Repeat password', min_length=8, max_length=64,
-                                widget=forms.PasswordInput(),
-                                help_text='8 characters min.',
-                                validators=[validate_password])
+    password1 = forms.CharField(
+        label='Password', min_length=8, max_length=64,
+        widget=forms.PasswordInput(),
+        help_text='8 characters min.',
+        validators=[validate_password]
+    )
+    password2 = forms.CharField(
+        label='Repeat password', min_length=8, max_length=64,
+        widget=forms.PasswordInput(),
+        help_text='8 characters min.',
+        validators=[validate_password]
+    )
 
     def clean_username(self):
         ''' Check if username already exists. '''
