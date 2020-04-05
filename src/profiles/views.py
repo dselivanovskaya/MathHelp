@@ -23,6 +23,7 @@ def delete_user_profile(request, username):
         User.objects.get(username=username).delete()
     return redirect(reverse('home'))
 
+
 def update_user_profile(request, username):
     if request.user.username != username:
         return redirect(reverse('home'))

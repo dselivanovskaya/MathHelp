@@ -1,14 +1,15 @@
 from django.test import TestCase
 from django.contrib.auth.models import User
 
-from .forms import UserRegistrationForm
+from registration.forms import UserRegistrationForm
 
 
 class UserRegistrationFormTest(TestCase):
     ''' Tests for UserRegistrationForm. '''
 
-    def setUp(self):
-        self.view_url = '/register/'
+    @classmethod
+    def setUpTestData(cls):
+        cls.view_url = '/register/'
         User.objects.create_user(username='john',
                                  email='john@mail.com',
                                  password='johnisthebest12')

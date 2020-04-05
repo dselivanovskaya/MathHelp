@@ -1,8 +1,8 @@
 from django.db import models
 from django.db.models.signals import pre_save, post_save
 
-from django.contrib.auth.models import User
 from django.dispatch import receiver
+from django.contrib.auth.models import User
 
 from .constants import MALE, FEMALE, GENDER_CHOICES
 
@@ -14,7 +14,7 @@ class Profile(models.Model):
     login_count = models.IntegerField(default=0)
 
     def __str__(self):
-        return f'{self.user}'
+        return self.user.username
 
     def __repr__(self):
         return (f"Profile(user={self.user}, "

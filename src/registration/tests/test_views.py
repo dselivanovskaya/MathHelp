@@ -5,10 +5,11 @@ from django.urls import reverse
 class RegisterUserViewTest(TestCase):
     ''' Tests for 'register_user' view. '''
 
-    def setUp(self):
-        self.view_url  = '/register/'
-        self.view_name = 'register'
-        self.template_name = 'registration/register.html'
+    @classmethod
+    def setUpTestData(cls):
+        cls.view_url  = '/register/'
+        cls.view_name = 'register'
+        cls.template_name = 'registration/register.html'
 
     def test_view_url_exists(self):
         response = self.client.get(self.view_url)
