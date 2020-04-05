@@ -39,7 +39,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'MathHelp.urls'
+ROOT_URLCONF = 'root.urls'
 
 # Templates
 TEMPLATES = [
@@ -58,7 +58,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'MathHelp.wsgi.application'
+WSGI_APPLICATION = 'root.wsgi.application'
 
 # Database
 DATABASES = {
