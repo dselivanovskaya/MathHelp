@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.test import TestCase
 
-from root.forms import LoginForm
+from authentication.forms import LoginForm
 
 
 class LoginFormTest(TestCase):

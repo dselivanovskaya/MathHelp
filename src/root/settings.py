@@ -24,9 +24,9 @@ INSTALLED_APPS = [
 
     # Own
     'api',
+    'authentication',
     'profiles',
     'registration',
-    'root',
     'tickets',
 ]
 
@@ -102,8 +102,6 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'),]
 
 # Sessions
 SESSION_SAVE_EVERY_REQUEST = True
-
-AUTH_PROFILE_MODULE = 'profiles.UserProfile'
 
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': [

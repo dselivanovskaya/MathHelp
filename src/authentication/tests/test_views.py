@@ -10,7 +10,7 @@ class LoginUserViewTest(TestCase):
     def setUpTestData(cls):
         cls.url  = '/login/'
         cls.name = 'login'
-        cls.template = 'root/login.html'
+        cls.template = 'authentication/login.html'
         User.objects.create_user(
             username='john', email='john@mail.com', password='johny123'
         )
@@ -49,7 +49,7 @@ class LoginUserViewTest(TestCase):
         )
         self.assertTemplateUsed(response, self.template)
 
-    def test_redirects_already_logged_in_user_to_his_profile(self):
+    def test_already_logged_in_user_redirected_to_his_profile(self):
         self.client.login(username='john', password='johny123')
         response = self.client.get(self.url)
         self.assertRedirects(response, '/john')

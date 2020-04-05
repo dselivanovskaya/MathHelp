@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
+from django.contrib.auth.signals import user_logged_in
 from django.db import models
-from django.db.models.signals import post_save, pre_save
+from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 from .constants import FEMALE, GENDER_CHOICES, MALE
@@ -23,12 +24,6 @@ class Profile(models.Model):
 
 @receiver(post_save, sender=User)
 def create_user_profile(instance, created, **kwargs):
-    ''' Automatically create Profile for every new User. '''
+    ''' For every created User create a Profile. '''
     if created:
-        Profile.objects.create(user=instance)
-
-
-@receiver(post_save, sender=User)
-def save_user_profile(instance, **kwargs):
-    ''' Save automatically created Profile. '''
-    instance.profile.save()
+        Profile.objects.create(user=instance).save()
