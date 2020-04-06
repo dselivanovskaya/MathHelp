@@ -2,6 +2,8 @@ from django.contrib.auth.models import User
 from django.test import TestCase, TransactionTestCase
 from django.urls import reverse
 
+from authentication.forms import LoginForm
+
 
 class LoginUserViewTest(TestCase):
     ''' Tests for 'login_user' view. '''
@@ -23,6 +25,14 @@ class LoginUserViewTest(TestCase):
 
     def test_view_renders_correct_template(self):
         self.assertTemplateUsed(self.client.get(reverse(self.name)), self.template)
+
+    def test_view_renders_correct_form(self):
+        response = self.client.get(self.url)
+        self.assertIsInstance(response.context['form'], LoginForm)
+
+    def test_redirects_authenticated_user_to_home(self):
+        self.client.login(username='john', password='johny123')
+        self.assertRedirects(self.client.get(self.url), '/')
 
     def test_existing_user_can_successfully_log_in(self):
         self.assertTrue(self.client.login(username='john', password='johny123'))
@@ -57,10 +67,6 @@ class LoginUserViewTest(TestCase):
         self.client.post(self.url, {'username': 'john', 'password': 'johny123'})
         user.refresh_from_db()
         self.assertEquals(login_count_before + 1, user.profile.login_count)
-
-    def test_redirects_authenticated_user_to_his_profile(self):
-        self.client.login(username='john', password='johny123')
-        self.assertRedirects(self.client.get(self.url), '/john')
 
 
 class LogoutUserViewTest(TestCase):

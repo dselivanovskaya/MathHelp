@@ -1,11 +1,14 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import redirect, render, reverse
 
 from .forms import RegistrationForm
 
 
+@user_passes_test(lambda user: user.is_anonymous, '/', None)
 def register_user(request):
+    ''' Register user. '''
 
     if request.method == 'GET':
         form = RegistrationForm()

@@ -7,8 +7,18 @@ from django.forms import ValidationError
 class RegistrationForm(forms.Form):
     ''' Form for user registration. '''
 
-    username = forms.CharField(label='Username', max_length=64)
-    email    = forms.EmailField(label='Email', max_length=128)
+    username = forms.CharField(
+        label='Username', max_length=64,
+        widget=forms.TextInput(attrs={
+            'placeholder': 'example',
+        })
+    )
+    email = forms.EmailField(
+        label='Email', max_length=128,
+        widget=forms.TextInput(attrs={
+            'placeholder': 'example@gmail.com',
+        })
+    )
     password1 = forms.CharField(
         label='Password', min_length=8, max_length=64,
         widget=forms.PasswordInput(),
