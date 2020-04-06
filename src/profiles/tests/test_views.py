@@ -14,8 +14,8 @@ class GetUserProfileViewTest(TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.url = f'/{JOHN_USERNAME}/'
-        cls.name = 'user-profile'
-        cls.template = 'profiles/user-profile.html'
+        cls.name = 'get-profile'
+        cls.template = 'profiles/get-profile.html'
         User.objects.create_user(
             username=JOHN_USERNAME, email=JOHN_EMAIL, password=JOHN_PASSWORD
         )
@@ -42,13 +42,13 @@ class GetUserProfileViewTest(TestCase):
 
 
 class UpdateUserProfileViewTest(TestCase):
-    ''' Tests for "update_user_profile" view. '''
+    ''' Tests for "update_profile" view. '''
     
     @classmethod
     def setUpTestData(cls):
         cls.url = f'/{JOHN_USERNAME}/update/'
-        cls.name = 'update-user-profile'
-        cls.template = 'profiles/update-user-profile.html'
+        cls.name = 'update-profile'
+        cls.template = 'profiles/update-profile.html'
         User.objects.create_user(
             username=JOHN_USERNAME, email=JOHN_EMAIL, password=JOHN_PASSWORD
         )
@@ -75,12 +75,12 @@ class UpdateUserProfileViewTest(TestCase):
 
 
 class DeleteUserProfileViewTest(TestCase):
-    ''' Tests for "delete_user_profile" view. '''
+    ''' Tests for "delete_profile" view. '''
 
     @classmethod
     def setUpTestData(cls):
         cls.url = f'/{JOHN_USERNAME}/delete/'
-        cls.name = 'delete-user-profile'
+        cls.name = 'delete-profile'
         User.objects.create_user(
             username=JOHN_USERNAME, email=JOHN_EMAIL, password=JOHN_PASSWORD
         )

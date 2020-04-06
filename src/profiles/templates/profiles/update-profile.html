@@ -8,13 +8,7 @@
   <section class="contacts">
     <div class="container">
       <h2 class="contacts-form title">Изменить профиль</h2>
-      <form action="{% url 'update-user-profile' username=user.username %}" class="contacts-form" method="post">{% csrf_token %}
-
-          {% if messages %}
-            {% for message in messages %}
-              {{ message }}
-            {% endfor %}
-          {% endif %}
+      <form action="{% url 'update-profile' username=user.username %}" class="contacts-form" method="post">{% csrf_token %}
 
         {{ form.as_p }}
 

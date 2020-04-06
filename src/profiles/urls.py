@@ -1,9 +1,9 @@
 from django.urls import include, path
 
-from .views import get_user_profile, update_user_profile, delete_user_profile
+from .views import get_profile, update_profile, delete_profile
 
 urlpatterns = [
-    path('', get_user_profile, name='user-profile'),
-    path('delete/', delete_user_profile, name='delete-user-profile'),
-    path('update/', update_user_profile, name='update-user-profile')
+    path('', get_profile, name='get-profile'),
+    path('delete/', delete_profile, name='delete-profile'),
+    path('update/', update_profile, name='update-profile')
 ]

@@ -9,17 +9,17 @@ from .decorators import ownership_required
 
 @login_required(redirect_field_name=None)
 @ownership_required
-def get_user_profile(request, username: str):
+def get_profile(request, username: str):
     ''' Returns user's profile page. '''
     context = {
         'user': User.objects.get(username=username),
     }
-    return render(request, 'profiles/user-profile.html', context)
+    return render(request, 'profiles/get-profile.html', context)
 
 
 @login_required(redirect_field_name=None)
 @ownership_required
-def update_user_profile(request, username: str):
+def update_profile(request, username: str):
 
     if request.method == 'GET':
         form = ProfileUpdateForm()
@@ -47,11 +47,11 @@ def update_user_profile(request, username: str):
         else:
             ''' error '''
 
-    return render(request, 'profiles/update-user-profile.html', {'form': form})
+    return render(request, 'profiles/update-profile.html', {'form': form})
 
 
 @login_required(redirect_field_name=None)
 @ownership_required
-def delete_user_profile(request, username: str):
+def delete_profile(request, username: str):
     User.objects.get(username=username).delete()
     return redirect('/')
