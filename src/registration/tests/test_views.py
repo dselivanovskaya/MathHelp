@@ -1,6 +1,6 @@
+from django.contrib.auth.models import User
 from django.test import TestCase
 from django.urls import reverse
-from django.contrib.auth.models import User
 
 from registration.forms import RegistrationForm
 
@@ -20,7 +20,7 @@ class RegisterUserViewTest(TestCase):
     def setUpTestData(cls):
         cls.url  = '/register/'
         cls.name = 'register'
-        cls.template = 'registration/register.html'
+        cls.template = 'registration/registration.html'
         User.objects.create_user(
             username=cls.JOHN_USERNAME,
             email=cls.JOHN_EMAIL,

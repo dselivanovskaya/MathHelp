@@ -1,6 +1,6 @@
 from django.contrib.auth import authenticate, login
-from django.contrib.auth.models import User
 from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.models import User
 from django.shortcuts import redirect, render, reverse
 
 from .forms import RegistrationForm
@@ -30,4 +30,4 @@ def register_user(request):
 
             return redirect(reverse('show-user-profile', args=[username]))
 
-    return render(request, 'registration/register.html', {'form': form})
+    return render(request, 'registration/registration.html', {'form': form})

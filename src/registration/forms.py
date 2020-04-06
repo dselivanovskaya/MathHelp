@@ -25,13 +25,13 @@ class RegistrationForm(forms.Form):
         label='Password', min_length=PASSWORD_MIN_LENGTH, max_length=64,
         widget=forms.PasswordInput(),
         help_text=f'{PASSWORD_MIN_LENGTH} characters min.',
-        validators=[validate_password]
+        validators=[validate_password], # Run through every validator in settings
     )
     password2 = forms.CharField(
         label='Repeat password', min_length=PASSWORD_MIN_LENGTH, max_length=64,
         widget=forms.PasswordInput(),
         help_text=f'{PASSWORD_MIN_LENGTH} characters min.',
-        validators=[validate_password]
+        validators=[validate_password], # Run through every validator in settings
     )
 
     def clean_username(self):
