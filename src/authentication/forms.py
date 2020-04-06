@@ -2,8 +2,9 @@ from django import forms
 from django.contrib.auth import authenticate
 from django.forms import ValidationError
 
+
 class LoginForm(forms.Form):
-    ''' Form for user log in. '''
+    ''' This form is displayed to logging in users. '''
 
     username = forms.CharField(label='Username')
     password = forms.CharField(label='Password', widget=forms.PasswordInput())
@@ -12,10 +13,10 @@ class LoginForm(forms.Form):
         ''' Check if user with 'username' and 'password' exists. '''
         super().clean()
 
-        username = self.cleaned_data.get('username')
-        password = self.cleaned_data.get('password')
-
-        user = authenticate(username=username, password=password)
+        user = authenticate(
+            username=self.cleaned_data.get('username'),
+            password=self.cleaned_data.get('password'),
+        )
 
         if user is None:
             raise ValidationError('Invalid username or password')

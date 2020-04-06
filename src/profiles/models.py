@@ -15,5 +15,5 @@ class Profile(models.Model):
 
     def __repr__(self):
         return (f"Profile(user={self.user}, "
-                f"gender={'Male' if self.gender == MALE else 'Female'}, "
+                f"gender={self.gender}, "
                 f"login_count={self.login_count})")
