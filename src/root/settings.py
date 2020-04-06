@@ -72,17 +72,24 @@ DATABASES = {
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
     {
+        # Check similarity between the password and a set of attributes of user.
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
     {
+        # Checks whether a password meets a minimum length.
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
     {
+        # Checks whether the password occurs in a list of common passwords.
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
+        # Checks whether the password isn't entirely numeric.
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
+    {
+        'NAME': 'registration.validators.CustomPasswordValidator',
+    }
 ]
 
 # Internationalization

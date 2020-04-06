@@ -7,6 +7,8 @@ from django.forms import ValidationError
 class RegistrationForm(forms.Form):
     ''' Form for user registration. '''
 
+    PASSWORD_MIN_LENGTH = 8
+
     username = forms.CharField(
         label='Username', max_length=64,
         widget=forms.TextInput(attrs={
@@ -20,15 +22,15 @@ class RegistrationForm(forms.Form):
         })
     )
     password1 = forms.CharField(
-        label='Password', min_length=8, max_length=64,
+        label='Password', min_length=PASSWORD_MIN_LENGTH, max_length=64,
         widget=forms.PasswordInput(),
-        help_text='8 characters min.',
+        help_text=f'{PASSWORD_MIN_LENGTH} characters min.',
         validators=[validate_password]
     )
     password2 = forms.CharField(
-        label='Repeat password', min_length=8, max_length=64,
+        label='Repeat password', min_length=PASSWORD_MIN_LENGTH, max_length=64,
         widget=forms.PasswordInput(),
-        help_text='8 characters min.',
+        help_text=f'{PASSWORD_MIN_LENGTH} characters min.',
         validators=[validate_password]
     )
 
@@ -37,7 +39,7 @@ class RegistrationForm(forms.Form):
         username = self.cleaned_data.get('username')
 
         if User.objects.filter(username=username).exists():
-            raise ValidationError('User with that username already exists')
+            raise ValidationError('User with that username already exists.')
 
         return username
 
@@ -46,7 +48,7 @@ class RegistrationForm(forms.Form):
         email = self.cleaned_data.get('email')
 
         if User.objects.filter(email=email).exists():
-            raise ValidationError('User with that email already exists')
+            raise ValidationError('User with that email already exists.')
 
         return email
 
@@ -56,6 +58,6 @@ class RegistrationForm(forms.Form):
         password2 = self.cleaned_data.get('password2')
 
         if password1 and password2 and password1 != password2:
-            raise ValidationError("Passwords don't match")
+            raise ValidationError("Passwords don't match.")
 
         return password2
