@@ -4,9 +4,10 @@ from django.contrib.auth.models import User
 from django.shortcuts import redirect, render, reverse
 
 from .forms import RegistrationForm
+from authentication.decorators import anonymous_required
 
 
-@user_passes_test(lambda user: user.is_anonymous, '/', None)
+@anonymous_required
 def register_user(request):
     ''' Register user. '''
 

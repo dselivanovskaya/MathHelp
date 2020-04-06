@@ -1,9 +1,7 @@
-from django.contrib.auth.decorators import user_passes_test
-from django.contrib.auth import REDIRECT_FIELD_NAME
-from django.shortcuts import redirect, reverse
+from django.shortcuts import redirect
 
 
-def user_owns_profile(function):
+def ownership_required(function):
     '''
         Redirects user home if he is trying to access profile he doesn't own.
     '''

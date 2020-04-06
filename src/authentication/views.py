@@ -1,11 +1,11 @@
 from django.contrib.auth import login, logout
-from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import redirect, render, reverse
 
 from .forms import LoginForm
+from .decorators import anonymous_required
 
 
-@user_passes_test(lambda user: user.is_anonymous, '/', None)
+@anonymous_required
 def login_user(request):
     ''' Log in user. '''
 

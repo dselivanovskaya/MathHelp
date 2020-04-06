@@ -4,11 +4,11 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 
 from .forms import ProfileUpdateForm
-from .decorators import user_owns_profile
+from .decorators import ownership_required
 
 
 @login_required(redirect_field_name=None)
-@user_owns_profile
+@ownership_required
 def get_user_profile(request, username: str):
     ''' Returns user's personal profile page. '''
     user = User.objects.get(username=username)
@@ -21,14 +21,14 @@ def get_user_profile(request, username: str):
 
 
 @login_required(redirect_field_name=None)
-@user_owns_profile
+@ownership_required
 def delete_user_profile(request, username):
     User.objects.get(username=username).delete()
     return redirect('/')
 
 
 @login_required(redirect_field_name=None)
-@user_owns_profile
+@ownership_required
 def update_user_profile(request, username):
 
     if request.method == 'POST':
