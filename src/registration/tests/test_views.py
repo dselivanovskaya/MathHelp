@@ -53,7 +53,7 @@ class RegisterUserViewTest(TestCase):
             'password1': self.ALICE_PASSOWRD,
             'password2': self.ALICE_PASSOWRD,
          })
-        self.assertRedirects(response, '/alice')
+        self.assertRedirects(response, '/alice/')
 
     def test_on_unsuccessful_registration_doesnt_redirect_user_to_his_profile(self):
         response = self.client.post(self.url, {

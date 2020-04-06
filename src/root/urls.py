@@ -8,7 +8,6 @@ urlpatterns = [
     path('additions/', TemplateView.as_view(template_name='additions.html'),
                                                           name='additions'),
 
-    path('', include('profiles.urls')),  # TODO
     path('', include('authentication.urls')),
 
     path('admin/', admin.site.urls),
@@ -16,4 +15,6 @@ urlpatterns = [
 
     path('register/', include('registration.urls')),
     path('tickets/', include('tickets.urls')),
+
+    path('<slug:username>/', include('profiles.urls')),  # must be last
 ]

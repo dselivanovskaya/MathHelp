@@ -18,7 +18,7 @@ def login_user(request):
         if form.is_valid():
             user = form.cleaned_data['user']
             login(request, user)
-            return redirect(reverse('show-user-profile', args=[user.username]))
+            return redirect(reverse('user-profile', args=[user.username]))
 
     return render(request, 'authentication/login.html', {'form': form})
 

@@ -1,31 +1,35 @@
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.urls import reverse
 
 from .forms import ProfileUpdateForm
+from .decorators import user_owns_profile
 
 
-def show_user_profile(request, username):
-    if request.user.username != username:
-        return redirect(reverse('home'))
-
+@login_required(redirect_field_name=None)
+@user_owns_profile
+def get_user_profile(request, username: str):
+    ''' Returns user's personal profile page. '''
     user = User.objects.get(username=username)
+
     # Remove duplicates from current session watched tickets
     watched_tickets = request.session.get('watched_tickets', [])
     user.watched_tickets = set(watched_tickets)
 
-    return render(request, "profiles/user-profile.html", {"user": user})
+    return render(request, 'profiles/user-profile.html', {'user': user})
 
 
+@login_required(redirect_field_name=None)
+@user_owns_profile
 def delete_user_profile(request, username):
-    if request.user.username == username:
-        User.objects.get(username=username).delete()
-    return redirect(reverse('home'))
+    User.objects.get(username=username).delete()
+    return redirect('/')
 
 
+@login_required(redirect_field_name=None)
+@user_owns_profile
 def update_user_profile(request, username):
-    if request.user.username != username:
-        return redirect(reverse('home'))
 
     if request.method == 'POST':
         form = ProfileUpdateForm(request.POST)
@@ -45,7 +49,7 @@ def update_user_profile(request, username):
             if new_password:
                 user.password = new_password
             user.save()
-            return redirect(reverse("show-user-profile", kwargs={"username": user.username}))
+            return redirect(reverse("user-profile", kwargs={"username": user.username}))
         else:
             ''' error '''
 

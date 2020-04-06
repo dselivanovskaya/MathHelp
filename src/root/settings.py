@@ -103,9 +103,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
-# Login/logout
-# LOGIN_REDIRECT_URL='home'
-# LOGOUT_REDIRECT_URL='home'
+# Login
+LOGIN_URL = '/login/'
+
 
 # Sessions
 SESSION_SAVE_EVERY_REQUEST = True
