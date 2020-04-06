@@ -10,29 +10,23 @@ from .decorators import ownership_required
 @login_required(redirect_field_name=None)
 @ownership_required
 def get_user_profile(request, username: str):
-    ''' Returns user's personal profile page. '''
-    user = User.objects.get(username=username)
-
-    # Remove duplicates from current session watched tickets
-    watched_tickets = request.session.get('watched_tickets', [])
-    user.watched_tickets = set(watched_tickets)
-
-    return render(request, 'profiles/user-profile.html', {'user': user})
+    ''' Returns user's profile page. '''
+    context = {
+        'user': User.objects.get(username=username),
+    }
+    return render(request, 'profiles/user-profile.html', context)
 
 
 @login_required(redirect_field_name=None)
 @ownership_required
-def delete_user_profile(request, username):
-    User.objects.get(username=username).delete()
-    return redirect('/')
+def update_user_profile(request, username: str):
 
+    if request.method == 'GET':
+        form = ProfileUpdateForm()
 
-@login_required(redirect_field_name=None)
-@ownership_required
-def update_user_profile(request, username):
-
-    if request.method == 'POST':
+    elif request.method == 'POST':
         form = ProfileUpdateForm(request.POST)
+
         if form.is_valid():
             new_username = form.cleaned_data['username']
             new_email    = form.cleaned_data['email']
@@ -49,9 +43,15 @@ def update_user_profile(request, username):
             if new_password:
                 user.password = new_password
             user.save()
-            return redirect(reverse("user-profile", kwargs={"username": user.username}))
+            return redirect(reverse('user-profile', args=[user.username]))
         else:
             ''' error '''
 
-    form = ProfileUpdateForm()
-    return render(request, 'profiles/update.html', {'form': form})
+    return render(request, 'profiles/update-user-profile.html', {'form': form})
+
+
+@login_required(redirect_field_name=None)
+@ownership_required
+def delete_user_profile(request, username: str):
+    User.objects.get(username=username).delete()
+    return redirect('/')

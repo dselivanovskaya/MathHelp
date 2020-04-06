@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="{% static 'css/error.css' %}"/>
     <link rel="shortcut icon" href="{% static 'img/logo-icon.png' %}" type="image/x-icon">
     {% block css %}{% endblock %}
-    {% block js %}{% endblock %}
     {% block icon %}{% endblock %}
   </head>
 
@@ -29,6 +28,8 @@
     {% block content %} {% endblock %}
 
     {% include 'footer.html' %}
+
+    {% block js %}{% endblock %}
   </body>
 
 </html>

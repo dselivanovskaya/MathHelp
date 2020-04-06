@@ -1,10 +1,11 @@
 from django.contrib.auth.models import User
 from django.db import models
 
-from .constants import FEMALE, GENDER_CHOICES, MALE
-
 
 class Profile(models.Model):
+
+    MALE, FEMALE = 1, 2
+    GENDER_CHOICES = ((MALE, 'Male'), (FEMALE, 'Female'))
 
     user   = models.OneToOneField(User, on_delete=models.CASCADE)
     gender = models.PositiveSmallIntegerField('gender', choices=GENDER_CHOICES, null=True)
