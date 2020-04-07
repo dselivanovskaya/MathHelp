@@ -3,7 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.urls import reverse
 
-from .forms import ProfileUpdateForm
+from .forms import UpdateProfileForm
+from .models import Profile
 from .decorators import ownership_required
 
 
@@ -22,30 +23,13 @@ def get_profile(request, username: str):
 def update_profile(request, username: str):
 
     if request.method == 'GET':
-        form = ProfileUpdateForm()
+        form = UpdateProfileForm()
 
     elif request.method == 'POST':
-        form = ProfileUpdateForm(request.POST)
-
+        form = UpdateProfileForm(request.POST, request.FILES, instance=Profile.objects.get(user=request.user))
         if form.is_valid():
-            new_username = form.cleaned_data['username']
-            new_email    = form.cleaned_data['email']
-            new_password = form.cleaned_data['password']
-
-            user = User.objects.get(username=username)
-
-            if new_username:
-                if not User.objects.filter(username=new_username).exists():
-                    user.username = new_username
-            if new_email:
-                if not User.objects.filter(email=new_email).exists():
-                    user.email = new_email
-            if new_password:
-                user.password = new_password
-            user.save()
-            return redirect(reverse('user-profile', args=[user.username]))
-        else:
-            ''' error '''
+            form.save()
+            return redirect(reverse('get-profile', args=[username]))
 
     return render(request, 'profiles/update-profile.html', {'form': form})
 

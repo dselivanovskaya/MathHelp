@@ -8,7 +8,8 @@
   <section class="contacts">
     <div class="container">
       <h2 class="contacts-form title">Изменить профиль</h2>
-      <form action="{% url 'update-profile' username=user.username %}" class="contacts-form" method="post">{% csrf_token %}
+      <form action="{% url 'update-profile' username=user.username %}" class="contacts-form" 
+       enctype="multipart/form-data" method="post">{% csrf_token %}
 
         {{ form.as_p }}
 

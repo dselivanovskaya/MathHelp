@@ -29,8 +29,8 @@ class CustomPasswordValidator:
                 'Password must contain at least 1 special character.'
             )
 
-        def get_help_text(self):
-            return (
-                'Your password must containt at least 1 digit, 1 uppercase '
-                'letter, 1 lowercase letter and 1 special character.'
-            )
+    def get_help_text(self):
+        return (
+            'Your password must containt at least 1 digit, 1 uppercase '
+            'letter, 1 lowercase letter and 1 special character.'
+        )
