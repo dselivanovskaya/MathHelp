@@ -1,43 +1,41 @@
-from django.shortcuts import render, redirect
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect, render
 from django.urls import reverse
 
-from django.contrib.auth.models import User
-
 from .forms import ProfileUpdateForm
+from .decorators import ownership_required
 
 
-def show_user_profile(request, username):
-    if request.user.username != username:
-        return redirect(reverse('home'))
-
-    user = User.objects.get(username=username)
-    # Remove duplicates from current session watched tickets
-    watched_tickets = request.session.get('watched_tickets', [])
-    user.watched_tickets = set(watched_tickets)
-
-    return render(request, "profiles/profile.html", {"user": user})
+@login_required(redirect_field_name=None)
+@ownership_required
+def get_profile(request, username: str):
+    ''' Returns user's profile page. '''
+    context = {
+        'user': User.objects.get(username=username),
+    }
+    return render(request, 'profiles/get-profile.html', context)
 
 
-def delete_user_profile(request, username):
-    if request.user.username == username:
-        User.objects.get(username=username).delete()
-    return redirect(reverse('home'))
+@login_required(redirect_field_name=None)
+@ownership_required
+def update_profile(request, username: str):
 
-def update_user_profile(request, username):
-    if request.user.username != username:
-        return redirect(reverse('home'))
+    if request.method == 'GET':
+        form = ProfileUpdateForm()
 
-    if request.method == 'POST':
+    elif request.method == 'POST':
         form = ProfileUpdateForm(request.POST)
+
         if form.is_valid():
             new_username = form.cleaned_data['username']
             new_email    = form.cleaned_data['email']
             new_password = form.cleaned_data['password']
 
             user = User.objects.get(username=username)
-            
+
             if new_username:
-                if not User.objects.filter(username=new_username).exists(): 
+                if not User.objects.filter(username=new_username).exists():
                     user.username = new_username
             if new_email:
                 if not User.objects.filter(email=new_email).exists():
@@ -45,10 +43,15 @@ def update_user_profile(request, username):
             if new_password:
                 user.password = new_password
             user.save()
-            return redirect(reverse("show-user-profile", kwargs={"username": user.username}))
+            return redirect(reverse('user-profile', args=[user.username]))
         else:
             ''' error '''
-        
-    form = ProfileUpdateForm()
-    return render(request, 'profiles/update.html', {'form': form})
-    
+
+    return render(request, 'profiles/update-profile.html', {'form': form})
+
+
+@login_required(redirect_field_name=None)
+@ownership_required
+def delete_profile(request, username: str):
+    User.objects.get(username=username).delete()
+    return redirect('/')

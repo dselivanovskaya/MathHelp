@@ -1,5 +1,6 @@
 from django import forms
 
+
 class ProfileUpdateForm(forms.Form):
 
     username = forms.CharField(

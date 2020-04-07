@@ -1,8 +1,8 @@
 from django.urls import path
 
-from .views import show_tickets, show_ticket_pdf
+from .views import get_ticket_pdf, list_tickets
 
 urlpatterns = [
-    path('', show_tickets, name='show-tickets'),
-    path('<slug:slug>', show_ticket_pdf, name='show-ticket-pdf'),
+    path('', list_tickets, name='tickets'),
+    path('<str:filename>', get_ticket_pdf, name='ticket-pdf'),
 ]

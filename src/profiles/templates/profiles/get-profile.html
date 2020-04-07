@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} {{ user.username }} {% endblock %}
+
+{% block content %}
+  <div class="container">
+      <h2 id="greeting">{{ user.username }}</h2>
+
+     <table>
+       <tr>
+         <td>
+           <button class="btn btn-blue">
+             <a href="{% url 'tickets' %}">Учить теорию</a>
+           </button>
+         </td>
+         <td>
+           <button class="btn btn-blue">
+             <a onclick="alert('Пока еще нету задач:(')">Решать задачи</a>
+           </button>
+         </td>
+         <td>
+           <button class="btn btn-blue">
+             <a href="{% url 'update-profile' username=user.username %}">Изменить профиль</a>
+           </button>
+         </td>
+         <td>
+           <button class="btn btn-blue">
+             <a href="{% url 'delete-profile' username=user.username %}"
+                 onclick="return confirm('Вы уверены, что хотите удалить свой профиль?')">Удалить профиль</a>
+           </button>
+         </td>
+       </tr>
+     </table>
+    <br>
+    {% if request.session.watched_tickets %}
+
+        {% if user.profile.gender == 1 %}
+            <b>Сегодня ты посмотрел:</b>
+        {% elif user.profile.gender == 2 %}
+            <b>Сегодня ты посмотрела:</b>
+        {% else %}
+            <b>Сегодня вы посмотрели:</b>
+        {% endif %}
+
+        <ul>
+        {% for ticket in request.session.watched_tickets %}
+            <li>{{ ticket }}</li>
+        {% endfor %}
+        </ul>
+
+    {% else %}
+
+        {% if user.profile.gender == 1 %}
+            <b>Сегодня ты еще не занимался :( Давай исправим это!</b>
+        {% elif user.profile.gender == 2 %}
+            <b>Сегодня ты еще не занималась :( Давай исправим это!</b>
+        {% else %}
+            <b>Сегодня вы еще не занимались :( Давай исправим это!</b>
+        {% endif %}
+
+    {% endif %}
+  </div>
+
+    <script src="{% static 'profiles/js/greet.js' %}"></script>
+
+{% endblock %}

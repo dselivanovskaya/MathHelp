@@ -1,37 +1,34 @@
-from django.shortcuts import render, redirect
-from django.urls import reverse
-from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
-from django.contrib import messages
-from django import forms
-from django.forms import ValidationError
+from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.models import User
+from django.shortcuts import redirect, render, reverse
 
-from profiles.models import Profile
+from .forms import RegistrationForm
+from authentication.decorators import anonymous_required
 
-from .forms import UserRegistrationForm
 
+@anonymous_required
+def register_user(request):
+    ''' Register user. '''
 
-def register(request):
+    if request.method == 'GET':
+        form = RegistrationForm()
 
-    if request.method == "POST":
-        form = UserRegistrationForm(request.POST)
+    elif request.method == 'POST':
+        form = RegistrationForm(request.POST)
+
         if form.is_valid():
-            user_object = form.cleaned_data
-            username = user_object["username"]
-            gender = user_object["gender"]
-            email    = user_object["email"]
-            password = user_object["password"]
+            username = form.cleaned_data['username']
+            email    = form.cleaned_data['email']
+            password = form.cleaned_data['password1']
 
-            if not (User.objects.filter(username=username).exists() or User.objects.filter(email=email).exists()):
-                user = User.objects.create_user(username, email, password)
-                Profile.objects.create(user=user, gender=gender)
-                user = authenticate(username=username, password=password)
-                login(request, user)
-                return redirect(reverse("show-user-profile", kwargs={"username": username}))
-            else: # user with 'username' or 'email' exists
-                msg = "User with that 'username' or 'email' already exists:("
-                messages.error(request, msg)
-    else:
-        form = UserRegistrationForm()
+            # Create user
+            user = User.objects.create_user(username, email, password)
+            # Login user
+            user = authenticate(username=username, password=password)
+            # Attach session
+            login(request, user)
 
-    return render(request, "registration/register.html", {"form": form})
+            return redirect(reverse('get-profile', args=[username]))
+
+    return render(request, 'registration/registration.html', {'form': form})

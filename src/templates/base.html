@@ -8,8 +8,10 @@
     <meta charset="utf-8">
     <title>{% block title %} {% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/error.css' %}"/>
     <link rel="shortcut icon" href="{% static 'img/logo-icon.png' %}" type="image/x-icon">
-    {% block icon %} {% endblock %}
+    {% block css %}{% endblock %}
+    {% block icon %}{% endblock %}
   </head>
 
   <body>
@@ -26,6 +28,8 @@
     {% block content %} {% endblock %}
 
     {% include 'footer.html' %}
+
+    {% block js %}{% endblock %}
   </body>
 
 </html>
