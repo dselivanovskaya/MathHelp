@@ -13,7 +13,7 @@ class GetUserProfileViewTest(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        cls.url = '/profile/'
+        cls.url = '/profile'
         cls.name = 'get-profile'
         cls.template = 'profile/get-profile.html'
         User.objects.create_user(
@@ -34,7 +34,7 @@ class GetUserProfileViewTest(TestCase):
         self.assertTemplateUsed(self.client.get(self.url), self.template)
 
     def test_redirects_unauthenticated_user_to_login_page(self):
-        self.assertRedirects(self.client.get(self.url), '/login/')
+        self.assertRedirects(self.client.get(self.url), '/sign-in')
 
 
 class UpdateUserProfileViewTest(TestCase):
@@ -42,7 +42,7 @@ class UpdateUserProfileViewTest(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        cls.url = '/profile/update/'
+        cls.url = '/profile/update'
         cls.name = 'update-profile'
         cls.template = 'profile/update-profile.html'
         User.objects.create_user(
@@ -63,8 +63,7 @@ class UpdateUserProfileViewTest(TestCase):
         self.assertTemplateUsed(self.client.get(self.url), self.template)
 
     def test_redirects_unauthenticated_user_to_login_page(self):
-        self.assertRedirects(self.client.get(self.url), '/login/')
-
+        self.assertRedirects(self.client.get(self.url), '/sign-in')
 
 
 class DeleteUserProfileViewTest(TestCase):
@@ -72,12 +71,11 @@ class DeleteUserProfileViewTest(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        cls.url = '/profile/delete/'
+        cls.url = '/profile/delete'
         cls.name = 'delete-profile'
         User.objects.create_user(
             username=JOHN_USERNAME, email=JOHN_EMAIL, password=JOHN_PASSWORD
         )
 
     def test_redirects_unauthenticated_user_to_login_page(self):
-        self.assertRedirects(self.client.get(self.url), '/login/')
-
+        self.assertRedirects(self.client.get(self.url), '/sign-in')

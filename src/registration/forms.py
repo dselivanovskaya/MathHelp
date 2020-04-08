@@ -4,8 +4,7 @@ from django.contrib.auth.password_validation import validate_password
 from django.forms import ValidationError
 
 
-class RegistrationForm(forms.Form):
-    ''' Form for user registration. '''
+class SignUpForm(forms.Form):
 
     PASSWORD_MIN_LENGTH = 8
 

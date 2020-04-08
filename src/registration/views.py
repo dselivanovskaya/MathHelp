@@ -2,23 +2,22 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render, reverse
 
-from .forms import RegistrationForm
+from .forms import SignUpForm
 from authentication.decorators import anonymous_required
 
 
 @anonymous_required
-def register_user(request):
-    ''' Register user. '''
+def sign_up(request):
 
     if request.method == 'GET':
-        form = RegistrationForm()
+        form = SignUpForm()
 
     elif request.method == 'POST':
-        form = RegistrationForm(request.POST)
+        form = SignUpForm(request.POST)
 
         if form.is_valid():
             username = form.cleaned_data['username']
-            email    = form.cleaned_data['email']
+            email = form.cleaned_data['email']
             password = form.cleaned_data['password1']
 
             # Create user

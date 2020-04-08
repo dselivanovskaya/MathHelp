@@ -1,19 +1,17 @@
 from django.contrib.auth import login, logout
 from django.shortcuts import redirect, render, reverse
 
-from .forms import LoginForm
+from .forms import SignInForm
 from .decorators import anonymous_required
 
 
 @anonymous_required
-def login_user(request):
-    ''' Log in user. '''
-
+def sign_in(request):
     if request.method == 'GET':
-        form = LoginForm()
+        form = SignInForm()
 
     elif request.method == 'POST':
-        form = LoginForm(request.POST)
+        form = SignInForm(request.POST)
 
         if form.is_valid():
             user = form.cleaned_data['user']
@@ -21,10 +19,9 @@ def login_user(request):
             request.session['watched_tickets'] = []
             return redirect(reverse('get-profile'))
 
-    return render(request, 'authentication/login.html', {'form': form})
+    return render(request, 'authentication/sign-in.html', {'form': form})
 
 
-def logout_user(request):
-    ''' Log out user. '''
+def sign_out(request):
     logout(request)
     return redirect(reverse('home'))

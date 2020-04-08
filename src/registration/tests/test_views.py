@@ -2,11 +2,10 @@ from django.contrib.auth.models import User
 from django.test import TestCase
 from django.urls import reverse
 
-from registration.forms import RegistrationForm
+from registration.forms import SignUpForm
 
 
-class RegisterUserViewTest(TestCase):
-    ''' Tests for 'register_user' view. '''
+class SignUpViewTest(TestCase):
 
     JOHN_USERNAME = 'john'
     JOHN_EMAIL = 'john@mail.com'
@@ -18,8 +17,8 @@ class RegisterUserViewTest(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        cls.url  = '/register/'
-        cls.name = 'register'
+        cls.url  = '/sign-up'
+        cls.name = 'sign-up'
         cls.template = 'registration/registration.html'
         User.objects.create_user(
             username=cls.JOHN_USERNAME,
@@ -38,7 +37,7 @@ class RegisterUserViewTest(TestCase):
 
     def test_view_renders_correct_form(self):
         response = self.client.get(self.url)
-        self.assertIsInstance(response.context['form'], RegistrationForm)
+        self.assertIsInstance(response.context['form'], SignUpForm)
 
     def test_redirects_authenticated_user_to_home(self):
         self.client.login(
@@ -53,7 +52,7 @@ class RegisterUserViewTest(TestCase):
             'password1': self.ALICE_PASSOWRD,
             'password2': self.ALICE_PASSOWRD,
          })
-        self.assertRedirects(response, '/profile/')
+        self.assertRedirects(response, '/profile')
 
     def test_on_unsuccessful_registration_doesnt_redirect_user_to_his_profile(self):
         response = self.client.post(self.url, {

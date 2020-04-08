@@ -1,11 +1,10 @@
 from django.contrib.auth.models import User
 from django.test import TestCase
 
-from registration.forms import RegistrationForm
+from registration.forms import SignUpForm
 
 
-class RegistrationFormTest(TestCase):
-    ''' Tests for RegistrationForm. '''
+class SignUpFormTest(TestCase):
 
     JOHN_USERNAME = 'john'
     JOHN_EMAIL = 'john@mail.com'
@@ -17,7 +16,7 @@ class RegistrationFormTest(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        cls.view_url = '/register/'
+        cls.view_url = '/sign-up'
         User.objects.create_user(
             username=cls.JOHN_USERNAME,
             email=cls.JOHN_EMAIL,
@@ -25,28 +24,28 @@ class RegistrationFormTest(TestCase):
         )
 
     def test_username_field_placeholder(self):
-        form = RegistrationForm()
+        form = SignUpForm()
         self.assertEqual(
             form.fields['username'].widget.attrs['placeholder'], 'example'
         )
 
     def test_email_field_placeholder(self):
-        form = RegistrationForm()
+        form = SignUpForm()
         self.assertEqual(
             form.fields['email'].widget.attrs['placeholder'], 'example@gmail.com'
         )
 
     def test_password_fields_help_text(self):
-        form = RegistrationForm()
+        form = SignUpForm()
         self.assertEqual(form.fields['password1'].help_text,
-            f'{RegistrationForm.PASSWORD_MIN_LENGTH} characters min.'
+            f'{SignUpForm.PASSWORD_MIN_LENGTH} characters min.'
         )
         self.assertEqual(form.fields['password2'].help_text,
-            f'{RegistrationForm.PASSWORD_MIN_LENGTH} characters min.'
+            f'{SignUpForm.PASSWORD_MIN_LENGTH} characters min.'
         )
 
     def test_form_is_invalid_if_username_is_not_available(self):
-        form = RegistrationForm({
+        form = SignUpForm({
             'username' : self.JOHN_USERNAME,
             'email'    : self.ALICE_EMAIL,
             'password1': self.ALICE_PASSOWRD,
@@ -55,7 +54,7 @@ class RegistrationFormTest(TestCase):
         self.assertFalse(form.is_valid())
 
     def test_form_is_invalid_if_email_is_not_available(self):
-        form = RegistrationForm({
+        form = SignUpForm({
             'username' : self.ALICE_USERNAME,
             'email'    : self.JOHN_EMAIL,
             'password1': self.ALICE_PASSOWRD,
@@ -64,7 +63,7 @@ class RegistrationFormTest(TestCase):
         self.assertFalse(form.is_valid())
 
     def test_form_is_invalid_if_passwords_dont_match(self):
-        form = RegistrationForm({
+        form = SignUpForm({
             'username' : self.ALICE_USERNAME,
             'email'    : self.ALICE_EMAIL,
             'password1': self.ALICE_PASSOWRD,
@@ -73,7 +72,7 @@ class RegistrationFormTest(TestCase):
         self.assertFalse(form.is_valid())
 
     def test_form_is_invalid_if_password_doesnt_have_one_digit(self):
-        form = RegistrationForm({
+        form = SignUpForm({
             'username' : self.ALICE_USERNAME,
             'email'    : self.ALICE_EMAIL,
             'password1': 'aliceiscool',
@@ -82,7 +81,7 @@ class RegistrationFormTest(TestCase):
         self.assertFalse(form.is_valid())
 
     def test_form_is_invalid_if_password_doesnt_have_one_uppercase_letter(self):
-        form = RegistrationForm({
+        form = SignUpForm({
             'username' : self.ALICE_USERNAME,
             'email'    : self.ALICE_EMAIL,
             'password1': 'aliceiscool12',
@@ -92,7 +91,7 @@ class RegistrationFormTest(TestCase):
         self.assertFalse(form.is_valid())
 
     def test_form_is_invalid_if_password_doesnt_have_one_lowercase_letter(self):
-        form = RegistrationForm({
+        form = SignUpForm({
             'username' : self.ALICE_USERNAME,
             'email'    : self.ALICE_EMAIL,
             'password1': 'ALICEISCOOL12',
@@ -101,7 +100,7 @@ class RegistrationFormTest(TestCase):
         self.assertFalse(form.is_valid())
 
     def test_form_is_invalid_if_password_doesnt_have_one_special_character(self):
-        form = RegistrationForm({
+        form = SignUpForm({
             'username' : self.ALICE_USERNAME,
             'email'    : self.ALICE_EMAIL,
             'password1': 'aliceIsCool12',
@@ -151,28 +150,6 @@ class RegistrationFormTest(TestCase):
         })
         self.assertFormError(response,
             'form', 'password2', 'Password must contain at least 1 digit.'
-        )
-
-    def test_form_displays_correct_error_message_if_password_doesnt_have_one_uppercase_letter(self):
-        response = self.client.post(self.view_url, {
-            'username' : self.ALICE_USERNAME,
-            'email'    : self.ALICE_EMAIL,
-            'password1': 'aliceiscool12',
-            'password2': 'aliceiscool12',
-        })
-        self.assertFormError(response,
-            'form', 'password2', 'Password must contain at least 1 uppercase letter.'
-        )
-
-    def test_form_displays_correct_error_message_if_password_doesnt_have_one_lowercase_letter(self):
-        response = self.client.post(self.view_url, {
-            'username' : self.ALICE_USERNAME,
-            'email'    : self.ALICE_EMAIL,
-            'password1': 'ALICEISCOOL12',
-            'password2': 'ALICEISCOOL12',
-        })
-        self.assertFormError(response,
-            'form', 'password2', 'Password must contain at least 1 lowercase letter.'
         )
 
     def test_form_displays_correct_error_message_if_password_doesnt_have_one_special_character(self):

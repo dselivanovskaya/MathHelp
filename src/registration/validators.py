@@ -11,18 +11,6 @@ class CustomPasswordValidator:
         if not any(char.isdigit() for char in password):
             raise ValidationError('Password must contain at least 1 digit.')
 
-        # Check for at least one uppercase letter.
-        if not any(char.isupper() for char in password):
-            raise ValidationError(
-                'Password must contain at least 1 uppercase letter.'
-            )
-
-        # Check for at least one lowercase letter.
-        if not any(char.islower() for char in password):
-            raise ValidationError(
-                'Password must contain at least 1 lowercase letter.'
-            )
-
         # Check for at least one special character.
         if not any(char in self.special_characters for char in password):
             raise ValidationError(

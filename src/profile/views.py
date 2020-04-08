@@ -5,7 +5,6 @@ from django.urls import reverse
 
 from .forms import UpdateProfileForm
 from .models import Profile
-from .decorators import ownership_required
 
 
 @login_required(redirect_field_name=None)

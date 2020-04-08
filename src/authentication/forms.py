@@ -3,8 +3,7 @@ from django.contrib.auth import authenticate
 from django.forms import ValidationError
 
 
-class LoginForm(forms.Form):
-    ''' This form is displayed to logging in users. '''
+class SignInForm(forms.Form):
 
     username = forms.CharField(label='Username')
     password = forms.CharField(label='Password', widget=forms.PasswordInput())

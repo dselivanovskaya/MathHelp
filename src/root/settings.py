@@ -103,11 +103,13 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
-# Login
-LOGIN_URL = '/login/'
+LOGIN_URL = '/sign-in'
+LOGOUT_UTL = '/sign-out'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+APPEND_SLASH = False
 
 # Sessions
 SESSION_SAVE_EVERY_REQUEST = True

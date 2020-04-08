@@ -8,14 +8,14 @@
   <section class="get-info">
     <div class="container">
       <h2 class="get-info-form title">Регистрация</h2>
-      <form action="{% url 'register' %}" class="get-info-form" method="post">{% csrf_token %}
+      <form action="{% url 'sign-up' %}" class="get-info-form" method="post">{% csrf_token %}
 
         {{ form.as_p }}
 
         <input type="submit" value="Register" class="get-info-form btn btn-blue ">
         <p class="get-info-instruction">
           Если вы уже имеете аккаунт:
-          <a href="{% url 'login' %}"><strong>Войти</strong></a>
+          <a href="{% url 'sign-in' %}"><strong>Войти</strong></a>
         </p>
       </form>
     </div>
