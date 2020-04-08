@@ -8,14 +8,13 @@ JOHN_EMAIL = 'john@gmail.com'
 JOHN_PASSWORD = 'John_123'
 
 
-class GetUserProfileViewTest(TestCase):
-    ''' Tests for "get_user_profile" view. '''
+class GetProfileViewTest(TestCase):
 
     @classmethod
     def setUpTestData(cls):
         cls.url = '/profile'
-        cls.name = 'get-profile'
-        cls.template = 'profile/get-profile.html'
+        cls.name = 'profile'
+        cls.template = 'profile/profile.html'
         User.objects.create_user(
             username=JOHN_USERNAME, email=JOHN_EMAIL, password=JOHN_PASSWORD
         )
@@ -37,8 +36,7 @@ class GetUserProfileViewTest(TestCase):
         self.assertRedirects(self.client.get(self.url), '/sign-in')
 
 
-class UpdateUserProfileViewTest(TestCase):
-    ''' Tests for "update_profile" view. '''
+class UpdateProfileViewTest(TestCase):
 
     @classmethod
     def setUpTestData(cls):
@@ -66,8 +64,7 @@ class UpdateUserProfileViewTest(TestCase):
         self.assertRedirects(self.client.get(self.url), '/sign-in')
 
 
-class DeleteUserProfileViewTest(TestCase):
-    ''' Tests for "delete_profile" view. '''
+class DeleteProfileViewTest(TestCase):
 
     @classmethod
     def setUpTestData(cls):

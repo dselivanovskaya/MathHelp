@@ -17,7 +17,7 @@ def sign_in(request):
             user = form.cleaned_data['user']
             login(request, user)
             request.session['watched_tickets'] = []
-            return redirect(reverse('get-profile'))
+            return redirect(reverse('profile'))
 
     return render(request, 'authentication/sign-in.html', {'form': form})
 

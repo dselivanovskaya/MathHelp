@@ -52,7 +52,7 @@ class SignInViewTest(TestCase):
         response = self.client.post(self.url,
             {'username': 'john', 'password': 'johny123'}, follow=True
         )
-        self.assertTemplateUsed(response, 'profile/get-profile.html')
+        self.assertTemplateUsed(response, 'profile/profile.html')
 
     def test_on_unsuccessful_login_renders_correct_template(self):
         response = self.client.post(self.url,

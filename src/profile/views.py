@@ -13,7 +13,7 @@ def get_profile(request):
     context = {
         'user': User.objects.get(username=request.user.username),
     }
-    return render(request, 'profile/get-profile.html', context)
+    return render(request, 'profile/profile.html', context)
 
 
 @login_required(redirect_field_name=None)
