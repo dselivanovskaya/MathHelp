@@ -9,7 +9,6 @@ from .forms import SignUpForm
 
 @anonymous_required
 def sign_up(request):
-
     if request.method == 'GET':
         form = SignUpForm()
 
@@ -17,17 +16,12 @@ def sign_up(request):
         form = SignUpForm(request.POST)
 
         if form.is_valid():
-            username = form.cleaned_data['username']
-            email = form.cleaned_data['email']
-            password = form.cleaned_data['password1']
-
-            # Create user
-            user = User.objects.create_user(username, email, password)
-            # Login user
-            user = authenticate(username=username, password=password)
-            # Attach session
+            form.save()
+            user = authenticate(
+                username=form.cleaned_data['username'],
+                password=form.cleaned_data['password1']
+            )
             login(request, user)
-
             return redirect(reverse('profile'))
 
     return render(request, 'registration/registration.html', {'form': form})

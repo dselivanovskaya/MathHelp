@@ -3,6 +3,9 @@ import os
 from django.contrib.auth.models import User
 from django.db import models
 
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
 from django.conf import settings
 
 
@@ -29,3 +32,10 @@ class Profile(models.Model):
         return (f"Profile(user={self.user}, "
                 f"gender={self.gender}, "
                 f"login_count={self.login_count})")
+
+
+@receiver(post_save, sender=User)
+def create_user_profile(instance, created, **kwargs):
+    ''' For every new registered user (creates User) create a Profile. '''
+    if created:
+        Profile.objects.create(user=instance).save()

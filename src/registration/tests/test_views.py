@@ -9,11 +9,11 @@ class SignUpViewTest(TestCase):
 
     JOHN_USERNAME = 'john'
     JOHN_EMAIL = 'john@mail.com'
-    JOHN_PASSWORD = 'John_123'
+    JOHN_PASSWORD = 'johny_123'
 
     ALICE_USERNAME = 'alice'
     ALICE_EMAIL = 'alice@gmail.com'
-    ALICE_PASSOWRD = 'Alice_123'
+    ALICE_PASSOWRD = 'alicia_123'
 
     @classmethod
     def setUpTestData(cls):
