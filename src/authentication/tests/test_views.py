@@ -41,7 +41,7 @@ class LoginUserViewTest(TestCase):
         response = self.client.post(self.url,
             {'username': 'john', 'password': 'johny123'},
         )
-        self.assertRedirects(response, '/john/')
+        self.assertRedirects(response, '/profile/')
 
     def test_on_unsuccessful_login_doesnt_redirect_user_to_his_profile(self):
         response = self.client.post(self.url,

@@ -28,6 +28,6 @@ def register_user(request):
             # Attach session
             login(request, user)
 
-            return redirect(reverse('get-profile', args=[username]))
+            return redirect(reverse('get-profile'))
 
     return render(request, 'registration/registration.html', {'form': form})

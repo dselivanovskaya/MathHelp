@@ -19,7 +19,7 @@ def login_user(request):
             user = form.cleaned_data['user']
             login(request, user)
             request.session['watched_tickets'] = []
-            return redirect(reverse('get-profile', args=[user.username]))
+            return redirect(reverse('get-profile'))
 
     return render(request, 'authentication/login.html', {'form': form})
 

@@ -17,10 +17,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('api.urls')),
 
+    path('profile/', include('profile.urls')),
     path('register/', include('registration.urls')),
     path('tickets/', include('tickets.urls')),
 
-    path('<slug:username>/', include('profile.urls')),
 ]
 
 if settings.DEBUG:

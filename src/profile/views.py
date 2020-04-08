@@ -9,33 +9,31 @@ from .decorators import ownership_required
 
 
 @login_required(redirect_field_name=None)
-@ownership_required
-def get_profile(request, username: str):
+def get_profile(request):
     ''' Returns user's profile page. '''
     context = {
-        'user': User.objects.get(username=username),
+        'user': User.objects.get(username=request.user.username),
     }
     return render(request, 'profile/get-profile.html', context)
 
 
 @login_required(redirect_field_name=None)
-@ownership_required
-def update_profile(request, username: str):
+def update_profile(request):
 
     if request.method == 'GET':
         form = UpdateProfileForm()
 
     elif request.method == 'POST':
         form = UpdateProfileForm(request.POST, request.FILES, instance=Profile.objects.get(user=request.user))
+
         if form.is_valid():
             form.save()
-            return redirect(reverse('get-profile', args=[username]))
+            return redirect(reverse('get-profile'))
 
     return render(request, 'profile/update-profile.html', {'form': form})
 
 
 @login_required(redirect_field_name=None)
-@ownership_required
-def delete_profile(request, username: str):
-    User.objects.get(username=username).delete()
+def delete_profile(request):
+    User.objects.get(username=request.user.username).delete()
     return redirect('/')

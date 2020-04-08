@@ -8,7 +8,7 @@
   <section class="get-info">
     <div class="container">
       <h2 class="get-info-form title">Изменить профиль</h2>
-      <form action="{% url 'update-profile' username=user.username %}" class="get-info-form" 
+      <form action="{% url 'update-profile' %}" class="get-info-form" 
        enctype="multipart/form-data" method="post">{% csrf_token %}
 
         {{ form.as_p }}
