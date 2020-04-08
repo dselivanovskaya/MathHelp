@@ -5,15 +5,15 @@
 
 {% block content %}
 
-  <section class="contacts">
+  <section class="get-info">
     <div class="container">
-      <h2 class="contacts-form title">Изменить профиль</h2>
-      <form action="{% url 'update-profile' username=user.username %}" class="contacts-form" 
+      <h2 class="get-info-form title">Изменить профиль</h2>
+      <form action="{% url 'update-profile' username=user.username %}" class="get-info-form" 
        enctype="multipart/form-data" method="post">{% csrf_token %}
 
         {{ form.as_p }}
 
-        <input type="submit" value="Update" class="contacts-form btn btn-blue ">
+        <input type="submit" value="Update" class="get-info-form btn btn-blue ">
        
       </form>
     </div>

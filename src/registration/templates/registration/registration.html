@@ -5,15 +5,15 @@
 
 {% block content %}
 
-  <section class="contacts">
+  <section class="get-info">
     <div class="container">
-      <h2 class="contacts-form title">Регистрация</h2>
-      <form action="{% url 'register' %}" class="contacts-form" method="post">{% csrf_token %}
+      <h2 class="get-info-form title">Регистрация</h2>
+      <form action="{% url 'register' %}" class="get-info-form" method="post">{% csrf_token %}
 
         {{ form.as_p }}
 
-        <input type="submit" value="Register" class="contacts-form btn btn-blue ">
-        <p class="contacts-instruction">
+        <input type="submit" value="Register" class="get-info-form btn btn-blue ">
+        <p class="get-info-instruction">
           Если вы уже имеете аккаунт:
           <a href="{% url 'login' %}"><strong>Войти</strong></a>
         </p>

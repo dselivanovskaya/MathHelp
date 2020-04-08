@@ -4,15 +4,15 @@
 
 {% block content %}
 
-<section class="contacts">
+<section class="get-info">
   <div class="container">
-    <h2 class="contacts-form title">Вход</h2>
-    <form method="post" class="contacts-form" autocomplete="off"> {% csrf_token %}
+    <h2 class="get-info-form title">Вход</h2>
+    <form method="post" class="get-info-form" autocomplete="off"> {% csrf_token %}
 
       {{ form.as_p }}
 
-      <button type="submit" class="contacts-form btn btn-blue">Login</button>
-      <p class="contacts-instruction">
+      <button type="submit" class="get-info-form btn btn-blue">Login</button>
+      <p class="get-info-instruction">
         У Вас еще нет аккаунта?
         <a href="{% url 'register' %}"><strong>Зарегистрироваться</strong></a>
       </p>

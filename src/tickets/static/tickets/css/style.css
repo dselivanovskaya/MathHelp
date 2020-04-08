@@ -1,0 +1,47 @@
+/* Search */
+
+#ticket-search {
+    background-position: 10px 12px; /* Position the search icon */
+    background-repeat: no-repeat; /* Do not repeat the icon image */
+    width: 100%;
+    font-size: 16px;
+    padding: 12px 20px 12px 40px;
+    border: 3px solid #ddd; /* grey border */
+    border-radius: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+ /* Tickets */
+
+.ticket {
+    color: #1f2022;
+    text-decoration: none;
+    display:block;
+    position:relative;
+    padding-right:20px;
+    padding-bottom:20px;
+}
+    
+.ticket:hover {
+    text-decoration: underline;
+}
+    
+.ticket:active {
+    text-decoration: none;
+    opacity: 0.3;
+}
+
+/* Rating stars */
+  
+.star{
+    vertical-align:top;
+    padding-top:20px;
+}
+  
+.star img{
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-top:0px;
+    width: 130px;
+}
