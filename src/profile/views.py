@@ -15,7 +15,7 @@ def get_profile(request, username: str):
     context = {
         'user': User.objects.get(username=username),
     }
-    return render(request, 'profiles/get-profile.html', context)
+    return render(request, 'profile/get-profile.html', context)
 
 
 @login_required(redirect_field_name=None)
@@ -31,7 +31,7 @@ def update_profile(request, username: str):
             form.save()
             return redirect(reverse('get-profile', args=[username]))
 
-    return render(request, 'profiles/update-profile.html', {'form': form})
+    return render(request, 'profile/update-profile.html', {'form': form})
 
 
 @login_required(redirect_field_name=None)

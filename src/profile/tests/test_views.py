@@ -15,7 +15,7 @@ class GetUserProfileViewTest(TestCase):
     def setUpTestData(cls):
         cls.url = f'/{JOHN_USERNAME}/'
         cls.name = 'get-profile'
-        cls.template = 'profiles/get-profile.html'
+        cls.template = 'profile/get-profile.html'
         User.objects.create_user(
             username=JOHN_USERNAME, email=JOHN_EMAIL, password=JOHN_PASSWORD
         )
@@ -48,7 +48,7 @@ class UpdateUserProfileViewTest(TestCase):
     def setUpTestData(cls):
         cls.url = f'/{JOHN_USERNAME}/update/'
         cls.name = 'update-profile'
-        cls.template = 'profiles/update-profile.html'
+        cls.template = 'profile/update-profile.html'
         User.objects.create_user(
             username=JOHN_USERNAME, email=JOHN_EMAIL, password=JOHN_PASSWORD
         )

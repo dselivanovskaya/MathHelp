@@ -20,7 +20,7 @@ urlpatterns = [
     path('register/', include('registration.urls')),
     path('tickets/', include('tickets.urls')),
 
-    path('<slug:username>/', include('profiles.urls')),  # must be last
+    path('<slug:username>/', include('profile.urls')),
 ]
 
 if settings.DEBUG:

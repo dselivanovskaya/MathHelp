@@ -71,7 +71,7 @@ class RegisterUserViewTest(TestCase):
             'password1': self.ALICE_PASSOWRD,
             'password2': self.ALICE_PASSOWRD,
         }, follow=True)
-        self.assertTemplateUsed(response, 'profiles/get-profile.html')
+        self.assertTemplateUsed(response, 'profile/get-profile.html')
 
     def test_on_unsuccessful_registration_renders_correct_template(self):
         response = self.client.post(self.url, {
