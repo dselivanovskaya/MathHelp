@@ -1,5 +1,6 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
+from django.http import JsonResponse
 from django.shortcuts import redirect, render, reverse
 
 from authentication.decorators import anonymous_required
@@ -25,3 +26,15 @@ def sign_up(request):
             return redirect(reverse('profile'))
 
     return render(request, 'registration/registration.html', {'form': form})
+
+
+def get_username_status(request):
+    username = request.GET.get('username', None)
+    response_data = {}
+
+    if User.objects.filter(username=username).exists():
+        response_data['result'] = 'error'
+    else:
+        response_data['result'] = 'success'
+
+    return JsonResponse(response_data)
