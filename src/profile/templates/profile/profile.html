@@ -21,7 +21,7 @@
          </td>
          <td>
            <button class="btn btn-blue">
-             <a href="{% url 'update-profile' %}">Изменить профиль</a>
+             <a href="{% url 'edit-profile' %}">Изменить профиль</a>
            </button>
          </td>
          <td>
@@ -33,9 +33,11 @@
        </tr>
      </table>
     <br>
+
 <b>{{ user.profile.age }}</b>
 <b>{{ user.profile.first_name }}</b>
 <b>{{ user.profile.last_name }}</b>
+
     <img src="{{ user.profile.image.url }}">
     {% if request.session.watched_tickets %}
 

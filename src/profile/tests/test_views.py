@@ -39,9 +39,9 @@ class UpdateProfileViewTest(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        cls.url = '/profile/update'
-        cls.name = 'update-profile'
-        cls.template = 'profile/update-profile.html'
+        cls.url = '/profile/edit'
+        cls.name = 'edit-profile'
+        cls.template = 'profile/edit-profile.html'
         User.objects.create_user(
             username=JOHN_USERNAME, email=JOHN_EMAIL, password=JOHN_PASSWORD
         )

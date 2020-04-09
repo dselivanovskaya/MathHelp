@@ -4,7 +4,7 @@ from django.shortcuts import redirect, render, reverse
 from django.utils.decorators import method_decorator
 from django.views import View
 
-from .forms import UpdateProfileForm
+from .forms import EditProfileForm
 from .models import Profile
 
 
@@ -18,10 +18,10 @@ class ProfileView(View):
 
 
 @method_decorator(login_required(redirect_field_name=None), name='dispatch')
-class UpdateProfileView(View):
+class EditProfileView(View):
 
-    form_class = UpdateProfileForm
-    template_name = 'profile/update-profile.html'
+    form_class = EditProfileForm
+    template_name = 'profile/edit-profile.html'
 
     def get(self, request):
         form = self.form_class(initial={
