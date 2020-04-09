@@ -2,7 +2,6 @@ from django.contrib.auth.models import User
 from django.test import TestCase
 from django.urls import reverse
 
-
 JOHN_USERNAME = 'john'
 JOHN_EMAIL = 'john@gmail.com'
 JOHN_PASSWORD = 'John_123'

@@ -2,27 +2,20 @@ import os
 
 from django.contrib.auth.models import User
 from django.db import models
-
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-
-from django.conf import settings
 
 
 class Profile(models.Model):
 
-    MALE, FEMALE = 1, 2
+    MALE, FEMALE = 'M', 'F'
     GENDER_CHOICES = ((MALE, 'Male'), (FEMALE, 'Female'))
 
-    user   = models.OneToOneField(User, on_delete=models.CASCADE)
-    image = models.ImageField(
-        upload_to='photos',
-        default='photos/default-avatar.jpg',
-    )
-    age = models.PositiveSmallIntegerField(default = 0)
-    first_name = models.CharField(default = '', max_length = 64)
-    last_name = models.CharField(default = '', max_length = 64)
-    gender = models.PositiveSmallIntegerField('gender', choices=GENDER_CHOICES, null=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default=MALE)
+    age = models.PositiveSmallIntegerField(default=0)
+
+    image = models.ImageField(upload_to='photos', default='photos/default-avatar.jpg')
     login_count = models.IntegerField(default=0)
 
     def __str__(self):
@@ -31,11 +24,12 @@ class Profile(models.Model):
     def __repr__(self):
         return (f"Profile(user={self.user}, "
                 f"gender={self.gender}, "
+                f"age={self.age}, "
                 f"login_count={self.login_count})")
 
 
 @receiver(post_save, sender=User)
 def create_user_profile(instance, created, **kwargs):
-    ''' For every new registered user (creates User) create a Profile. '''
+    ''' For every new registered user (created User) create a Profile. '''
     if created:
         Profile.objects.create(user=instance).save()
