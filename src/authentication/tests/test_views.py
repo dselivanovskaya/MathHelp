@@ -1,18 +1,17 @@
 from django.contrib.auth.models import User
-from django.test import TestCase, TransactionTestCase
+from django.test import TestCase
 from django.urls import reverse
 
-from authentication.forms import LoginForm
+from authentication.forms import SignInForm
 
 
-class LoginUserViewTest(TestCase):
-    ''' Tests for 'login_user' view. '''
+class SignInViewTest(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        cls.url  = '/login/'
-        cls.name = 'login'
-        cls.template = 'authentication/login.html'
+        cls.url = '/sign-in'
+        cls.name = 'sign-in'
+        cls.template = 'authentication/sign-in.html'
         User.objects.create_user(
             username='john', email='john@mail.com', password='johny123'
         )
@@ -28,7 +27,7 @@ class LoginUserViewTest(TestCase):
 
     def test_view_renders_correct_form(self):
         response = self.client.get(self.url)
-        self.assertIsInstance(response.context['form'], LoginForm)
+        self.assertIsInstance(response.context['form'], SignInForm)
 
     def test_redirects_authenticated_user_to_home(self):
         self.client.login(username='john', password='johny123')
@@ -41,7 +40,7 @@ class LoginUserViewTest(TestCase):
         response = self.client.post(self.url,
             {'username': 'john', 'password': 'johny123'},
         )
-        self.assertRedirects(response, '/john/')
+        self.assertRedirects(response, '/profile')
 
     def test_on_unsuccessful_login_doesnt_redirect_user_to_his_profile(self):
         response = self.client.post(self.url,
@@ -53,7 +52,7 @@ class LoginUserViewTest(TestCase):
         response = self.client.post(self.url,
             {'username': 'john', 'password': 'johny123'}, follow=True
         )
-        self.assertTemplateUsed(response, 'profiles/get-profile.html')
+        self.assertTemplateUsed(response, 'profile/profile.html')
 
     def test_on_unsuccessful_login_renders_correct_template(self):
         response = self.client.post(self.url,
@@ -69,13 +68,12 @@ class LoginUserViewTest(TestCase):
         self.assertEquals(login_count_before + 1, user.profile.login_count)
 
 
-class LogoutUserViewTest(TestCase):
-    ''' Tests for 'logout_user' view. '''
+class SignOutViewTest(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        cls.url  = '/logout/'
-        cls.name = 'logout'
+        cls.url = '/sign-out'
+        cls.name = 'sign-out'
 
     def test_view_url_exists(self):
         response = self.client.get(self.url, follow=True)

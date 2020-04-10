@@ -43,7 +43,7 @@ class Extractor:
 
 
 def main():
-    response = urlreq.urlopen(url=f'http://{HOST}:{PORT}/api/users/')
+    response = urlreq.urlopen(url=f'http://{HOST}:{PORT}/api/users')
     if response.getcode() == SUCCESS:
         extractor = Extractor(json.loads(response.read()))
         pprint(extractor.data)

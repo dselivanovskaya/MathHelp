@@ -1,28 +1,35 @@
 from django.http import FileResponse, Http404
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+from django.views import View
 
 from .models import Ticket
 
 
-def list_tickets(request):
-    ''' Retusn a list of all tickets. '''
-    return render(
-        request, 'tickets/tickets.html', {'tickets': Ticket.objects.all()}
-    )
+class TicketListView(View):
+
+    template_name = 'tickets/ticket-list.html'
+
+    def get(self, request):
+        context = {'tickets': Ticket.objects.all()}
+        return render(request, self.template_name, context)
 
 
-def get_ticket_pdf(request, id, filename: str):
-    ''' Return a ticket in pdf format. '''
-    ticket = Ticket.objects.get(filename=filename)
-    if ticket.name not in request.session['watched_tickets']:
-        request.session['watched_tickets'].append(ticket.name)
-    print(ticket.get_absolute_path())
-    try:
-        return FileResponse(open(ticket.get_absolute_path(), 'rb'))
-    except FileNotFoundError:
-        raise Http404
+class TicketDetailView(View):
 
-def get_ticket(request, id):
-    return render(
-        request, 'tickets/ticket.html', {'ticket': Ticket.objects.get(id = id)}
-    )
+    template_name = 'tickets/ticket-detail.html'
+
+    def get(self, request, id):
+        ticket = get_object_or_404(Ticket, id=id)
+        return render(request, self.template_name, {'ticket': ticket})
+
+
+class TicketReadPDFView(View):
+
+    def get(self, request, id):
+        ticket = get_object_or_404(Ticket, id=id)
+        if ticket.name not in request.session['watched_tickets']:
+            request.session['watched_tickets'].append(ticket.name)
+        try:
+            return FileResponse(open(ticket.get_absolute_path(), 'rb'))
+        except FileNotFoundError:
+            raise Http404

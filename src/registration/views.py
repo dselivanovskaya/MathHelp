@@ -1,33 +1,31 @@
 from django.contrib.auth import authenticate, login
-from django.contrib.auth.models import User
 from django.shortcuts import redirect, render, reverse
+from django.utils.decorators import method_decorator
+from django.views import View
 
-from .forms import RegistrationForm
 from authentication.decorators import anonymous_required
 
+from .forms import SignUpForm
 
-@anonymous_required
-def register_user(request):
-    ''' Register user. '''
 
-    if request.method == 'GET':
-        form = RegistrationForm()
+@method_decorator(anonymous_required, name='dispatch')
+class SignUpView(View):
 
-    elif request.method == 'POST':
-        form = RegistrationForm(request.POST)
+    form_class = SignUpForm
+    template_name = 'registration/registration.html'
 
+    def get(self, request):
+        form = self.form_class()
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request):
+        form = self.form_class(request.POST)
         if form.is_valid():
-            username = form.cleaned_data['username']
-            email    = form.cleaned_data['email']
-            password = form.cleaned_data['password1']
-
-            # Create user
-            user = User.objects.create_user(username, email, password)
-            # Login user
-            user = authenticate(username=username, password=password)
-            # Attach session
+            form.save()
+            user = authenticate(
+                username=form.cleaned_data['username'],
+                password=form.cleaned_data['password1']
+            )
             login(request, user)
-
-            return redirect(reverse('get-profile', args=[username]))
-
-    return render(request, 'registration/registration.html', {'form': form})
+            return redirect(reverse('profile'))
+        return render(request, self.template_name, {'form': form})

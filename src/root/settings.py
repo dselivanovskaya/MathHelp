@@ -25,7 +25,7 @@ INSTALLED_APPS = [
     # Own
     'api',
     'authentication',
-    'profiles',
+    'profile',
     'registration',
     'tickets',
 ]
@@ -71,18 +71,18 @@ DATABASES = {
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        # Check similarity between the password and a set of attributes of user.
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
+    # {
+    #     # Check similarity between the password and a set of attributes of user.
+    #     'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    # },
     {
         # Checks whether a password meets a minimum length.
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
-    {
-        # Checks whether the password occurs in a list of common passwords.
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
+    # {
+    #     # Checks whether the password occurs in a list of common passwords.
+    #     'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    # },
     {
         # Checks whether the password isn't entirely numeric.
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
@@ -103,8 +103,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
-# Login
-LOGIN_URL = '/login/'
+LOGIN_URL = '/sign-in'
+LOGOUT_UTL = '/sign-out'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'

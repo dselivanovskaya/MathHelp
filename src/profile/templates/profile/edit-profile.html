@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Edit profile {% endblock %}
+
+{% block content %}
+  <section class="get-info">
+    <div class="container">
+      <h2>Изменить профиль</h2>
+      <form action="{% url 'edit-profile' %}" method="post" class="get-info-form">
+       {% csrf_token %}
+
+        <label for="{{ form.first_name.id_for_label }}">First name:</label>
+        {{ form.first_name }}
+        {{ form.first_name.errors }}
+
+        <label for="{{ form.last_name.id_for_label }}">Last name:</label>
+        {{ form.last_name }}
+        {{ form.last_name.errors }}
+
+        <label for="{{ form.gender.id_for_label }}">Gender:</label>
+        {{ form.gender }}
+        {{ form.gender.errors }}
+
+        <label for="{{ form.age.id_for_label }}">Age:</label>
+        {{ form.age }}
+        {{ form.age.errors }}
+
+       <button type="submit" class="btn btn-blue">Сохранить</button>
+      </form>
+    </div>
+  </section>
+{% endblock %}

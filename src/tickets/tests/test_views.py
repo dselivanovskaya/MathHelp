@@ -6,9 +6,9 @@ class ListTicketsViewTest(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        cls.url  = '/tickets/'
-        cls.name = 'tickets'
-        cls.template = 'tickets/tickets.html'
+        cls.url  = '/tickets'
+        cls.name = 'ticket-list'
+        cls.template = 'tickets/ticket-list.html'
 
     def test_view_url_exists(self):
         response = self.client.get(self.url)
