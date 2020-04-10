@@ -19,7 +19,7 @@ urlpatterns = [
     path('api/', include('api.urls')),
 
     path('profile', include('profile.urls')),
-    path('tickets/', include('tickets.urls')),
+    path('tickets', include('tickets.urls')),
 
 ]
 

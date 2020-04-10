@@ -1,5 +1,4 @@
 {% load static %}
-
 <!doctype html>
 
 <html lang="rus">
@@ -16,19 +15,15 @@
   </head>
 
   <body>
-    {% block header %}
-
-      {% if user.is_authenticated %}
-        {% include 'auth_header.html' %}
-      {% else %}
-        {% include 'not_auth_header.html' %}
-      {% endif %}
-
-    {% endblock header %}
+    {% if user.is_authenticated %}
+      {% include 'includes/auth-header.html' %}
+    {% else %}
+      {% include 'includes/not-auth-header.html' %}
+    {% endif %}
 
     {% block content %} {% endblock %}
 
-    {% include 'footer.html' %}
+    {% include 'includes/footer.html' %}
 
     {% block js %}{% endblock %}
   </body>

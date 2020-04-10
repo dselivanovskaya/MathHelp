@@ -4,7 +4,7 @@
 {% block title %} Sign up {% endblock %}
 
 {% block css %}
-  <link rel="stylesheet" href="{% static 'registration/css/registration.css' %}">
+    <link rel="stylesheet" href="{% static 'registration/css/registration.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -33,11 +33,12 @@
         {{ form.password2.errors }}
 
         <button type="submit" id="id_signup_button">Зарегистрироваться</button>
+
       </form>
     </div>
   </section>
+{% endblock %}
 
-  {% block js %}
+{% block js %}
     <script src="{% static 'registration/js/registration.js' %}"></script>
-  {% endblock %}
 {% endblock %}

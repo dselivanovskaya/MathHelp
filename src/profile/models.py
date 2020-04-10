@@ -1,5 +1,3 @@
-import os
-
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.signals import post_save
@@ -26,6 +24,12 @@ class Profile(models.Model):
                 f"gender={self.gender}, "
                 f"age={self.age}, "
                 f"login_count={self.login_count})")
+
+    def is_male(self):
+        return self.gender == self.MALE
+
+    def is_female(self):
+        return self.gender == self.FEMALE
 
 
 @receiver(post_save, sender=User)

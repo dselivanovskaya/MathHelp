@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} {{ ticket.name }} {% endblock %}
+
+{% block content %}
+  <div class="container">
+    <button class="btn btn-blue"><a href="#">Скачать</a></button>
+    <button class="btn btn-blue">
+      <a href="{% url 'ticket-read-pdf' id=ticket.id %}" class="ticket">Читать онлайн</a>
+    </button>
+    <button class="btn btn-blue"><a href="#">Пройти тест</a></button>
+  </div>
+{% endblock %}

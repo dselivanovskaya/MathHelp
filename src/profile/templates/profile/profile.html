@@ -11,17 +11,12 @@
        <tr>
          <td>
            <button class="btn btn-blue">
-             <a href="{% url 'tickets' %}">Учить теорию</a>
+             <a href="{% url 'ticket-list' %}">Учить билеты</a>
            </button>
          </td>
          <td>
            <button class="btn btn-blue">
-             <a onclick="alert('Пока еще нету задач:(')">Решать задачи</a>
-           </button>
-         </td>
-         <td>
-           <button class="btn btn-blue">
-             <a href="{% url 'edit-profile' %}">Изменить профиль</a>
+             <a href="{% url 'edit-profile' %}">Редактировать профиль</a>
            </button>
          </td>
          <td>
@@ -34,40 +29,34 @@
      </table>
     <br>
 
-<b>{{ user.profile.age }}</b>
-<b>{{ user.profile.first_name }}</b>
-<b>{{ user.profile.last_name }}</b>
-
     <img src="{{ user.profile.image.url }}">
-    {% if request.session.watched_tickets %}
 
-        {% if user.profile.gender == 1 %}
+    {% if request.session.watched_tickets %}
+        {% if user.profile.is_male %}
             <b>Сегодня ты посмотрел:</b>
-        {% elif user.profile.gender == 2 %}
+        {% elif user.profile.is_female %}
             <b>Сегодня ты посмотрела:</b>
         {% else %}
             <b>Сегодня вы посмотрели:</b>
         {% endif %}
-
         <ul>
         {% for ticket in request.session.watched_tickets %}
             <li>{{ ticket }}</li>
         {% endfor %}
         </ul>
-
     {% else %}
-
-        {% if user.profile.gender == 1 %}
+        {% if user.profile.is_male %}
             <b>Сегодня ты еще не занимался :( Давай исправим это!</b>
-        {% elif user.profile.gender == 2 %}
+        {% elif user.profile.is_female %}
             <b>Сегодня ты еще не занималась :( Давай исправим это!</b>
         {% else %}
             <b>Сегодня вы еще не занимались :( Давай исправим это!</b>
         {% endif %}
-
     {% endif %}
+
   </div>
+{% endblock %}
 
-    <script src="{% static 'profile/js/greet.js' %}"></script>
-
+{% block js %}
+    <script src="{% static 'profile/js/profile.js' %}"></script>
 {% endblock %}
