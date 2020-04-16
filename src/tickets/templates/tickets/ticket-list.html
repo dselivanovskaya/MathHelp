@@ -27,7 +27,7 @@
           </td>
 
           <td>
-            <a href="#" class="btn btn-blue btn-blue-small">Тест</a>
+            <a href="{% url 'ticket-quiz' id=ticket.id %}" class="btn btn-blue btn-blue-small">Тест</a>
           </td>
         </tr>
       {% endfor %}

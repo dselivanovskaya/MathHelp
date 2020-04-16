@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} Quiz {% endblock %}
+
+{% block content %}
+    
+<div class="container">
+<b>Тест по теме: </b>{{ticket.name}}<br>
+<form action="{% url 'ticket-quiz' id=ticket.id %}" method="post" class="get-info-form" autocomplete="off">
+  {% csrf_token %}
+{{ form.as_p }}
+<button type="submit" class="get-info-form btn btn-blue">Проверить</button>
+</form>
+
+{% for message in messages %}
+  <b>{{ message }}</b>
+{% endfor %}
+
+</div>
+
+{% endblock %}

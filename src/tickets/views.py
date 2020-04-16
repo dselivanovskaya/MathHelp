@@ -33,3 +33,4 @@ class TicketReadPDFView(View):
             return FileResponse(open(ticket.get_absolute_path(), 'rb'))
         except FileNotFoundError:
             raise Http404
+

@@ -1,0 +1,54 @@
+/*Profile table*/
+
+.profile-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.profile-table p {
+    display: inline-block;
+    color: #404040;
+    font-size: 18px;
+    line-height: 24px;
+}
+
+.profile-gray {
+    background-color:#efefef;
+    width: 490px;
+    padding: 10px;
+}
+
+.profile-blue {
+    background-color: #d8e4f1;
+    width: 490px;
+    padding: 10px;
+}
+
+/*Profile-info table*/
+
+.profile-info {
+    border-collapse: collapse;
+    width: 980px;
+}
+
+.profile-info img {
+    padding: 10px;
+}
+
+.user-info {
+    width: 250px;
+}
+
+.user-info b {
+    display: block;
+    margin: 0 auto 5px;
+    padding-left: 10px;
+}
+
+.user-stat {
+    vertical-align: top;
+}
+
+.user-stat b {
+    color: #404040;
+}
