@@ -34,14 +34,31 @@
 
 /* Rating stars */
   
-.star{
+.star {
     vertical-align:top;
     padding-top:20px;
 }
   
-.star img{
+.star img {
     padding-left: 10px;
     padding-right: 10px;
     margin-top:0px;
     width: 130px;
+}
+
+/* Comments table */
+
+.actions {
+    background-color: #efefef;
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 10px;
+}
+.comments {
+    background-color: #d8e4f1;
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 10px;
 }

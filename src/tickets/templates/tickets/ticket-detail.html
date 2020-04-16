@@ -4,27 +4,38 @@
 {% block title %} {{ ticket.name }} {% endblock %}
 
 {% block content %}
-  <div class="container">
-    <button class="btn btn-blue"><a href="#">Скачать</a></button>
-    <button class="btn btn-blue">
-      <a href="{% url 'ticket-read-pdf' id=ticket.id %}" class="ticket">Читать онлайн</a>
-    </button>
-    <button class="btn btn-blue"><a href="#">Пройти тест</a></button>
+<div class="container">
+  <div class="actions">
+    <h2>Действия:</h2>
+    <a href="#" class="btn btn-blue">Скачать</a>
+    <a href="{% url 'ticket-read-pdf' id=ticket.id %}" class="ticket btn btn-blue">Читать онлайн</a>
+    <a href="{% url 'ticket-quiz' id=ticket.id %}" class="btn btn-blue">Пройти тест</a><br>
+  </div>
 
-    <b>Comments</b>
-    {% for comment in comments %}
-      <h2>{{comment.creator}}</h2>
-      <p>{{comment.body}}</p>
-    {% endfor %}
 
-    <form action="{% url 'comment-post' ticket_id=ticket.id %}" method="post" class="get-info-form" autocomplete="off">
+
+  <div class="comments">
+      <h2>Комментарии к билету:</h2>
+      <table class="comments">
+        {% for comment in comments %}
+        <tr>
+          <td width="750px">
+            <h3>{{comment.creator}}</h3>
+            <p>{{comment.body}}</p>
+            <td width="200px"><h5>{{comment.created}}</h5></td>
+          </td>
+        </tr>
+        {% endfor %} 
+      </table>
+   
+    
+    
+    <h2>Оставьте свой комментарий:</h2>
+    <form action="{% url 'comment-post' ticket_id=ticket.id %}" method="post" autocomplete="off">
       {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit" class="get-info-form btn btn-blue">Отправить</button>
+    <button type="submit" class="btn btn-blue">Отправить</button>
     </form>
-
-tor
-
-
+  </div>
   </div>
 {% endblock %}

@@ -23,6 +23,6 @@ class TicketQuizView(View):
         form = self.form_class(ticket.quiz.question_set.all(), request.POST)
         if form.is_valid():
             result = form.cleaned_data['result']
-            messages.info(request, f'Result is {result}')
+            messages.info(request, f'Ваш результат: {result}')
             return redirect(reverse('ticket-quiz', args=[id]))
         return render(request, self.template_name, {'form': form, 'ticket': ticket})
