@@ -10,5 +10,21 @@
       <a href="{% url 'ticket-read-pdf' id=ticket.id %}" class="ticket">Читать онлайн</a>
     </button>
     <button class="btn btn-blue"><a href="#">Пройти тест</a></button>
+
+    <b>Comments</b>
+    {% for comment in comments %}
+      <h2>{{comment.creator}}</h2>
+      <p>{{comment.body}}</p>
+    {% endfor %}
+
+    <form action="{% url 'comment-post' ticket_id=ticket.id %}" method="post" class="get-info-form" autocomplete="off">
+      {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="get-info-form btn btn-blue">Отправить</button>
+    </form>
+
+tor
+
+
   </div>
 {% endblock %}

@@ -28,7 +28,8 @@ INSTALLED_APPS = [
     'profile',
     'registration',
     'tickets',
-    'quiz'
+    'quiz',
+    'forum'
 ]
 
 MIDDLEWARE = [

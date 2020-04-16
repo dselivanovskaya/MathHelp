@@ -20,6 +20,7 @@ urlpatterns = [
 
     path('profile', include('profile.urls')),
     path('tickets', include('tickets.urls')),
+    path('forum/', include('forum.urls')),
 
 ]
 

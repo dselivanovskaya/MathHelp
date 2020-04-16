@@ -13,4 +13,4 @@ class Ticket(models.Model):
         return self.name
 
     def get_absolute_path(self):
-        return os.path.abspath(os.path.join('src/tickets/media', self.filename))
+        return os.path.abspath(os.path.join('tickets/media', self.filename))

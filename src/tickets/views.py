@@ -2,8 +2,9 @@ from django.http import FileResponse, Http404
 from django.shortcuts import render, get_object_or_404
 from django.views import View
 
+from forum.forms import CommentForm
+from forum.models import Comment
 from .models import Ticket
-
 
 class TicketListView(View):
 
@@ -17,10 +18,13 @@ class TicketListView(View):
 class TicketDetailView(View):
 
     template_name = 'tickets/ticket-detail.html'
+    form_class = CommentForm
 
     def get(self, request, id):
         ticket = get_object_or_404(Ticket, id=id)
-        return render(request, self.template_name, {'ticket': ticket})
+        form = self.form_class(ticket, request.user)
+        comments =  Comment.objects.all()
+        return render(request, self.template_name, {'ticket': ticket, 'form': form, 'comments': comments})
 
 
 class TicketReadPDFView(View):
