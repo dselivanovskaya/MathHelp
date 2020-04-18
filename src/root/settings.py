@@ -25,7 +25,7 @@ INSTALLED_APPS = [
     # Own
     'api',
     'authentication',
-    'profile',
+    'profiles',
     'registration',
     'tickets',
     'quiz',

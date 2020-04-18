@@ -11,7 +11,7 @@ from .models import Profile
 @method_decorator(login_required(redirect_field_name=None), name='dispatch')
 class ProfileView(View):
 
-    template_name = 'profile/profile.html'
+    template_name = 'profiles/profile.html'
 
     def get(self, request):
         return render(request, self.template_name, {})
@@ -21,7 +21,7 @@ class ProfileView(View):
 class EditProfileView(View):
 
     form_class = EditProfileForm
-    template_name = 'profile/edit-profile.html'
+    template_name = 'profiles/edit-profile.html'
 
     def get(self, request):
         form = self.form_class(initial={

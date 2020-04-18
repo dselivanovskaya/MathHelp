@@ -18,7 +18,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('api.urls')),
 
-    path('profile', include('profile.urls')),
+    path('profiles', include('profiles.urls')),
     path('tickets', include('tickets.urls')),
     path('forum/', include('forum.urls')),
 

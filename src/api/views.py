@@ -24,3 +24,4 @@ class ListUsersView(View):
 
         serializer = UserSerializer(users, many=True)
         return JsonResponse(serializer.data, safe=False)
+
