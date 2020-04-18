@@ -1,10 +1,12 @@
 from django.http import FileResponse, Http404
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import get_object_or_404, render
 from django.views import View
 
 from forum.forms import CommentForm
 from forum.models import Comment
+
 from .models import Ticket
+
 
 class TicketListView(View):
 
@@ -37,4 +39,3 @@ class TicketReadPDFView(View):
             return FileResponse(open(ticket.get_absolute_path(), 'rb'))
         except FileNotFoundError:
             raise Http404
-

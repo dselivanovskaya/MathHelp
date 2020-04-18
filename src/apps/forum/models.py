@@ -1,7 +1,8 @@
+from django.contrib.auth.models import User
 from django.db import models
 
-from django.contrib.auth.models import User 
 from tickets.models import Ticket
+
 
 class Comment(models.Model):
     created = models.DateTimeField(auto_now_add=True)

@@ -1,9 +1,9 @@
+from django.conf import settings
 from django.shortcuts import reverse
 from django.test import TestCase
 
 from accounts.forms import SigninForm, SignupForm
 from accounts.validators import CustomPasswordValidator
-from accounts.views import SigninView, SignupView
 
 from .test_data import USER1
 
@@ -12,7 +12,7 @@ class SigninFormTest(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        cls.view_url = reverse(SigninView.url_name)
+        cls.view_url = reverse(settings.LOGIN_URL)
         cls.form_class = SigninForm
 
     def test_form_displays_correct_error_message_if_user_doesnt_exist(self):
@@ -29,7 +29,7 @@ class SignupFormTest(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        cls.view_url = reverse(SignupView.url_name)
+        cls.view_url = reverse(settings.REGISTER_URL)
 
     def test_form_is_invalid_if_full_name_is_invalid(self):
         form = SignupForm({

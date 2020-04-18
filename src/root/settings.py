@@ -41,10 +41,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'accounts.apps.AccountsConfig',
-    'profiles',
+    'profiles.apps.ProfilesConfig',
     'tickets',
     'quiz',
-    'forum'
+    'forum',
 ]
 
 # HTTP.
@@ -80,6 +80,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                'accounts.context_processors.url_names',
+                'profiles.context_processors.url_names',
             ],
         },
     },
@@ -156,14 +159,20 @@ MEDIA_URL = '/media/'
 # The model to use to represent a User.
 AUTH_USER_MODEL = 'auth.User'
 
-# The URL or named URL pattern where requests are redirected for login.
+# The named URL pattern where requests are redirected for registration.
+REGISTER_URL = 'signup'
+
+# The named URL pattern where requests are redirected for login.
 LOGIN_URL = 'signin'
 
-# The URL or named URL pattern where requests are redirected after login.
+# The named URL pattern where requests are redirected for logout.
+LOGOUT_URL = 'signout'
+
+# The named URL pattern where requests are redirected after login.
 LOGIN_REDIRECT_URL = 'profile-redirect'
 
 # The URL or named URL pattern where requests are redirected after logout.
-LOGOUT_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = 'index'
 
 # Messages.
 # ------------------------------------------------------------------------------

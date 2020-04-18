@@ -2,6 +2,7 @@ from django import forms
 
 from .models import Answer
 
+
 class QuizForm(forms.Form):
 
     def __init__(self, questions, *args, **kwargs):

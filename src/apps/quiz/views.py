@@ -1,6 +1,5 @@
-from django.shortcuts import render, get_object_or_404, redirect, reverse
-
 from django.contrib import messages
+from django.shortcuts import get_object_or_404, redirect, render, reverse
 from django.views import View
 
 from tickets.models import Ticket

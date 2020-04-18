@@ -7,7 +7,7 @@
   <section class="get-info">
     <div class="container">
       <h2>Изменить профиль</h2>
-      <form action="{% url 'profile-update' request.user.username %}"
+      <form action="{% url PROFILE_UPDATE_URL request.user.username %}"
         method="POST" class="get-info-form">
         {% csrf_token %}
 

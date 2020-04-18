@@ -1,6 +1,6 @@
-from django.shortcuts import redirect
-from django.contrib.auth.decorators import user_passes_test
 from django.conf import settings
+from django.contrib.auth.decorators import user_passes_test
+from django.shortcuts import redirect
 
 
 def anonymous_required(function=None, redirect_url=None):

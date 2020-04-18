@@ -1,10 +1,9 @@
-from django.contrib.auth.models import User
 from django.conf import settings
-from django.urls import reverse
+from django.contrib.auth.models import User
 from django.test import TestCase
+from django.urls import reverse
 
-from accounts.forms import SigninForm, SignupForm
-from accounts.views import SigninView, SignupView, SignoutView
+from accounts.views import SigninView, SignupView
 
 from .test_data import USER1, USER2
 
@@ -13,10 +12,9 @@ class SigninViewTest(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        cls.url = reverse(SigninView.url_name)
+        cls.url = reverse(settings.LOGIN_URL)
         cls.form_class = SigninView.form_class
         cls.template_name = SigninView.template_name
-
         User.objects.create_user(
             username=USER1.username, email=USER1.email, password=USER1.password
         )
@@ -92,10 +90,9 @@ class SignupViewTest(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        cls.url = reverse(SignupView.url_name)
+        cls.url = reverse(settings.REGISTER_URL)
         cls.form_class = SignupView.form_class
         cls.template_name = SignupView.template_name
-
         User.objects.create_user(
             username=USER1.username, email=USER1.email, password=USER1.password
         )
@@ -163,7 +160,7 @@ class SignoutViewTest(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        cls.url = reverse(SignoutView.url_name)
+        cls.url = reverse(settings.LOGOUT_URL)
 
     def test_view_url_exists(self):
         self.assertEqual(
@@ -172,5 +169,5 @@ class SignoutViewTest(TestCase):
 
     def test_redirects(self):
         self.assertRedirects(
-            self.client.get(self.url), settings.LOGOUT_REDIRECT_URL
+            self.client.get(self.url), reverse(settings.LOGOUT_REDIRECT_URL)
         )

@@ -58,7 +58,7 @@
           <p>Повтори изученные темы для их закрепления</p>
         </td>
         <td class="profile-blue">
-          <a href="{% url 'profile-delete' request.user.username %}" class="btn btn-blue"
+          <a href="{% url PROFILE_DELETE_URL request.user.username %}" class="btn btn-blue"
           onclick="return confirm('Вы уверены, что хотите удалить свой профиль?')">Удалить профиль</a>
           <p>Отменить это действие будет невозможно</p>
         </td>
@@ -67,7 +67,7 @@
         <td class="profile-gray">
         </td>
         <td class="profile-blue">
-          <a href="{% url 'profile-update' request.user.username %}" class="btn btn-blue" >Редактировать профиль</a>
+          <a href="{% url PROFILE_UPDATE_URL request.user.username %}" class="btn btn-blue" >Редактировать профиль</a>
           <p>Здесь вы можете изменить данные своего аккаунта</p>
         </td>
       </tr>

@@ -1,7 +1,8 @@
 from django.urls import path
 
-from .views import TicketListView, TicketDetailView, TicketReadPDFView
 from quiz.views import TicketQuizView
+
+from .views import TicketDetailView, TicketListView, TicketReadPDFView
 
 urlpatterns = [
     path('', TicketListView.as_view(), name='ticket-list'),

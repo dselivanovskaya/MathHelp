@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 
-{% block title %} Sign up {% endblock %}
+{% block title %} Регистрация {% endblock %}
 
 {% block content %}
   <section class="get-info">
     <div class="container">
       <h2 class="get-info-form title">Регистрация</h2>
-      <form class="get-info-form" action="{% url 'signup' %}" method="POST">
+      <form class="get-info-form" action="{% url REGISTER_URL %}" method="POST">
         {% csrf_token %}
 
         {{ form.as_p }}
@@ -17,7 +17,7 @@
 
         <p class="get-info-instruction">
           У вас уже есть аккаунт?
-          <a href="{% url 'signin' %}"><strong>Войти</strong></a>
+          <a href="{% url LOGIN_URL %}"><strong>Войти</strong></a>
         </p>
 
       </form>

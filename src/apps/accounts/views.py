@@ -1,9 +1,9 @@
-from django.contrib.auth import login, logout
-from django.contrib import messages
 from django.conf import settings
+from django.contrib import messages
+from django.contrib.auth import login, logout
 from django.shortcuts import redirect, render
-from django.views import View
 from django.utils.decorators import method_decorator
+from django.views import View
 
 from .apps import AccountsConfig
 from .decorators import anonymous_required
@@ -15,7 +15,6 @@ class SigninView(View):
 
     form_class = SigninForm
     template_name = f'{AccountsConfig.name}/signin.html'
-    url_name = 'signin'
 
     def get(self, request):
         form = self.form_class()
@@ -34,7 +33,6 @@ class SignupView(View):
 
     template_name = f'{AccountsConfig.name}/signup.html'
     form_class = SignupForm
-    url_name = 'signup'
 
     def get(self, request):
         form = self.form_class()
@@ -50,8 +48,6 @@ class SignupView(View):
 
 
 class SignoutView(View):
-
-    url_name = 'signout'
 
     def get(self, request):
         logout(request)

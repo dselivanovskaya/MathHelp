@@ -1,9 +1,11 @@
-from django.shortcuts import render, redirect, reverse
 from django.contrib import messages
+from django.shortcuts import redirect, render, reverse
 from django.views import View
-from .forms import CommentForm 
 
 from tickets.models import Ticket
+
+from .forms import CommentForm
+
 
 class CommentPostView(View):
 
