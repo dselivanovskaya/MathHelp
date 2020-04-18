@@ -33,16 +33,21 @@ class SigninViewTest(TestCase):
 
     def test_redirects_authenticated_user(self):
         self.client.login(username=USER1.username, password=USER1.password)
-        self.assertRedirects(
-            self.client.get(self.url), reverse(settings.LOGIN_REDIRECT_URL)
-        )
+        response = self.client.get(self.url, follow=True)
+        self.assertEquals(response.redirect_chain, [
+            (reverse(settings.LOGIN_REDIRECT_URL), 302),
+            (f'/{USER1.username}', 302)
+         ])
 
     def test_on_successful_login_redirects_user(self):
         response = self.client.post(self.url, {
             'username': USER1.username,
             'password': USER1.password,
-        })
-        self.assertRedirects(response, reverse(settings.LOGIN_REDIRECT_URL))
+        }, follow=True)
+        self.assertEquals(response.redirect_chain, [
+            (reverse(settings.LOGIN_REDIRECT_URL), 302),
+            (f'/{USER1.username}', 302)
+         ])
 
     def test_on_unsuccessful_login_doesnt_redirect_user(self):
         response = self.client.post(self.url, {
@@ -107,9 +112,11 @@ class SignupViewTest(TestCase):
 
     def test_redirects_authenticated_user(self):
         self.client.login(username=USER1.username, password=USER1.password)
-        self.assertRedirects(
-            self.client.get(self.url), reverse(settings.LOGIN_REDIRECT_URL)
-        )
+        response = self.client.get(self.url, follow=True)
+        self.assertEquals(response.redirect_chain, [
+            (reverse(settings.LOGIN_REDIRECT_URL), 302),
+            (f'/{USER1.username}', 302)
+         ])
 
     def test_on_successful_registration_redirects_user(self):
         response = self.client.post(self.url, {

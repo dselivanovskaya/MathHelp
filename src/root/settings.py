@@ -3,7 +3,6 @@ import sys
 
 from django.contrib.messages import constants as message_constants
 
-
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 APPS_DIR = os.path.join(BASE_DIR, 'apps')
@@ -157,16 +156,13 @@ MEDIA_URL = '/media/'
 # The model to use to represent a User.
 AUTH_USER_MODEL = 'auth.User'
 
-# The URL or named URL pattern where requests are redirected for login
-# when using the login_required() decorator,
+# The URL or named URL pattern where requests are redirected for login.
 LOGIN_URL = 'signin'
 
-# The URL or named URL pattern where requests are redirected after login
-# when the LoginView doesn’t get a next GET parameter.
-LOGIN_REDIRECT_URL = 'profile'
+# The URL or named URL pattern where requests are redirected after login.
+LOGIN_REDIRECT_URL = 'profile-redirect'
 
-# The URL or named URL pattern where requests are redirected after logout
-# if LogoutView doesn’t have a next_page attribute.
+# The URL or named URL pattern where requests are redirected after logout.
 LOGOUT_REDIRECT_URL = '/'
 
 # Messages.

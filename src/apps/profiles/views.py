@@ -20,6 +20,16 @@ class ProfileView(TemplateView):
 
 
 @method_decorator(login_required(redirect_field_name=None), name='dispatch')
+class ProfileRedirectView(View):
+    ''' Redirects user to his profile. '''
+
+    url_name = 'profile-redirect'
+
+    def get(self, request):
+        return redirect(ProfileView.url_name, request.user.username)
+
+
+@method_decorator(login_required(redirect_field_name=None), name='dispatch')
 class ProfileUpdateView(View):
 
     url_name = 'profile-update'
@@ -40,7 +50,8 @@ class ProfileUpdateView(View):
     def post(self, request, **kwargs):
         form = self.form_class(
             request.user,
-            request.POST, instance=Profile.objects.get(user=request.user)
+            request.POST,
+            instance=Profile.objects.get(user=request.user)
         )
         if form.is_valid():
             form.save()
