@@ -1,9 +1,9 @@
 from django.urls import path
 
-from .views import ProfileView, EditProfileView, DeleteProfileView
+from .views import ProfileView, ProfileUpdateView, ProfileDeleteView
 
 urlpatterns = [
-    path('',        ProfileView.as_view(),       name='profile'),
-    path('/edit',   EditProfileView.as_view(),   name='edit-profile'),
-    path('/delete', DeleteProfileView.as_view(), name='delete-profile'),
+    path('<slug:username>', ProfileView.as_view(), name=ProfileView.url_name),
+    path('<slug:username>/edit', ProfileUpdateView.as_view(), name=ProfileUpdateView.url_name),
+    path('<slug:username>/delete', ProfileDeleteView.as_view(), name=ProfileDeleteView.url_name),
 ]

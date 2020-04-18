@@ -1,50 +1,60 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.shortcuts import redirect, render, reverse
+from django.contrib import messages
+from django.conf import settings
+from django.shortcuts import redirect, render
 from django.utils.decorators import method_decorator
+from django.views.generic.base import TemplateView
 from django.views import View
 
-from .forms import EditProfileForm
+from .apps import ProfilesConfig
+from .forms import ProfileUpdateForm
 from .models import Profile
 
 
 @method_decorator(login_required(redirect_field_name=None), name='dispatch')
-class ProfileView(View):
+class ProfileView(TemplateView):
 
-    template_name = 'profiles/profile.html'
-
-    def get(self, request):
-        return render(request, self.template_name, {})
+    url_name = 'profile'
+    template_name = f'{ProfilesConfig.name}/profile.html'
 
 
 @method_decorator(login_required(redirect_field_name=None), name='dispatch')
-class EditProfileView(View):
+class ProfileUpdateView(View):
 
-    form_class = EditProfileForm
-    template_name = 'profiles/edit-profile.html'
+    url_name = 'profile-update'
+    form_class = ProfileUpdateForm
+    template_name = f'{ProfilesConfig.name}/profile-update.html'
 
-    def get(self, request):
-        form = self.form_class(initial={
+    def get(self, request, **kwargs):
+        form = self.form_class(request.user, initial={
             'first_name': request.user.first_name,
-            'last_name' : request.user.last_name,
-            'gender'    : request.user.profile.gender,
-            'age'       : request.user.profile.age,
+            'last_name':  request.user.last_name,
+            'email':      request.user.email,
+            'username':   request.user.username,
+            'gender':     request.user.profile.gender,
+            'age':        request.user.profile.age,
         })
         return render(request, self.template_name, {'form': form})
 
-    def post(self, request):
-        form = self.form_class(request.POST,
-            instance=Profile.objects.get(user=request.user)
+    def post(self, request, **kwargs):
+        form = self.form_class(
+            request.user,
+            request.POST, instance=Profile.objects.get(user=request.user)
         )
         if form.is_valid():
             form.save()
-            return redirect(reverse('profile'))
+            messages.success(request, 'Your profile has been updated.')
+            return redirect(self.url_name, request.user.username)
         return render(request, self.template_name, {'form': form})
 
 
 @method_decorator(login_required(redirect_field_name=None), name='dispatch')
-class DeleteProfileView(View):
+class ProfileDeleteView(View):
 
-    def get(self, request):
+    url_name = 'profile-delete'
+
+    def get(self, request, **kwargs):
         User.objects.get(username=request.user.username).delete()
-        return redirect('/')
+        messages.success(request, 'Your profile has been deleted.')
+        return redirect(settings.LOGIN_URL)

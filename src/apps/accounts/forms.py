@@ -16,10 +16,10 @@ class SigninForm(auth.forms.AuthenticationForm):
 
 class SignupForm(auth.forms.UserCreationForm):
 
-    full_name = forms.CharField(max_length=255, widget=forms.TextInput(
+    full_name = forms.CharField(max_length=128, widget=forms.TextInput(
         attrs={'placeholder': 'Harry Potter'},
     ))
-    email = forms.EmailField(max_length=255, widget=forms.EmailInput(
+    email = forms.EmailField(max_length=128, widget=forms.EmailInput(
         attrs={'placeholder': 'harry_potter@hogwarts.com'},
     ))
     username = forms.CharField(max_length=128, widget=forms.TextInput(
