@@ -2,7 +2,11 @@ from django.db import models
 
 from tickets.models import Ticket
 
+
 class Quiz(models.Model):
+
+    MIN_REQUIRED_RESULT = 70
+
     ticket = models.OneToOneField(Ticket, on_delete=models.CASCADE)
     questions_count = models.PositiveIntegerField()
 

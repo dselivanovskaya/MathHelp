@@ -11,3 +11,11 @@
     list-style-type: none;  /* remove bullet points */
     margin-left: .3em;
 }
+
+.success {
+    background-color: #98fb98;
+}
+
+.error {
+    background-color: #ff7f50;
+}

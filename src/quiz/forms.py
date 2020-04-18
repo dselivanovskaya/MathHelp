@@ -18,5 +18,5 @@ class QuizForm(forms.Form):
         for question, answer_id in cleaned_data.items():
             if Answer.objects.get(id=answer_id).correct:
                 correct += 1
-        cleaned_data['result'] = (correct / len(self.fields))*100
+        cleaned_data['result'] = int((correct / len(self.fields)) * 100)
         return cleaned_data

@@ -6,6 +6,7 @@ from django.views import View
 from tickets.models import Ticket
 
 from .forms import QuizForm
+from .models import Quiz
 
 
 class TicketQuizView(View):
@@ -23,6 +24,9 @@ class TicketQuizView(View):
         form = self.form_class(ticket.quiz.question_set.all(), request.POST)
         if form.is_valid():
             result = form.cleaned_data['result']
-            messages.info(request, f'Ваш результат: {result}')
+            if result < Quiz.MIN_REQUIRED_RESULT:
+                messages.error(request, f'Ваш результат: {result}')
+            else:
+                messages.success(request, f'Ваш результат: {result}')
             return redirect(reverse('ticket-quiz', args=[id]))
         return render(request, self.template_name, {'form': form, 'ticket': ticket})

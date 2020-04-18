@@ -23,7 +23,7 @@ class TicketDetailView(View):
     def get(self, request, id):
         ticket = get_object_or_404(Ticket, id=id)
         form = self.form_class(ticket, request.user)
-        comments =  Comment.objects.all()
+        comments =  Comment.objects.filter(ticket__id=id)
         return render(request, self.template_name, {'ticket': ticket, 'form': form, 'comments': comments})
 
 

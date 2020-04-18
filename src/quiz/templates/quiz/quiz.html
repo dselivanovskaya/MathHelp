@@ -16,11 +16,11 @@
     
 <div class="container">
 
-<div class="result">
+
 {% for message in messages %}
-    {{ message }}
+    <div class="{{ message.tags }}">{{ message }}</div>
 {% endfor %}
-</div>
+
 
 <table>
   <tr>
@@ -35,5 +35,6 @@
 </form>
 
 </div>
+
 
 {% endblock %}

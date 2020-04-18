@@ -13,7 +13,7 @@ class Profile(models.Model):
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default=MALE)
     age = models.PositiveSmallIntegerField(default=0)
 
-    image = models.ImageField(upload_to='photos', default='photos/default-avatar.jpg')
+    image = models.ImageField(upload_to='profiles/photos', default='profiles/photos/default-avatar.jpg')
     login_count = models.IntegerField(default=0)
 
     def __str__(self):

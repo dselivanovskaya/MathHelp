@@ -1,6 +1,7 @@
 import os
 
 from django.db import models
+from django.conf import settings
 
 
 class Ticket(models.Model):
@@ -13,4 +14,7 @@ class Ticket(models.Model):
         return self.name
 
     def get_absolute_path(self):
-        return os.path.abspath(os.path.join('tickets/media', self.filename))
+        return os.path.join(settings.MEDIA_ROOT, 'tickets', self.filename)
+
+    def get_absolute_url(self):
+        return os.path.join(settings.MEDIA_URL, 'tickets', self.filename)

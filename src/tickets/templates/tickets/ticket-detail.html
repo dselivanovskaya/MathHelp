@@ -3,11 +3,16 @@
 
 {% block title %} {{ ticket.name }} {% endblock %}
 
+{% block css %}
+  <link rel="stylesheet" href="{% static 'tickets/css/style.css' %}">
+{% endblock %}
+
+
 {% block content %}
 <div class="container">
   <div class="actions">
     <h2>Действия:</h2>
-    <a href="#" class="btn btn-blue">Скачать</a>
+    <a href="{{ ticket.get_absolute_url }}" download class="btn btn-blue">Скачать</a>
     <a href="{% url 'ticket-read-pdf' id=ticket.id %}" class="ticket btn btn-blue">Читать онлайн</a>
     <a href="{% url 'ticket-quiz' id=ticket.id %}" class="btn btn-blue">Пройти тест</a><br>
   </div>
