@@ -21,6 +21,12 @@
       {% include 'includes/not-auth-header.html' %}
     {% endif %}
 
+    {% if messages %}
+      {% for message in messages %}
+        {{ message }}
+      {% endfor %}
+    {% endif %}
+
     {% block content %} {% endblock %}
 
     {% include 'includes/footer.html' %}
