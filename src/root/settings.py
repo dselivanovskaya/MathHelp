@@ -1,17 +1,38 @@
 import os
+import sys
+
+from django.contrib.messages import constants as message_constants
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'nmhzmtcg4124w@8b24+f=q+k$_j)onr2o(c&-t$$lqe!=xm^=9'
+APPS_DIR = os.path.join(BASE_DIR, 'apps')
+sys.path.insert(0, APPS_DIR)
+
+# Debugging.
+# ------------------------------------------------------------------------------
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# Security.
+# ------------------------------------------------------------------------------
+
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = 'nmhzmtcg4124w@8b24+f=q+k$_j)onr2o(c&-t$$lqe!=xm^=9'
+
 ALLOWED_HOSTS = ['127.0.0.1']
 
+# Urls.
+# ------------------------------------------------------------------------------
+
+ROOT_URLCONF = 'root.urls'
+
+APPEND_SLASH = True
+
+# Application settings.
+# ------------------------------------------------------------------------------
+
 INSTALLED_APPS = [
-    # Default
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -19,18 +40,18 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    # Third Party
-    'rest_framework',
-
-    # Own
-    'api',
-    'authentication',
-    'profiles',
-    'registration',
+    'accounts.apps.AccountsConfig',
+    'profiles.apps.ProfilesConfig',
     'tickets',
     'quiz',
-    'forum'
+    'forum',
 ]
+
+# HTTP.
+# ------------------------------------------------------------------------------
+
+# Django’s built-in servers (e.g. runserver) will use this.
+WSGI_APPLICATION = 'root.wsgi.application'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -42,13 +63,16 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'root.urls'
+# Template engine settings.
+# ------------------------------------------------------------------------------
 
-# Templates
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        # Look for templates in these directories.
+        'DIRS': [os.path.join(BASE_DIR, 'templates'),
+                 os.path.join(APPS_DIR, 'templates')],
+        # Look for templates inside installed applications.
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -56,14 +80,17 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                'accounts.context_processors.url_names',
+                'profiles.context_processors.url_names',
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'root.wsgi.application'
+# Database settings.
+# ------------------------------------------------------------------------------
 
-# Database
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -71,52 +98,95 @@ DATABASES = {
     }
 }
 
-# Password validation
+# Password validation.
+# ------------------------------------------------------------------------------
+
 AUTH_PASSWORD_VALIDATORS = [
-    # {
-    #     # Check similarity between the password and a set of attributes of user.
-    #     'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    # },
     {
-        # Checks whether a password meets a minimum length.
+        # Check if password meets a minimum length.
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
-    # {
-    #     # Checks whether the password occurs in a list of common passwords.
-    #     'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    # },
     {
-        # Checks whether the password isn't entirely numeric.
+        # Check if password occurs in a list of common passwords.
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
+    {
+        # Check if password isn't entirely numeric.
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
     {
-        'NAME': 'registration.validators.CustomPasswordValidator',
+        # Check if password has at least one digit and one special character.
+        'NAME': 'accounts.validators.CustomPasswordValidator',
     }
 ]
 
-# Internationalization
+# Internationalization.
+# ------------------------------------------------------------------------------
 LANGUAGE_CODE = 'en-us'
+
+# Server timezone.
 TIME_ZONE = 'Europe/Moscow'
+
 USE_I18N = True
+
+# Display numbers and dates using the format of the current locale.
 USE_L10N = True
+
+# Datetimes are timezone-aware.
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
+# Static files.
+# ------------------------------------------------------------------------------
+
+# URL to use when referring to static files.
 STATIC_URL = '/static/'
+
+# Additional locations of static files directories.
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
-LOGIN_URL = '/sign-in'
-LOGOUT_UTL = '/sign-out'
+# Media files.
+# ------------------------------------------------------------------------------
 
+# Absolute path to the directory that will hold USER-UPLOADED files.
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# URL that handles the media served from MEDIA_ROOT.
 MEDIA_URL = '/media/'
 
-# Sessions
-SESSION_SAVE_EVERY_REQUEST = True
+# Authentication.
+# ------------------------------------------------------------------------------
 
-REST_FRAMEWORK = {
-    'DEFAULT_RENDERER_CLASSES': [
-        'rest_framework.renderers.JSONRenderer',
-        'rest_framework.renderers.BrowsableAPIRenderer',
-    ]
+# The model to use to represent a User.
+AUTH_USER_MODEL = 'auth.User'
+
+# The named URL pattern where requests are redirected for registration.
+REGISTER_URL = 'signup'
+
+# The named URL pattern where requests are redirected for login.
+LOGIN_URL = 'signin'
+
+# The named URL pattern where requests are redirected for logout.
+LOGOUT_URL = 'signout'
+
+# The named URL pattern where requests are redirected after login.
+LOGIN_REDIRECT_URL = 'profile-redirect'
+
+# The URL or named URL pattern where requests are redirected after logout.
+LOGOUT_REDIRECT_URL = 'index'
+
+# Messages.
+# ------------------------------------------------------------------------------
+
+MESSAGE_TAGS = {
+    message_constants.DEBUG: 'debug',
+    message_constants.INFO: 'info',
+    message_constants.SUCCESS: 'success',
+    message_constants.WARNING: 'warning',
+    message_constants.ERROR: 'error',
 }
+
+# Session.
+# ------------------------------------------------------------------------------
+
+SESSION_SAVE_EVERY_REQUEST = False
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False

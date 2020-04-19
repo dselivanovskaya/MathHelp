@@ -8,13 +8,13 @@
     <nav class="head-nav">
       <ul class="head-ul">
         <li>
-          <a href="{% url 'home' %}">Главная</a>
+          <a href="{% url 'index' %}">Главная</a>
         </li>
         <li>
-          <a href="{% url 'profile' %}">{{ user.username }}</a>
+          <a href="{% url PROFILE_URL request.user.username %}">{{ user.username }}</a>
         </li>
         <li>
-          <a href="{% url 'sign-out' %}">Выход</a>
+          <a href="{% url LOGOUT_URL %}">Выход</a>
         </li>
       </ul>
     </nav>

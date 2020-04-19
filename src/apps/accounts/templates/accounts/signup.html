@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %} Регистрация {% endblock %}
+
+{% block content %}
+  <section class="get-info">
+    <div class="container">
+      <h2 class="get-info-form title">Регистрация</h2>
+      <form class="get-info-form" action="{% url REGISTER_URL %}" method="POST">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button type="submit" class="get-info-form btn btn-blue">
+          Зарегистрироваться
+        </button>
+
+        <p class="get-info-instruction">
+          У вас уже есть аккаунт?
+          <a href="{% url LOGIN_URL %}"><strong>Войти</strong></a>
+        </p>
+
+      </form>
+    </div>
+  </section>
+{% endblock %}
+

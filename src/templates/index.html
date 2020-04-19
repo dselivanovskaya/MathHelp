@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block icon %}
+    <link rel="shortcut icon" href="static/img/logo-icon.png" type="image/x-icon">
+{% endblock %}
+
+{% block title %} Home {% endblock %}
+
+{% block content %}
+  <header class="main-header">
+    <div class="container">
+        <div class="header-top"></div> <!-- Don't remove -->
+        <div class="promo">
+          <div class="promo-title">Математика - это интересно!</div>
+          <p>Ты можешь больше, чем ты думаешь</p>
+          {% if not user.is_authenticated %}
+            <a href="{% url REGISTER_URL %}" class='btn btn-blue'>Зарегистрироваться</a>
+          {% endif %}
+        </div>
+    </div>
+  </header>
+
+  <section class="choice">
+    <div class="container">
+
+      <div class="choice-item">
+        <div class="choice-icon choice-icon-theory"></div>
+        <h2 class="choice-title"><a href="{% url 'ticket-list' %}">Билеты</a></h2>
+        <p>Дадут тебе необходимые знания</p>
+      </div>
+
+      <div class="choice-item">
+        <div class="choice-icon choice-icon-matherials"></div>
+        <h2 class="choice-title"><a href="{% url 'additions' %}">Полезные материалы</a></h2>
+        <p>Учебники и задачники для самостоятельного изучения</p>
+      </div>
+
+    </div>
+  </section>
+{% endblock %}

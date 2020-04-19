@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+  {{ request.user.first_name }} {{ request.user.last_name }}
+{% endblock %}
+
+{% block css %}
+  <link rel="stylesheet" href="{% static 'profiles/css/profiles.css' %}">
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+
+    <table class="profile-info">
+      <tr>
+        <td class="user-info">
+          <img src="{{ request.user.profile.image.url }}" width="170px" height="200px">
+          <b>{{ request.user.first_name }} {{ request.user.last_name }}<br>
+          {{ request.user.profile.age }} лет</b>
+        </td>
+        <td class="user-stat">
+          <h2 id="greeting">{{ user.username }}</h2>
+          {% if request.session.watched_tickets %}
+            {% if request.user.profile.is_male %}
+              <b>Сегодня ты посмотрел:</b>
+            {% elif request.user.profile.is_female %}
+              <b>Сегодня ты посмотрела:</b>
+            {% else %}
+              <b>Сегодня вы посмотрели:</b>
+            {% endif %}
+            <ul>
+            {% for ticket in request.session.watched_tickets %}
+                <li>{{ ticket }}</li>
+            {% endfor %}
+            </ul>
+          {% else %}
+            {% if request.user.profile.is_male %}
+                <b>Сегодня ты еще не занимался :( Давай исправим это!</b>
+            {% elif request.user.profile.is_female %}
+                <b>Сегодня ты еще не занималась :( Давай исправим это!</b>
+            {% else %}
+                <b>Сегодня вы еще не занимались :( Давай исправим это!</b>
+            {% endif %}
+          {% endif %}
+        </td>
+      </tr>
+    </table>
+
+    <table class="profile-table">
+      <tr>
+        <td class="profile-gray"><h3>Обучение:</h3></td>
+        <td class="profile-blue"><h3>Настройки:</h3></td>
+      </tr>
+      <tr>
+        <td class="profile-gray">
+          <a href="{% url 'ticket-list' %}" class="btn btn-blue">Учить билеты</a>
+          <p>Повтори изученные темы для их закрепления</p>
+        </td>
+        <td class="profile-blue">
+          <a href="{% url PROFILE_DELETE_URL request.user.username %}" class="btn btn-blue"
+          onclick="return confirm('Вы уверены, что хотите удалить свой профиль?')">Удалить профиль</a>
+          <p>Отменить это действие будет невозможно</p>
+        </td>
+      </tr>
+      <tr>
+        <td class="profile-gray">
+        </td>
+        <td class="profile-blue">
+          <a href="{% url PROFILE_UPDATE_URL request.user.username %}" class="btn btn-blue" >Редактировать профиль</a>
+          <p>Здесь вы можете изменить данные своего аккаунта</p>
+        </td>
+      </tr>
+    </table>
+  </div>
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'profiles/js/profiles.js' %}"></script>
+{% endblock %}
