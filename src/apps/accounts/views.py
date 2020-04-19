@@ -33,6 +33,9 @@ class SignupView(View):
 
     template_name = f'{AccountsConfig.name}/signup.html'
     form_class = SignupForm
+    messages = {
+        'success': 'Пользователь был успешно создан.'
+    }
 
     def get(self, request):
         form = self.form_class()
@@ -41,14 +44,19 @@ class SignupView(View):
     def post(self, request):
         form = self.form_class(data=request.POST)
         if form.is_valid():
-            user = form.save()
-            messages.success(request, f'User {user.username} has been created.')
+            form.save()
+            messages.success(request, self.messages['success'])
             return redirect(settings.LOGIN_URL)
         return render(request, self.template_name, {'form': form})
 
 
 class SignoutView(View):
 
+    messages = {
+        'success': 'Вы вышли из системы.'
+    }
+
     def get(self, request):
         logout(request)
+        messages.success(request, self.messages['success'])
         return redirect(settings.LOGOUT_REDIRECT_URL)

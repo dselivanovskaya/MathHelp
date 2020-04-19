@@ -16,8 +16,11 @@ class SigninForm(auth.forms.AuthenticationForm):
 
 class SignupForm(auth.forms.UserCreationForm):
 
-    full_name = forms.CharField(max_length=128, widget=forms.TextInput(
-        attrs={'placeholder': 'Harry Potter'},
+    first_name = forms.CharField(max_length=128, widget=forms.TextInput(
+        attrs={'placeholder': 'Harry'},
+    ))
+    last_name = forms.CharField(max_length=128, widget=forms.TextInput(
+        attrs={'placeholder': 'Potter'},
     ))
     email = forms.EmailField(max_length=128, widget=forms.EmailInput(
         attrs={'placeholder': 'harry_potter@hogwarts.com'},
@@ -28,28 +31,17 @@ class SignupForm(auth.forms.UserCreationForm):
 
     field_order = ('full_name', 'email')
 
-    error_messages = {
-        'invalid_full_name': 'Invalid full name.',
-        'password_mismatch': 'The two password fields didn’t match.',
-    }
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.use_required_attribute = False
         self.fields['username'].widget.attrs.pop("autofocus", None)
 
-    def clean_full_name(self):
-        full_name = self.cleaned_data.get('full_name')
-        if len(full_name.split()) != 2:
-            raise forms.ValidationError(
-                self.error_messages['invalid_full_name']
-            )
-        return full_name
-
     def save(self):
         user = super().save()
-        first_name, last_name = self.cleaned_data.get('full_name').split()
-        user.first_name, user.last_name = first_name, last_name
+
+        user.first_name = self.cleaned_data.get('first_name')
+        user.last_name = self.cleaned_data.get('last_name')
         user.email = self.cleaned_data.get('email')
+
         user.save()
         return user
