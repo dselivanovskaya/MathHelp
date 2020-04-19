@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'tickets',
     'quiz',
     'forum',
+
+    'tests',
 ]
 
 # HTTP.

@@ -1,12 +1,11 @@
 from django.conf import settings
-from django.contrib.auth.models import User
 from django.test import TestCase
 from django.urls import reverse
 
+from tests.data import USER1, USER2
+
 from profiles.views import ProfileView
 from accounts.views import SigninView, SignupView, SignoutView
-
-from .test_data import USER1, USER2
 
 
 class SigninViewTest(TestCase):
@@ -14,7 +13,8 @@ class SigninViewTest(TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.url = reverse(settings.LOGIN_URL)
-        cls.form_class = SigninView.form_class
+        cls.view_class = SigninView
+        cls.form_class = cls.view_class.form_class
         cls.template_name = SigninView.template_name
         cls.user = USER1.create_in_db()
 

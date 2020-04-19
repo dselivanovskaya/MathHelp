@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.test import TestCase
 
-from .test_data import USER1
+from tests.data import USER1
 
 
 class AccountsSignalsTest(TestCase):

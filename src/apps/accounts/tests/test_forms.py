@@ -2,10 +2,10 @@ from django.conf import settings
 from django.shortcuts import reverse
 from django.test import TestCase
 
+from tests.data import USER1
+
 from accounts.forms import SigninForm, SignupForm
 from accounts.validators import CustomPasswordValidator
-
-from .test_data import USER1
 
 
 class SigninFormTest(TestCase):

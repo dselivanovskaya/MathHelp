@@ -8,10 +8,13 @@ class Profile(models.Model):
     GENDER_CHOICES = ((MALE, 'Male'), (FEMALE, 'Female'))
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default=MALE)
-    age = models.PositiveSmallIntegerField(default=0)
-
-    image = models.ImageField(upload_to='profiles/photos', default='profiles/photos/default-avatar.jpg')
+    gender = models.CharField(
+        max_length=1, choices=GENDER_CHOICES, default=MALE, blank=True
+    )
+    age = models.PositiveSmallIntegerField(default=0, blank=True)
+    photo = models.ImageField(
+        upload_to='profiles/photos', default='profiles/photos/default-avatar.jpg'
+    )
     login_count = models.IntegerField(default=0)
 
     def __str__(self):

@@ -15,7 +15,8 @@ class TestUser:
 
     def create_in_db(self):
         return get_user_model().objects.create_user(
-            username=self.username, email=self.email, password=self.password
+            username=self.username, email=self.email, password=self.password,
+            first_name=self.first_name, last_name=self.last_name,
         )
 
 

@@ -8,10 +8,9 @@ from .models import Profile
 class ProfileUpdateForm(ModelForm):
 
     first_name = forms.CharField(max_length=64, min_length=1, required=False)
-    last_name = forms.CharField(max_length=64, min_length=1, required=False)
-
-    email = forms.EmailField(max_length=128, required=False)
-    username = forms.CharField(max_length=128, min_length=1, required=False)
+    last_name  = forms.CharField(max_length=64, min_length=1, required=False)
+    email      = forms.EmailField(max_length=128, required=False)
+    username   = forms.CharField(max_length=128, min_length=1, required=False)
 
     field_order = ('first_name', 'last_name', 'email', 'username')
 

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Удалить Профиль {% endblock %}
+
+{% block content %}
+  <section class="get-info">
+    <div class="container">
+        <p>Вы уверены, что хотите удалить свой профиль?</p>
+       <form action="{% url PROFILE_DELETE_URL request.user.username %}" method="POST">
+         {% csrf_token %}
+         <button type="submit" class="btn btn-blue">Удалить</button>
+       </form>
+       <a class="btn btn-blue" href="{% url PROFILE_URL request.user.username %}">Отмена</a>
+      </form>
+    </div>
+  </section>
+{% endblock %}

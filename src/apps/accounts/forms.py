@@ -29,7 +29,7 @@ class SignupForm(auth.forms.UserCreationForm):
         attrs={'placeholder': 'harry_potter'},
     ))
 
-    field_order = ('full_name', 'email')
+    field_order = ('first_name', 'last_name', 'email')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

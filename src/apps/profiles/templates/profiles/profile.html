@@ -55,12 +55,10 @@
       <tr>
         <td class="profile-gray">
           <a href="{% url 'ticket-list' %}" class="btn btn-blue">Учить билеты</a>
-          <p>Повтори изученные темы для их закрепления</p>
         </td>
         <td class="profile-blue">
           <a href="{% url PROFILE_DELETE_URL request.user.username %}" class="btn btn-blue"
-          onclick="return confirm('Вы уверены, что хотите удалить свой профиль?')">Удалить профиль</a>
-          <p>Отменить это действие будет невозможно</p>
+          >Удалить профиль</a>
         </td>
       </tr>
       <tr>
@@ -68,7 +66,6 @@
         </td>
         <td class="profile-blue">
           <a href="{% url PROFILE_UPDATE_URL request.user.username %}" class="btn btn-blue" >Редактировать профиль</a>
-          <p>Здесь вы можете изменить данные своего аккаунта</p>
         </td>
       </tr>
     </table>
