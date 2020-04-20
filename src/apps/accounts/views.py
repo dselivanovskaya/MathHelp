@@ -31,6 +31,7 @@ class AccountLoginView(View):
         return render(request, self.template_name, {'form': form})
 
 
+@method_decorator(login_required(redirect_field_name=None), name='dispatch')
 class AccountLogoutView(View):
 
     messages = {
@@ -66,6 +67,7 @@ class AccountCreateView(View):
         return render(request, self.template_name, {'form': form})
 
 
+@method_decorator(login_required(redirect_field_name=None), name='dispatch')
 class AccountSettingsView(TemplateView):
     template_name = f'{accounts_config.name}/account-settings.html'
 
@@ -84,5 +86,5 @@ class AccountDeleteView(View):
 
     def post(self, request):
         get_user_model().objects.get(id=request.user.id).delete()
-        messages.success(request, self.messages['succcess'])
+        messages.success(request, self.messages['success'])
         return redirect(settings.INDEX_URL)

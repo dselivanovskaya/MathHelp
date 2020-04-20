@@ -6,7 +6,11 @@ from tests.data import USER1, USER2
 from profiles.views import ProfileDetailView
 
 from accounts.apps import AccountsConfig as accounts_config
-from accounts.views import AccountLoginView, AccountCreateView, AccountLogoutView
+from accounts.views import (
+    AccountLoginView, AccountLogoutView,
+    AccountSettingsView,
+    AccountCreateView, AccountDeleteView
+)
 
 
 class AccountLoginViewTest(TestCase):
@@ -19,14 +23,14 @@ class AccountLoginViewTest(TestCase):
         cls.template_name = cls.view_class.template_name
         cls.user = USER1.create_in_db()
 
-    def test_view_url_exists(self):
+    def test_url_exists(self):
         self.assertEqual(self.client.get(self.url).status_code, 200)
 
-    def test_view_renders_correct_form(self):
+    def test_renders_correct_form(self):
         response = self.client.get(self.url)
         self.assertIsInstance(response.context['form'], self.form_class)
 
-    def test_view_renders_correct_template(self):
+    def test_renders_correct_template(self):
         self.assertTemplateUsed(self.client.get(self.url), self.template_name)
 
     def test_redirects_authenticated_user_to_his_profile(self):
@@ -82,6 +86,61 @@ class AccountLoginViewTest(TestCase):
         self.assertEquals(self.client.session['watched_tickets'], [])
 
 
+class AccountLogoutViewTest(TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.url = reverse(accounts_config.ACCOUNT_LOGOUT_URL)
+        cls.view_class = AccountLogoutView
+        cls.user = USER1.create_in_db()
+
+    def test_view_url_exists(self):
+        self.client.login(username=USER1.username, password=USER1.password)
+        self.assertEqual(
+            self.client.get(self.url, follow=True).status_code, 200
+        )
+
+    def test_redirects_anonymous_user_to_login_page(self):
+        self.assertRedirects(
+            self.client.get(self.url), reverse(settings.LOGIN_URL)
+        )
+
+    def test_redirects_to_index_page(self):
+        self.client.login(username=USER1.username, password=USER1.password)
+        self.assertRedirects(
+            self.client.get(self.url), reverse(settings.INDEX_URL)
+        )
+
+    def test_sends_correct_message(self):
+        self.client.login(username=USER1.username, password=USER1.password)
+        response = self.client.get(self.url, follow=True)
+        messages = list(response.context['messages'])
+        self.assertEquals(str(messages[0]), self.view_class.messages['success'])
+
+
+def AccountSettingsViewTest(TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.url = reverse(accounts_config.ACCOUNT_SETTINGS_URL)
+        cls.view_class = AccountSettingsView
+        cls.template_name = cls.view_class.template_name
+        USER1.create_in_db()
+
+    def test_url_exists_for_authenticated_user(self):
+        self.client.login(username=USER1.username, password=USER1.password)
+        self.assertEqual(self.client.get(self.url).status_code, 200)
+
+    def test_renders_correct_template_for_authenticated_user(self):
+        self.client.login(username=USER1.username, password=USER1.password)
+        self.assertTemplateUsed(self.client.get(self.url), self.template_name)
+
+    def test_redirects_anonymous_user_to_login_page(self):
+        self.assertRedirects(
+            self.client.get(self.url), reverse(settings.LOGIN_URL)
+        )
+
+
 class AccountCreateViewTest(TestCase):
 
     @classmethod
@@ -92,14 +151,14 @@ class AccountCreateViewTest(TestCase):
         cls.template_name = cls.view_class.template_name
         cls.user = USER1.create_in_db()
 
-    def test_view_url_exists(self):
+    def test_url_exists(self):
         self.assertEqual(self.client.get(self.url).status_code, 200)
 
-    def test_view_renders_correct_form(self):
+    def test_renders_correct_form(self):
         response = self.client.get(self.url)
         self.assertIsInstance(response.context['form'], self.form_class)
 
-    def test_view_renders_correct_template(self):
+    def test_renders_correct_template(self):
         self.assertTemplateUsed(self.client.get(self.url), self.template_name)
 
     def test_redirects_authenticated_user_to_his_profile(self):
@@ -167,48 +226,35 @@ class AccountCreateViewTest(TestCase):
         self.assertTemplateUsed(response, self.template_name)
 
 
-class AccountLogoutViewTest(TestCase):
+class AccountDeleteViewTest(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        cls.url = reverse(accounts_config.ACCOUNT_LOGOUT_URL)
-        cls.view_class = AccountLogoutView
+        cls.url = reverse(accounts_config.ACCOUNT_DELETE_URL)
+        cls.view_class = AccountDeleteView
+        cls.template_name = cls.view_class.template_name
+        USER1.create_in_db()
 
-    def test_view_url_exists(self):
-        self.assertEqual(
-            self.client.get(self.url, follow=True).status_code, 200
-        )
+    def test_url_exists_for_authenticated_user(self):
+        self.client.login(username=USER1.username, password=USER1.password)
+        self.assertEqual(self.client.get(self.url).status_code, 200)
 
-    def test_redirects_to_index_page(self):
+    def test_renders_correct_template_for_authenticated_user(self):
+        self.client.login(username=USER1.username, password=USER1.password)
+        self.assertTemplateUsed(self.client.get(self.url), self.template_name)
+
+    def test_redirects_anonymous_user_to_login_page(self):
         self.assertRedirects(
-            self.client.get(self.url), reverse(settings.INDEX_URL)
+            self.client.get(self.url), reverse(settings.LOGIN_URL)
         )
 
-    def test_sends_correct_message(self):
-        response = self.client.get(self.url, follow=True)
+    def test_after_delete_redirect_to_index_page(self):
+        self.client.login(username=USER1.username, password=USER1.password)
+        response = self.client.post(self.url, {})
+        self.assertRedirects(response, reverse(settings.INDEX_URL))
+
+    def test_on_delete_sends_corrent_message(self):
+        self.client.login(username=USER1.username, password=USER1.password)
+        response = self.client.post(self.url, {}, follow=True)
         messages = list(response.context['messages'])
         self.assertEquals(str(messages[0]), self.view_class.messages['success'])
-
-# class ProfileDeleteViewTest(TestCase):
-
-#     @classmethod
-#     def setUpTestData(cls):
-#         cls.url = reverse(profiles_config.PROFILE_DELETE_URL, args=[USER1.username])
-#         cls.view_class = ProfileDeleteView
-#         USER1.create_in_db()
-
-#     def test_redirects_anonymous_user_to_login_page(self):
-#         self.assertRedirects(
-#             self.client.get(self.url), reverse(settings.LOGIN_URL)
-#         )
-
-#     def test_after_delete_redirect_to_index_page(self):
-#         self.client.login(username=USER1.username, password=USER1.password)
-#         response = self.client.post(self.url, {})
-#         self.assertRedirects(response, reverse(settings.LOGOUT_REDIRECT_URL))
-
-#     def test_on_delete_sends_corrent_message(self):
-#         self.client.login(username=USER1.username, password=USER1.password)
-#         response = self.client.post(self.url, {}, follow=True)
-#         messages = list(response.context['messages'])
-#         self.assertEquals(str(messages[0]), self.view_class.messages['success'])
