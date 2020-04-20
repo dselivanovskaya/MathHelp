@@ -3,7 +3,7 @@ from django.test import TestCase
 
 from tests.data import USER1, USER2
 
-from profiles.apps import ProfilesConfig as app_conf
+from profiles.apps import ProfilesConfig as profiles_config
 from profiles.forms import ProfileUpdateForm
 
 
@@ -17,7 +17,7 @@ class ProfileUpdateFormTest(TestCase):
 
     def test_form_displays_correct_error_message_if_username_is_taken(self):
         self.client.login(username=USER1.username, password=USER1.password)
-        url = reverse(app_conf.PROFILE_UPDATE_URL, args=[USER1.username])
+        url = reverse(profiles_config.PROFILE_UPDATE_URL, args=[USER1.username])
         response = self.client.post(url, {'username': USER2.username})
         self.assertFormError(
             response, 'form', 'username',

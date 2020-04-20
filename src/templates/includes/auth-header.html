@@ -11,10 +11,13 @@
           <a href="{% url INDEX_URL %}">Главная</a>
         </li>
         <li>
-          <a href="{% url PROFILE_URL user.username %}">{{ user.first_name }} {{ user.last_name }}</a>
+          <a href="{% url PROFILE_DETAIL_URL user.username %}">Мой профиль</a>
         </li>
         <li>
-          <a href="{% url LOGOUT_URL %}">Выход</a>
+          <a href="{% url ACCOUNT_SETTINGS_URL %}">Настройки</a>
+        </li>
+        <li>
+          <a href="{% url ACCOUNT_LOGOUT_URL %}">Выход</a>
         </li>
       </ul>
     </nav>

@@ -3,19 +3,20 @@ from django.test import TestCase
 from django.urls import reverse
 
 from tests.data import USER1, USER2
+from profiles.views import ProfileDetailView
 
-from profiles.views import ProfileView
-from accounts.views import SigninView, SignupView, SignoutView
+from accounts.apps import AccountsConfig as accounts_config
+from accounts.views import AccountLoginView, AccountCreateView, AccountLogoutView
 
 
-class SigninViewTest(TestCase):
+class AccountLoginViewTest(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        cls.url = reverse(settings.LOGIN_URL)
-        cls.view_class = SigninView
+        cls.url = reverse(accounts_config.ACCOUNT_LOGIN_URL)
+        cls.view_class = AccountLoginView
         cls.form_class = cls.view_class.form_class
-        cls.template_name = SigninView.template_name
+        cls.template_name = cls.view_class.template_name
         cls.user = USER1.create_in_db()
 
     def test_view_url_exists(self):
@@ -33,7 +34,7 @@ class SigninViewTest(TestCase):
         response = self.client.get(self.url, follow=True)
         self.assertEquals(response.redirect_chain, [
             (reverse(settings.LOGIN_REDIRECT_URL), 302),
-            (f'/{USER1.username}', 302)
+            (f'/profiles/{USER1.username}', 302)
          ])
 
     def test_on_successful_login_redirects_user_to_his_profile(self):
@@ -41,10 +42,7 @@ class SigninViewTest(TestCase):
             'username': USER1.username,
             'password': USER1.password,
         }, follow=True)
-        self.assertEquals(response.redirect_chain, [
-            (reverse(settings.LOGIN_REDIRECT_URL), 302),
-            (f'/{USER1.username}', 302)
-         ])
+        self.assertRedirects(response, f'/profiles/{USER1.username}')
 
     def test_on_unsuccessful_login_doesnt_redirect_user_to_his_profile(self):
         response = self.client.post(self.url, {
@@ -58,7 +56,7 @@ class SigninViewTest(TestCase):
             'username': USER1.username,
             'password': USER1.password,
         }, follow=True)
-        self.assertTemplateUsed(response, ProfileView.template_name)
+        self.assertTemplateUsed(response, ProfileDetailView.template_name)
 
     def test_on_unsuccessful_login_renders_correct_template(self):
         response = self.client.post(self.url, {
@@ -84,12 +82,12 @@ class SigninViewTest(TestCase):
         self.assertEquals(self.client.session['watched_tickets'], [])
 
 
-class SignupViewTest(TestCase):
+class AccountCreateViewTest(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        cls.url = reverse(settings.REGISTER_URL)
-        cls.view_class = SignupView
+        cls.url = reverse(accounts_config.ACCOUNT_CREATE_URL)
+        cls.view_class = AccountCreateView
         cls.form_class = cls.view_class.form_class
         cls.template_name = cls.view_class.template_name
         cls.user = USER1.create_in_db()
@@ -104,12 +102,12 @@ class SignupViewTest(TestCase):
     def test_view_renders_correct_template(self):
         self.assertTemplateUsed(self.client.get(self.url), self.template_name)
 
-    def test_redirects_authenticated_user_to_hit_profile(self):
+    def test_redirects_authenticated_user_to_his_profile(self):
         self.client.login(username=USER1.username, password=USER1.password)
         response = self.client.get(self.url, follow=True)
         self.assertEquals(response.redirect_chain, [
             (reverse(settings.LOGIN_REDIRECT_URL), 302),
-            (f'/{USER1.username}', 302)
+            (f'/profiles/{USER1.username}', 302)
          ])
 
     def test_on_successful_registration_redirects_user_to_login_page(self):
@@ -155,7 +153,7 @@ class SignupViewTest(TestCase):
             'password1':  USER2.password,
             'password2':  USER2.password,
         }, follow=True)
-        self.assertTemplateUsed(response, SigninView.template_name)
+        self.assertTemplateUsed(response, AccountLoginView.template_name)
 
     def test_on_unsuccessful_registration_renders_correct_template(self):
         response = self.client.post(self.url, {
@@ -169,12 +167,12 @@ class SignupViewTest(TestCase):
         self.assertTemplateUsed(response, self.template_name)
 
 
-class SignoutViewTest(TestCase):
+class AccountLogoutViewTest(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        cls.url = reverse(settings.LOGOUT_URL)
-        cls.view_class = SignoutView
+        cls.url = reverse(accounts_config.ACCOUNT_LOGOUT_URL)
+        cls.view_class = AccountLogoutView
 
     def test_view_url_exists(self):
         self.assertEqual(
@@ -183,10 +181,34 @@ class SignoutViewTest(TestCase):
 
     def test_redirects_to_index_page(self):
         self.assertRedirects(
-            self.client.get(self.url), reverse(settings.LOGOUT_REDIRECT_URL)
+            self.client.get(self.url), reverse(settings.INDEX_URL)
         )
 
     def test_sends_correct_message(self):
         response = self.client.get(self.url, follow=True)
         messages = list(response.context['messages'])
         self.assertEquals(str(messages[0]), self.view_class.messages['success'])
+
+# class ProfileDeleteViewTest(TestCase):
+
+#     @classmethod
+#     def setUpTestData(cls):
+#         cls.url = reverse(profiles_config.PROFILE_DELETE_URL, args=[USER1.username])
+#         cls.view_class = ProfileDeleteView
+#         USER1.create_in_db()
+
+#     def test_redirects_anonymous_user_to_login_page(self):
+#         self.assertRedirects(
+#             self.client.get(self.url), reverse(settings.LOGIN_URL)
+#         )
+
+#     def test_after_delete_redirect_to_index_page(self):
+#         self.client.login(username=USER1.username, password=USER1.password)
+#         response = self.client.post(self.url, {})
+#         self.assertRedirects(response, reverse(settings.LOGOUT_REDIRECT_URL))
+
+#     def test_on_delete_sends_corrent_message(self):
+#         self.client.login(username=USER1.username, password=USER1.password)
+#         response = self.client.post(self.url, {}, follow=True)
+#         messages = list(response.context['messages'])
+#         self.assertEquals(str(messages[0]), self.view_class.messages['success'])

@@ -1,29 +1,23 @@
-from django.conf import settings
 from django.urls import path
 
-from .apps import ProfilesConfig
-from .views import (ProfileDeleteView, ProfileRedirectView, ProfileUpdateView,
-                    ProfileView)
+from .apps import ProfilesConfig as profiles_config
+from .views import ProfileRedirectView, ProfileDetailView, ProfileUpdateView
+
 
 urlpatterns = [
     path(
-        'profiles/redirect',
+        'redirect',
         ProfileRedirectView.as_view(),
-        name=settings.LOGIN_REDIRECT_URL
+        name=profiles_config.PROFILE_REDIRECT_URL
     ),
     path(
         '<slug:username>',
-        ProfileView.as_view(),
-        name=ProfilesConfig.PROFILE_URL
+        ProfileDetailView.as_view(),
+        name=profiles_config.PROFILE_DETAIL_URL
     ),
     path(
-        '<slug:username>/edit',
+        '<slug:username>/update',
         ProfileUpdateView.as_view(),
-        name=ProfilesConfig.PROFILE_UPDATE_URL
+        name=profiles_config.PROFILE_UPDATE_URL
     ),
-    path(
-        '<slug:username>/delete',
-        ProfileDeleteView.as_view(),
-        name=ProfilesConfig.PROFILE_DELETE_URL
-    )
 ]

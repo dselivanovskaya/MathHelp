@@ -1,9 +1,8 @@
-from .apps import ProfilesConfig
+from .apps import ProfilesConfig as profiles_config
 
 
 def url_names(request):
     return {
-        'PROFILE_URL':        ProfilesConfig.PROFILE_URL,
-        'PROFILE_UPDATE_URL': ProfilesConfig.PROFILE_UPDATE_URL,
-        'PROFILE_DELETE_URL': ProfilesConfig.PROFILE_DELETE_URL,
+        'PROFILE_DETAIL_URL': profiles_config.PROFILE_DETAIL_URL,
+        'PROFILE_UPDATE_URL': profiles_config.PROFILE_UPDATE_URL,
     }

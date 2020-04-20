@@ -2,9 +2,7 @@
 
 {% load static %}
 
-{% block title %}
-  {{ user.first_name }} {{ user.last_name }}
-{% endblock %}
+{% block title %} {{ user.first_name }} {{ user.last_name }} {% endblock %}
 
 {% block css %}
   <link rel="stylesheet" href="{% static 'profiles/css/profiles.css' %}">
@@ -12,7 +10,6 @@
 
 {% block content %}
   <div class="container">
-
     <table class="profile-info">
       <tr>
         <td class="user-info">
@@ -51,22 +48,23 @@
     <table class="profile-table">
       <tr>
         <td class="profile-gray"><h3>Обучение:</h3></td>
-        <td class="profile-blue"><h3>Настройки:</h3></td>
       </tr>
       <tr>
         <td class="profile-gray">
-          <a href="{% url 'ticket-list' %}" class="btn btn-blue">Учить билеты</a>
+          <a href="{% url 'ticket-list' %}" class="btn btn-blue">
+            Учить билеты
+          </a>
         </td>
         <td class="profile-blue">
-          <a href="{% url PROFILE_DELETE_URL user.username %}" class="btn btn-blue"
-          >Удалить профиль</a>
         </td>
       </tr>
       <tr>
         <td class="profile-gray">
         </td>
         <td class="profile-blue">
-          <a href="{% url PROFILE_UPDATE_URL user.username %}" class="btn btn-blue" >Редактировать профиль</a>
+          <a href="{% url PROFILE_UPDATE_URL user.username %}" class="btn btn-blue" >
+            Редактировать профиль
+          </a>
         </td>
       </tr>
     </table>

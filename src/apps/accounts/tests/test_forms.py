@@ -4,16 +4,17 @@ from django.test import TestCase
 
 from tests.data import USER1
 
-from accounts.forms import SigninForm, SignupForm
+from accounts.apps import AccountsConfig as app_conf
+from accounts.forms import AccountLoginForm, AccountCreateForm
 from accounts.validators import CustomPasswordValidator
 
 
-class SigninFormTest(TestCase):
+class AccountLoginFormTest(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        cls.view_url = reverse(settings.LOGIN_URL)
-        cls.form_class = SigninForm
+        cls.view_url = reverse(app_conf.ACCOUNT_LOGIN_URL)
+        cls.form_class = AccountLoginForm
 
     def test_form_displays_correct_error_message_if_user_doesnt_exist(self):
         response = self.client.post(self.view_url, {
@@ -26,12 +27,12 @@ class SigninFormTest(TestCase):
         )
 
 
-class SignupFormTest(TestCase):
+class AccountCreateFormTest(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        cls.view_url = reverse(settings.REGISTER_URL)
-        cls.form_class = SignupForm
+        cls.view_url = reverse(app_conf.ACCOUNT_CREATE_URL)
+        cls.form_class = AccountCreateForm
         cls.validator_class = CustomPasswordValidator
 
     def test_form_is_invalid_if_password_doesnt_have_one_digit(self):

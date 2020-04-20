@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %} Удалить Аккаунт {% endblock %}
+
+{% block content %}
+  <section class="get-info">
+    <div class="container">
+        <p>Вы уверены, что хотите удалить свой аккаунт?</p>
+       <form action="{% url ACCOUNT_DELETE_URL %}" method="POST">
+         {% csrf_token %}
+         <button type="submit" class="btn btn-blue">Удалить</button>
+       </form>
+       <a class="btn btn-blue" href="{% url ACCOUNT_SETTINGS_URL %}">Отмена</a>
+      </form>
+    </div>
+  </section>
+{% endblock %}

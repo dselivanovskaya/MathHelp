@@ -3,19 +3,21 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 
+from pages.apps import PagesConfig as pages_conf
 from pages.views import IndexView, ReferenceView
 
+
 urlpatterns = [
-    path('', IndexView.as_view(), name='index'),
-    path('reference', ReferenceView.as_view(), name='reference'),
+    path('', IndexView.as_view(), name=pages_conf.INDEX_URL),
+    path('reference', ReferenceView.as_view(), name=pages_conf.REFERENCE_URL),
 
     path('admin/', admin.site.urls),
 
     path('tickets', include('tickets.urls')),
     path('forum/', include('forum.urls')),
 
-    path('', include('accounts.urls')),
-    path('', include('profiles.urls')),
+    path('accounts/', include('accounts.urls')),
+    path('profiles/', include('profiles.urls')),
 ]
 
 if settings.DEBUG:

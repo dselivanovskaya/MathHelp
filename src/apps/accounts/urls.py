@@ -1,10 +1,17 @@
-from django.conf import settings
 from django.urls import path
 
-from .views import SigninView, SignoutView, SignupView
+
+from .apps import AccountsConfig as app_conf
+from .views import (
+    AccountLoginView, AccountLogoutView,
+    AccountSettingsView,
+    AccountCreateView, AccountDeleteView
+)
 
 urlpatterns = [
-    path('signin',  SigninView.as_view(),  name=settings.LOGIN_URL),
-    path('signup',  SignupView.as_view(),  name=settings.REGISTER_URL),
-    path('signout', SignoutView.as_view(), name=settings.LOGOUT_URL),
+    path('login',    AccountLoginView.as_view(),    name=app_conf.ACCOUNT_LOGIN_URL),
+    path('logout',   AccountLogoutView.as_view(),   name=app_conf.ACCOUNT_LOGOUT_URL),
+    path('settings', AccountSettingsView.as_view(), name=app_conf.ACCOUNT_SETTINGS_URL),
+    path('create',   AccountCreateView.as_view(),   name=app_conf.ACCOUNT_CREATE_URL),
+    path('delete',   AccountDeleteView.as_view(),   name=app_conf.ACCOUNT_DELETE_URL),
 ]

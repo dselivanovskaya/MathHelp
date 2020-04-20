@@ -2,10 +2,10 @@ from django import forms
 from django.contrib import auth
 
 
-class SigninForm(auth.forms.AuthenticationForm):
+class AccountLoginForm(auth.forms.AuthenticationForm):
 
     error_messages = {
-        'invalid_login': 'Incorrect username or password.',
+        'invalid_login': 'Неправильное имя пользователя или пароль.',
     }
 
     def __init__(self, *args, **kwargs):
@@ -14,7 +14,7 @@ class SigninForm(auth.forms.AuthenticationForm):
         self.fields['username'].widget.attrs.pop("autofocus", None)
 
 
-class SignupForm(auth.forms.UserCreationForm):
+class AccountCreateForm(auth.forms.UserCreationForm):
 
     first_name = forms.CharField(max_length=128, widget=forms.TextInput(
         attrs={'placeholder': 'Harry'},
