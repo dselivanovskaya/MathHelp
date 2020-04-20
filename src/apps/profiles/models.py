@@ -36,9 +36,9 @@ class Profile(models.Model):
     def __str__(self):
         return self.user.username
 
-    def has_default_photo(self):
-        ''' Check if user's profile photo is default. '''
-        return self.photo.path == get_default_profile_photo_path()
+    # def has_default_photo(self):
+    #     ''' Check if user's profile photo is default. '''
+    #     return self.photo.path == get_default_profile_photo_path()
 
     def delete_photo(self):
         ''' Delete user's profile photo. '''

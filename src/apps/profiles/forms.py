@@ -30,7 +30,8 @@ class ProfileUpdateForm(ModelForm):
 
     def clean_photo(self):
         photo = self.cleaned_data.get('photo')
-        if photo:
+        # If user uploads a new image
+        if photo != self.user.profile.photo:
             # Check uploaded photo dimension
             width, height = get_image_dimensions(photo)
             if width > Profile.PHOTO_MAX_WIDTH:
@@ -41,9 +42,7 @@ class ProfileUpdateForm(ModelForm):
                 raise forms.ValidationError(
                     self.error_messages['invalid_photo_size']
                 )
-            # Delete old photo
-            if not self.user.profile.has_default_photo():
-                self.user.profile.delete_photo()
+            self.user.profile.delete_photo()
         return photo
 
     def save(self, *args, **kwargs):
