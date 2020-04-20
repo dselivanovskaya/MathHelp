@@ -13,14 +13,14 @@
     <table class="profile-info">
       <tr>
         <td class="user-info">
-          <img src="{{ user.profile.photo.url }}" width="170px" height="200px">
+          <img src="{{ user.profile.photo.url }}" width="200px" height="200px">
           <b>{{ user.first_name }} {{ user.last_name }}</b>
           <a class="btn btn-blue" href="{% url PROFILE_UPDATE_URL user.username %}">
             Редактировать
           </a>
         </td>
         <td class="user-stat">
-          <h2 id="greeting">{{ user.username }}</h2>
+          <h2 id="greeting">{{ user.first_name }}</h2>
           {% if request.session.watched_tickets %}
             {% if user.profile.is_male %}
               <b>Сегодня ты посмотрел:</b>
