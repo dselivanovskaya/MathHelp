@@ -47,7 +47,7 @@ class ReferenceViewTest(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        cls.url = reverse(pages_config.REFERENCE_URL)
+        cls.url = reverse(pages_config.REFERENCES_URL)
         cls.view_class = ReferenceView
         cls.template_name = cls.view_class.template_name
 
