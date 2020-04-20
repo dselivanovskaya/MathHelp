@@ -1,23 +1,31 @@
+from django.conf import settings
 from django.test import TestCase
 from django.urls import reverse
 
+from tests.data import USER1
 
-class ListTicketsViewTest(TestCase):
+from tickets.apps import TicketsConfig as tickets_config
+from tickets.views import TicketListView
+
+
+class TicketListViewTest(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        cls.url  = '/tickets'
-        cls.name = 'ticket-list'
-        cls.template = 'tickets/ticket-list.html'
+        cls.url = reverse(tickets_config.TICKET_LIST_URL)
+        cls.view_class = TicketListView
+        cls.template = cls.view_class.template_name
+        USER1.create_in_db()
 
-    def test_view_url_exists(self):
-        response = self.client.get(self.url)
-        self.assertEqual(response.status_code, 200)
+    def test_url_exists_for_authenticated_user(self):
+        self.client.login(username=USER1.username, password=USER1.password)
+        self.assertEqual(self.client.get(self.url).status_code, 200)
 
-    def test_view_url_accessible_by_name(self):
-        response = self.client.get(reverse(self.name))
-        self.assertEqual(response.status_code, 200)
+    def test_redirects_anonymous_user_to_login_page(self):
+        self.assertRedirects(
+            self.client.get(self.url), reverse(settings.LOGIN_URL)
+        )
 
-    def test_view_uses_correct_template(self):
-        response = self.client.get(reverse(self.name))
-        self.assertTemplateUsed(response, self.template)
+    def test_renders_correct_template(self):
+        self.client.login(username=USER1.username, password=USER1.password)
+        self.assertTemplateUsed(self.client.get(self.url), self.template)

@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+
 {% load static %}
 
 {% block title %} {{ ticket.name }} {% endblock %}
@@ -10,37 +11,33 @@
 
 {% block content %}
 <div class="container">
-  <div class="actions">
-    <h2>Действия:</h2>
+    <h2>{{ ticket.name }}</h2>
     <a href="{{ ticket.get_absolute_url }}" download class="btn btn-blue">Скачать</a>
-    <a href="{% url 'ticket-read-pdf' id=ticket.id %}" class="ticket btn btn-blue">Читать онлайн</a>
-    <a href="{% url 'ticket-quiz' id=ticket.id %}" class="btn btn-blue">Пройти тест</a><br>
-  </div>
-
-
+    <a href="{% url TICKET_READ_PDF_URL ticket.filename %}" class="btn btn-blue">Читать онлайн</a>
+    <a href="{% url QUIZ_TICKET_URL ticket.id %}" class="btn btn-blue">Пройти тест</a><br>
 
   <div class="comments">
-      <h2>Комментарии к билету:</h2>
       <table class="comments">
         {% for comment in comments %}
         <tr>
           <td width="750px">
-            <h3>{{comment.creator}}</h3>
-            <p>{{comment.body}}</p>
-            <td width="200px"><h5>{{comment.created}}</h5></td>
+            <h3>{{ comment.creator }}</h3>
+            <p>{{ comment.body }}</p>
+            <td width="200px"><h5>{{ comment.created }}</h5></td>
           </td>
         </tr>
-        {% endfor %} 
+        {% endfor %}
       </table>
-   
-    
-    
-    <h2>Оставьте свой комментарий:</h2>
-    <form action="{% url 'comment-post' ticket_id=ticket.id %}" method="post" autocomplete="off">
+
+    <form action="{% url 'comment-post' ticket.id %}" method="POST">
       {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-blue">Отправить</button>
+      {% for field in form %}
+        {{ field }}
+      {% endfor %}
+      <button type="submit" class="btn btn-blue">Комментировать</button>
     </form>
+
   </div>
+
   </div>
 {% endblock %}
