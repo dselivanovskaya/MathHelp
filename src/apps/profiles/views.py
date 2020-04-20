@@ -33,7 +33,7 @@ class ProfileUpdateView(View):
     template_name = f'{profiles_config.name}/profile-update.html'
 
     messages = {
-        'success': 'Профиль был успешно обновлен.'
+        'success': 'Профиль был успешно изменён.'
     }
 
     def get(self, request, **kwargs):
@@ -41,7 +41,6 @@ class ProfileUpdateView(View):
             'first_name': request.user.first_name,
             'last_name':  request.user.last_name,
             'email':      request.user.email,
-            'username':   request.user.username,
             'gender':     request.user.profile.gender,
             'age':        request.user.profile.age,
         })
