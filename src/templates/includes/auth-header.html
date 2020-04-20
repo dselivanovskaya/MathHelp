@@ -8,10 +8,10 @@
     <nav class="head-nav">
       <ul class="head-ul">
         <li>
-          <a href="{% url 'index' %}">Главная</a>
+          <a href="{% url INDEX_URL %}">Главная</a>
         </li>
         <li>
-          <a href="{% url PROFILE_URL request.user.username %}">{{ user.username }}</a>
+          <a href="{% url PROFILE_URL user.username %}">{{ user.first_name }} {{ user.last_name }}</a>
         </li>
         <li>
           <a href="{% url LOGOUT_URL %}">Выход</a>

@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
+
 {% load static %}
 
 {% block title %}
-  {{ request.user.first_name }} {{ request.user.last_name }}
+  {{ user.first_name }} {{ user.last_name }}
 {% endblock %}
 
 {% block css %}
@@ -15,16 +16,16 @@
     <table class="profile-info">
       <tr>
         <td class="user-info">
-          <img src="{{ request.user.profile.image.url }}" width="170px" height="200px">
-          <b>{{ request.user.first_name }} {{ request.user.last_name }}<br>
-          {{ request.user.profile.age }} лет</b>
+          <img src="{{ user.profile.photo.url }}" width="170px" height="200px">
+          <b>{{ user.first_name }} {{ user.last_name }}<br>
+          {{ user.profile.age }} лет</b>
         </td>
         <td class="user-stat">
           <h2 id="greeting">{{ user.username }}</h2>
           {% if request.session.watched_tickets %}
-            {% if request.user.profile.is_male %}
+            {% if user.profile.is_male %}
               <b>Сегодня ты посмотрел:</b>
-            {% elif request.user.profile.is_female %}
+            {% elif user.profile.is_female %}
               <b>Сегодня ты посмотрела:</b>
             {% else %}
               <b>Сегодня вы посмотрели:</b>
@@ -35,9 +36,9 @@
             {% endfor %}
             </ul>
           {% else %}
-            {% if request.user.profile.is_male %}
+            {% if user.profile.is_male %}
                 <b>Сегодня ты еще не занимался :( Давай исправим это!</b>
-            {% elif request.user.profile.is_female %}
+            {% elif user.profile.is_female %}
                 <b>Сегодня ты еще не занималась :( Давай исправим это!</b>
             {% else %}
                 <b>Сегодня вы еще не занимались :( Давай исправим это!</b>
@@ -57,7 +58,7 @@
           <a href="{% url 'ticket-list' %}" class="btn btn-blue">Учить билеты</a>
         </td>
         <td class="profile-blue">
-          <a href="{% url PROFILE_DELETE_URL request.user.username %}" class="btn btn-blue"
+          <a href="{% url PROFILE_DELETE_URL user.username %}" class="btn btn-blue"
           >Удалить профиль</a>
         </td>
       </tr>
@@ -65,7 +66,7 @@
         <td class="profile-gray">
         </td>
         <td class="profile-blue">
-          <a href="{% url PROFILE_UPDATE_URL request.user.username %}" class="btn btn-blue" >Редактировать профиль</a>
+          <a href="{% url PROFILE_UPDATE_URL user.username %}" class="btn btn-blue" >Редактировать профиль</a>
         </td>
       </tr>
     </table>

@@ -41,10 +41,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'accounts.apps.AccountsConfig',
+    'forum',
+    'pages.apps.PagesConfig',
     'profiles.apps.ProfilesConfig',
     'tickets',
     'quiz',
-    'forum',
 
     'tests',
 ]
@@ -84,6 +85,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
 
                 'accounts.context_processors.url_names',
+                'pages.context_processors.url_names',
                 'profiles.context_processors.url_names',
             ],
         },
