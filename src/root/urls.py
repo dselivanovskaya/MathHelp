@@ -5,14 +5,13 @@ from django.urls import include, path
 
 
 urlpatterns = [
-    path('', include('pages.urls')),
-    path('admin/', admin.site.urls),
-
-    path('tickets/', include('tickets.urls')),
-    path('forum/', include('forum.urls')),
-
+    path('admin/',    admin.site.urls),
+    path('',          include('pages.urls')),
+    path('forum/',    include('forum.urls')),
     path('accounts/', include('accounts.urls')),
     path('profiles/', include('profiles.urls')),
+    path('quizzes/',  include('quizzes.urls')),
+    path('tickets/',  include('tickets.urls')),
 ]
 
 if settings.DEBUG:

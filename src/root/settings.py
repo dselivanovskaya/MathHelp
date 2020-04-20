@@ -31,8 +31,6 @@ ALLOWED_HOSTS = ['127.0.0.1']
 
 ROOT_URLCONF = 'root.urls'
 
-APPEND_SLASH = True
-
 # Application settings.
 # ------------------------------------------------------------------------------
 
@@ -45,11 +43,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'accounts.apps.AccountsConfig',
-    'forum',
+    'forum.apps.ForumConfig',
     'pages.apps.PagesConfig',
     'profiles.apps.ProfilesConfig',
-    'tickets',
-    'quiz',
+    'quizzes.apps.QuizzesConfig',
+    'tickets.apps.TicketsConfig',
 
     'tests',
 ]
@@ -88,9 +86,11 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
 
-                'accounts.context_processors.url_names',
-                'pages.context_processors.url_names',
-                'profiles.context_processors.url_names',
+                'accounts.context_processors.accounts',
+                'pages.context_processors.pages',
+                'profiles.context_processors.profiles',
+                'quizzes.context_processors.quizzes',
+                'tickets.context_processors.tickets',
             ],
         },
     },

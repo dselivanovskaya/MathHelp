@@ -1,0 +1,12 @@
+.quiz-form {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.quiz-form p {
+  font-weight: bold;
+}
+
+li {
+  list-style-type: none;
+}

@@ -1,7 +1,7 @@
 from .apps import AccountsConfig as accounts_config
 
 
-def url_names(request):
+def accounts(request):
     return {
         'ACCOUNT_LOGIN_URL':    accounts_config.ACCOUNT_LOGIN_URL,
         'ACCOUNT_LOGOUT_URL':   accounts_config.ACCOUNT_LOGOUT_URL,

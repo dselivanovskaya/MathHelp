@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %} Тест {% endblock %}
+
+{% block css %}
+  <link rel="stylesheet" href="{% static 'quizzes/css/quizzes.css' %}">
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <table>
+      <tr>
+        <td width="180px"><h2>Тест по теме: </h2></td>
+        <td><h3>{{ ticket.name }}</h3></td>
+      </tr>
+    </table>
+
+    <form class="quiz-form" action="{% url QUIZ_TICKET_URL ticket.id %}" method="POST">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-blue">Проверить</button>
+    </form>
+  </div>
+{% endblock %}
