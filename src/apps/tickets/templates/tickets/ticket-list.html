@@ -1,9 +1,8 @@
 {% extends 'base.html' %}
+
 {% load static %}
 
-{% load tickets_extras %}
-
-{% block title %} Tickets {% endblock %}
+{% block title %} Билеты {% endblock %}
 
 {% block css %}
   <link rel="stylesheet" href="{% static 'tickets/css/style.css' %}"/>
@@ -11,23 +10,21 @@
 
 {% block content %}
   <div class="container">
-    <input type="text" id="ticket-search" onkeyup="searchTicket()"
-                                          placeholder="Search ticket...">
+    <input type="text" id="ticket-search" onkeyup="searchTicket()" placeholder="Искать билет...">
     <table class="catalog" id="tickets-table">
-      {% for ticket in tickets %}
+      <tr>
+        <th>Название</th>
+        <th>Сложность</th>
+      </tr>
+      {% for ticket in object_list %}
         <tr>
           <td>
-            <p><a href="{% url 'ticket-detail' id=ticket.id %}" class="ticket">{{ ticket.name }}</a></p>
+            <a href="{% url TICKET_DETAIL_URL ticket.id %}" class="ticket">
+              {{ ticket.name }}
+            </a>
           </td>
-
           <td class="star">
-            {% with "tickets/img/"|strcat:ticket.level|strcat:"-star.png" as image %}
-                <img src="{% static image %}"/>
-            {% endwith %}
-          </td>
-
-          <td>
-            <a href="{% url 'ticket-quiz' id=ticket.id %}" class="btn btn-blue btn-blue-small">Тест</a>
+            <img src="{% static ticket.get_level_image_name %}">
           </td>
         </tr>
       {% endfor %}

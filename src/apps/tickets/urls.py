@@ -1,12 +1,23 @@
 from django.urls import path
 
-from quiz.views import TicketQuizView
-
+from .apps import TicketsConfig as tickets_config
 from .views import TicketDetailView, TicketListView, TicketReadPDFView
 
+
 urlpatterns = [
-    path('', TicketListView.as_view(), name='ticket-list'),
-    path('/<int:id>', TicketDetailView.as_view(), name='ticket-detail'),
-    path('/<int:id>/read', TicketReadPDFView.as_view(), name='ticket-read-pdf'),
-    path('/<int:id>/quiz', TicketQuizView.as_view(), name='ticket-quiz'),
+    path(
+        'list',
+        TicketListView.as_view(),
+        name=tickets_config.TICKET_LIST_URL
+    ),
+    path(
+        '<int:ticket_id>',
+        TicketDetailView.as_view(),
+        name=tickets_config.TICKET_DETAIL_URL
+    ),
+    path(
+        '<str:ticket_filename>',
+        TicketReadPDFView.as_view(),
+        name=tickets_config.TICKET_READ_PDF_URL
+    ),
 ]

@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %} Настройки {% endblock %}
+
+{% block content %}
+  <div class="container">
+    <ul>
+      <li>
+        <a href="{% url ACCOUNT_USERNAME_CHANGE_URL %}" class="btn btn-blue" >
+          Изменить имя пользователя
+        </a>
+      </li>
+      <li>
+        <a href="{% url ACCOUNT_PASSWORD_CHANGE_URL %}" class="btn btn-blue" >
+          Изменить пароль
+        </a>
+      </li>
+      <li>
+        <a href="{% url ACCOUNT_DELETE_URL %}" class="btn btn-blue" >
+          Удалить аккаунт
+        </a>
+      </li>
+    </ul>
+  </div>
+{% endblock %}

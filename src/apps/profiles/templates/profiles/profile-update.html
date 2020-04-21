@@ -1,14 +1,15 @@
 {% extends 'base.html' %}
+
 {% load static %}
 
-{% block title %} Edit profile {% endblock %}
+{% block title %} Изменить профиль {% endblock %}
 
 {% block content %}
   <section class="get-info">
     <div class="container">
       <h2>Изменить профиль</h2>
-      <form action="{% url PROFILE_UPDATE_URL request.user.username %}"
-        method="POST" class="get-info-form">
+      <form class="get-info-form" action="{% url PROFILE_UPDATE_URL user.username %}"
+        method="POST" enctype="multipart/form-data">
         {% csrf_token %}
 
         {{ form.as_p }}

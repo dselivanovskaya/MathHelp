@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %} Вход {% endblock %}
+
+{% block content %}
+  <section class="get-info">
+    <div class="container">
+      <h2 class="get-info-form title">Вход</h2>
+      <form class="get-info-form" action="{% url ACCOUNT_LOGIN_URL %}" method="POST">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button type="submit" class="get-info-form btn btn-blue">
+          Войти
+        </button>
+
+        <p class="get-info-instruction">
+          У Вас еще нет аккаунта?
+          <a href="{% url ACCOUNT_CREATE_URL %}"><strong>Создать аккаунт</strong></a>
+        </p>
+
+      </form>
+    </div>
+  </section>
+{% endblock %}

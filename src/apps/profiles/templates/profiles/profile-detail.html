@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %} {{ user.first_name }} {{ user.last_name }} {% endblock %}
+
+{% block css %}
+  <link rel="stylesheet" href="{% static 'profiles/css/profiles.css' %}">
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <table class="profile-info">
+      <tr>
+        <td class="user-info">
+          <img src="{{ user.profile.photo.url }}" width="200px" height="200px">
+          <b>{{ user.first_name }} {{ user.last_name }}</b>
+          <a class="btn btn-blue" href="{% url PROFILE_UPDATE_URL user.username %}">
+            Редактировать
+          </a>
+        </td>
+        <td class="user-stat">
+          <h2 id="greeting">{{ user.first_name }}</h2>
+          {% if request.session.watched_tickets %}
+            {% if user.profile.is_male %}
+              <b>Сегодня ты посмотрел:</b>
+            {% elif user.profile.is_female %}
+              <b>Сегодня ты посмотрела:</b>
+            {% else %}
+              <b>Сегодня вы посмотрели:</b>
+            {% endif %}
+            <ul>
+            {% for ticket in request.session.watched_tickets %}
+                <li>{{ ticket }}</li>
+            {% endfor %}
+            </ul>
+          {% else %}
+            {% if user.profile.is_male %}
+                <b>Сегодня ты еще не занимался :( Давай исправим это!</b>
+            {% elif user.profile.is_female %}
+                <b>Сегодня ты еще не занималась :( Давай исправим это!</b>
+            {% else %}
+                <b>Сегодня вы еще не занимались :( Давай исправим это!</b>
+            {% endif %}
+          {% endif %}
+        </td>
+      </tr>
+    </table>
+  </div>
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'profiles/js/profiles.js' %}"></script>
+{% endblock %}

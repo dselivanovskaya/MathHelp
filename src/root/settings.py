@@ -8,6 +8,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 APPS_DIR = os.path.join(BASE_DIR, 'apps')
 sys.path.insert(0, APPS_DIR)
 
+from accounts.apps import AccountsConfig as accounts_config
+from pages.apps import PagesConfig as pages_config
+from profiles.apps import ProfilesConfig as profiles_config
+
 # Debugging.
 # ------------------------------------------------------------------------------
 
@@ -27,8 +31,6 @@ ALLOWED_HOSTS = ['127.0.0.1']
 
 ROOT_URLCONF = 'root.urls'
 
-APPEND_SLASH = True
-
 # Application settings.
 # ------------------------------------------------------------------------------
 
@@ -41,10 +43,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'accounts.apps.AccountsConfig',
+    'forum.apps.ForumConfig',
+    'pages.apps.PagesConfig',
     'profiles.apps.ProfilesConfig',
-    'tickets',
-    'quiz',
-    'forum',
+    'quizzes.apps.QuizzesConfig',
+    'tickets.apps.TicketsConfig',
+
+    'tests',
 ]
 
 # HTTP.
@@ -81,8 +86,11 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
 
-                'accounts.context_processors.url_names',
-                'profiles.context_processors.url_names',
+                'accounts.context_processors.accounts',
+                'pages.context_processors.pages',
+                'profiles.context_processors.profiles',
+                'quizzes.context_processors.quizzes',
+                'tickets.context_processors.tickets',
             ],
         },
     },
@@ -159,20 +167,16 @@ MEDIA_URL = '/media/'
 # The model to use to represent a User.
 AUTH_USER_MODEL = 'auth.User'
 
-# The named URL pattern where requests are redirected for registration.
-REGISTER_URL = 'signup'
+# The named URL pattern where requests are redirected for index page.
+INDEX_URL = pages_config.INDEX_URL
 
 # The named URL pattern where requests are redirected for login.
-LOGIN_URL = 'signin'
-
-# The named URL pattern where requests are redirected for logout.
-LOGOUT_URL = 'signout'
+# Used in login_required decorator.
+LOGIN_URL = accounts_config.ACCOUNT_LOGIN_URL
 
 # The named URL pattern where requests are redirected after login.
-LOGIN_REDIRECT_URL = 'profile-redirect'
-
-# The URL or named URL pattern where requests are redirected after logout.
-LOGOUT_REDIRECT_URL = 'index'
+# Used in anonymous_required decorator.
+LOGIN_REDIRECT_URL = profiles_config.PROFILE_REDIRECT_URL
 
 # Messages.
 # ------------------------------------------------------------------------------

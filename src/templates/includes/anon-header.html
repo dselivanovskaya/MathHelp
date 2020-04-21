@@ -1,0 +1,19 @@
+{% load static %}
+
+<header class="second-head">
+  <div class="container">
+    <div class="head-img">
+      <img src="{% static 'img/logo-head2.jpg' %}" width="250" height="128" alt="MathHelp">
+    </div>
+    <nav class="head-nav">
+      <ul class="head-ul">
+        <li>
+          <a href="{% url INDEX_URL %}">Главная</a>
+        </li>
+        <li>
+          <a href="{% url ACCOUNT_LOGIN_URL %}">Вход</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>

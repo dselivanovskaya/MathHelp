@@ -8,13 +8,19 @@
     <nav class="head-nav">
       <ul class="head-ul">
         <li>
-          <a href="{% url 'index' %}">Главная</a>
+          <a href="{% url PROFILE_DETAIL_URL user.username %}">Мой профиль</a>
         </li>
         <li>
-          <a href="{% url PROFILE_URL request.user.username %}">{{ user.username }}</a>
+          <a href="{% url TICKET_LIST_URL %}">Билеты</a>
         </li>
         <li>
-          <a href="{% url LOGOUT_URL %}">Выход</a>
+          <a href="{% url REFERENCES_URL %}">Ссылки</a>
+        </li>
+        <li>
+          <a href="{% url ACCOUNT_SETTINGS_URL %}">Настройки</a>
+        </li>
+        <li>
+          <a href="{% url ACCOUNT_LOGOUT_URL %}">Выход</a>
         </li>
       </ul>
     </nav>

@@ -1,9 +1,13 @@
-from django.conf import settings
+from .apps import AccountsConfig as accounts_config
 
 
-def url_names(request):
+def accounts(request):
     return {
-        'LOGIN_URL': settings.LOGIN_URL,
-        'REGISTER_URL': settings.REGISTER_URL,
-        'LOGOUT_URL': settings.LOGOUT_URL,
+        'ACCOUNT_LOGIN_URL':    accounts_config.ACCOUNT_LOGIN_URL,
+        'ACCOUNT_LOGOUT_URL':   accounts_config.ACCOUNT_LOGOUT_URL,
+        'ACCOUNT_SETTINGS_URL': accounts_config.ACCOUNT_SETTINGS_URL,
+        'ACCOUNT_CREATE_URL':   accounts_config.ACCOUNT_CREATE_URL,
+        'ACCOUNT_DELETE_URL':   accounts_config.ACCOUNT_DELETE_URL,
+        'ACCOUNT_PASSWORD_CHANGE_URL':   accounts_config.ACCOUNT_PASSWORD_CHANGE_URL,
+        'ACCOUNT_USERNAME_CHANGE_URL':   accounts_config.ACCOUNT_USERNAME_CHANGE_URL,
     }
