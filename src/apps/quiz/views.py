@@ -4,8 +4,8 @@ from django.utils.decorators import method_decorator
 from django.conf import settings
 from django.shortcuts import redirect, render, get_object_or_404
 from django.views import View
+from django.core.exceptions import ObjectDoesNotExist
 
-from  accounts.decorators import session_required
 from tickets.apps import TicketsConfig as tickets_config
 
 from .apps import QuizConfig as quiz_config
@@ -21,13 +21,19 @@ class QuizTicketView(View):
 
     def get(self, request, quiz_id):
         '''
-            Update session['watched_quizzes'] and return a QuizForm.
+            Render quiz form.
+
+            If user has taken this quiz in the current session, redirect to
+            that quiz result page.
+
+            If user has not yet seen this quiz, update
+            session['watched_quizzes'].
         '''
+        if str(quiz_id) in request.session['taken_quizzes']:
+            return redirect(quiz_config.QUIZ_RESULT_URL, quiz_id)
+
         quiz = get_object_or_404(Quiz, id=quiz_id)
         quiz.session_update(request, 'watched_quizzes')
-
-        if request.session['taken_quizzes'].get(str(quiz_id)):
-            return redirect(quiz_config.QUIZ_RESULT_URL, quiz_id)
 
         context = {
             'quiz': quiz,
@@ -38,21 +44,29 @@ class QuizTicketView(View):
 
     def post(self, request, quiz_id):
         '''
-            Validate QuizForm and calculate result.
-            If it is valid, create a session['taken_quiz'] entry, store
-            result in there and redirect to QuizResultView.
+            Calculate quiz result and store it in the session.
+
+            If user has taken this quiz in the current session, redirect to
+            that quiz result page.
+
+            If form is valid, calculate total percentage of correct answers,
+            store it in the current session alongside with quiz_id, quiz_name
+            and saved flad.
+
+            Redirect to quiz result page.
         '''
+        if str(quiz_id) in request.session['taken_quizzes']:
+            return redirect(quiz_config.QUIZ_RESULT_URL, quiz_id)
+
         quiz = get_object_or_404(Quiz, id=quiz_id)
         form = self.form_class(quiz, request.POST)
-
-        if request.session['taken_quizzes'].get(str(quiz_id)):
-            return redirect(quiz_config.QUIZ_RESULT_URL, quiz_id)
 
         if form.is_valid():
             request.session['taken_quizzes'].update({
                 str(quiz_id): {
-                    'name':    quiz.ticket.name,
-                    'percent': form.cleaned_data['percent'],
+                    'name':   quiz.ticket.name,
+                    'result': form.cleaned_data['result'],
+                    'saved':  False,
                 }
             })
             return redirect(quiz_config.QUIZ_RESULT_URL, quiz_id)
@@ -72,17 +86,24 @@ class QuizResultView(View):
 
     def get(self, request, quiz_id):
         '''
+            Display quiz result.
 
+            If user has not yet taken the quiz, that he requests result for,
+            redirect him to that quiz page, else return quiz result.
+
+            If user has not yet saved the quiz result, allow to save it,
+            else do not.
         '''
-        quiz = get_object_or_404(Quiz, id=quiz_id)
-
-        # If user didn't take a quiz on this ticket
-        if not request.session['taken_quizzes'].get(str(quiz_id)):
+        if str(quiz_id) not in request.session['taken_quizzes']:
             return redirect(quiz_config.QUIZ_TICKET_URL, quiz_id)
 
+        quiz = get_object_or_404(Quiz, id=quiz_id)
+        taken_quizzes = request.session['taken_quizzes']
+
         context = {
-            'quiz': quiz,
-            'percent': request.session['taken_quizzes'][str(quiz_id)]['percent'],
+            'quiz':        quiz,
+            'quiz_result': taken_quizzes[str(quiz_id)]['result'],
+            'quiz_saved':  taken_quizzes[str(quiz_id)]['saved'],
         }
 
         return render(request, self.template_name, context)
@@ -98,33 +119,37 @@ class QuizSaveView(View):
 
     def get(self, request, quiz_id):
         '''
-            Save session['taken_quiz']['percent'] in database.
-        '''
-        quiz = get_object_or_404(Quiz, id=quiz_id)
+            Save quiz result to the database.
 
-        # If user didn't take a quiz on this ticket
-        if not request.session['taken_quizzes'].get(str(quiz_id)):
+            If user has not yet taken the quiz, that he requests to save
+            result for, redirect him to that quiz page.
+
+            If user does not have a Result entry for this quiz in the
+            database, then create a new one.
+
+            If user has a Result entry for this quiz in the database,
+            then update it.
+
+            Mark quiz as saved in the session.
+        '''
+        if str(quiz_id) not in request.session['taken_quizzes']:
             return redirect(quiz_config.QUIZ_TICKET_URL, quiz_id)
 
-        percent = request.session['taken_quizzes'][str(quiz_id)]['percent']
+        quiz = get_object_or_404(Quiz, id=quiz_id)
+        result = request.session['taken_quizzes'][str(quiz_id)]['result']
 
-        # Check if user already has a saved record for this quiz.
-        user_results = Result.objects.filter(quiz=quiz, user=request.user)
-
-        if user_results:
-            # If he does, we update the result.
-            prev_result = user_results.first()
-            prev_result.percent = percent
-            prev_result.save()
-            messages.success(request, self.messages['success-update'])
-        else:
-            # If he doesn't, we create a new entry.
+        try:
+            prev_result = Result.objects.get(quiz=quiz, user=request.user)
+        except ObjectDoesNotExist:
             new_result = Result.objects.create(
-                quiz=quiz, user=request.user, percent=percent
+                quiz=quiz, user=request.user, percent=result
             )
             new_result.save()
             messages.success(request, self.messages['success-save'])
-
-        # ?? remove this quiz result from session??
-
-        return redirect(settings.PROFILE_REDIRECT_URL)
+        else:
+            prev_result.persect = result
+            prev_result.save()
+            messages.success(request, self.messages['success-update'])
+        finally:
+            request.session['taken_quizzes'][str(quiz_id)]['saved'] = True
+            return redirect(settings.PROFILE_REDIRECT_URL)

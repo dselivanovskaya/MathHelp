@@ -11,9 +11,11 @@
 {% block content %}
   <div class="container">
     <h3><u>Билет</u>: {{ quiz.ticket.name }}</h3>
-    <h3><u>Результат</u>: {{ percent }}%.</h3>
+    <h3><u>Результат</u>: {{ quiz_result }}%.</h3>
 
-    <a class="btn btn-blue" href="{% url QUIZ_SAVE_URL quiz.id %}">Сохранить</a>
+    {% if not quiz_saved %}
+      <a class="btn btn-blue" href="{% url QUIZ_SAVE_URL quiz.id %}">Сохранить</a>
+    {% endif %}
     <a class="btn btn-blue">Пройти заново</a>
     <a class="btn btn-blue">Работа над ошибками</a>
   </div>

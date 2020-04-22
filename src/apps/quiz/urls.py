@@ -19,5 +19,10 @@ urlpatterns = [
         '<int:quiz_id>/result/save',
         QuizSaveView.as_view(),
         name=quiz_config.QUIZ_SAVE_URL,
-    )
+    ),
+    path(
+        '<int:quiz_id>/restart',
+        QuizSaveView.as_view(),
+        name=quiz_config.QUIZ_SAVE_URL,
+    ),
 ]
