@@ -1,5 +1,4 @@
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.conf import settings
 from django.shortcuts import redirect, render, get_object_or_404
@@ -13,7 +12,6 @@ from .forms import QuizForm
 from .models import Quiz, Result
 
 
-@method_decorator(login_required(redirect_field_name=None), name='dispatch')
 class QuizTicketView(View):
 
     template_name = f'{quiz_config.name}/quiz-ticket.html'
@@ -79,7 +77,6 @@ class QuizTicketView(View):
         return render(request, self.template_name, context)
 
 
-@method_decorator(login_required(redirect_field_name=None), name='dispatch')
 class QuizResultView(View):
 
     template_name = f'{quiz_config.name}/quiz-result.html'
@@ -109,7 +106,6 @@ class QuizResultView(View):
         return render(request, self.template_name, context)
 
 
-@method_decorator(login_required(redirect_field_name=None), name='dispatch')
 class QuizSaveView(View):
 
     messages = {
@@ -152,4 +148,4 @@ class QuizSaveView(View):
             messages.success(request, self.messages['success-update'])
         finally:
             request.session['taken_quizzes'][str(quiz_id)]['saved'] = True
-            return redirect(settings.PROFILE_REDIRECT_URL)
+            return redirect(settings.LOGIN_REDIRECT_URL)

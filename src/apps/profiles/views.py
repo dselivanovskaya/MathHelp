@@ -1,5 +1,4 @@
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.utils.decorators import method_decorator
 from django.views import View
@@ -10,7 +9,6 @@ from .forms import ProfileUpdateForm
 from .models import Profile
 
 
-@method_decorator(login_required(redirect_field_name=None), name='dispatch')
 class ProfileRedirectView(View):
     ''' Redirects user to his profile. '''
 
@@ -20,13 +18,11 @@ class ProfileRedirectView(View):
         )
 
 
-@method_decorator(login_required(redirect_field_name=None), name='dispatch')
 class ProfileDetailView(TemplateView):
 
     template_name = f'{profiles_config.name}/profile-detail.html'
 
 
-@method_decorator(login_required(redirect_field_name=None), name='dispatch')
 class ProfileUpdateView(View):
 
     form_class = ProfileUpdateForm

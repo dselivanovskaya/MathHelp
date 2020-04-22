@@ -1,5 +1,4 @@
 from django.http import FileResponse, Http404
-from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.shortcuts import get_object_or_404, render
 from django.views import View
@@ -12,14 +11,12 @@ from .apps import TicketsConfig as tickets_config
 from .models import Ticket
 
 
-@method_decorator(login_required(redirect_field_name=None), name='dispatch')
 class TicketListView(ListView):
 
     model = Ticket
     template_name = f'{tickets_config.name}/ticket-list.html'
 
 
-@method_decorator(login_required(redirect_field_name=None), name='dispatch')
 class TicketDetailView(View):
 
     form_class = CommentForm
@@ -37,7 +34,6 @@ class TicketDetailView(View):
         return render(request, self.template_name, context)
 
 
-@method_decorator(login_required(redirect_field_name=None), name='dispatch')
 class TicketReadPDFView(View):
 
     def get(self, request, ticket_filename):

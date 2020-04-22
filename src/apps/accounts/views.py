@@ -1,11 +1,11 @@
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import login, logout, get_user_model
-from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.generic.base import TemplateView
+
 
 from .apps import AccountsConfig as accounts_config
 from .decorators import anonymous_required
@@ -34,19 +34,6 @@ class AccountLoginView(View):
         return render(request, self.template_name, {'form': form})
 
 
-@method_decorator(login_required(redirect_field_name=None), name='dispatch')
-class AccountLogoutView(View):
-
-    messages = {
-        'success': 'Вы вышли из системы.'
-    }
-
-    def get(self, request):
-        logout(request)
-        messages.success(request, self.messages['success'])
-        return redirect(settings.INDEX_URL)
-
-
 @method_decorator(anonymous_required, name='dispatch')
 class AccountCreateView(View):
 
@@ -70,13 +57,23 @@ class AccountCreateView(View):
         return render(request, self.template_name, {'form': form})
 
 
-@method_decorator(login_required(redirect_field_name=None), name='dispatch')
+class AccountLogoutView(View):
+
+    messages = {
+        'success': 'Вы вышли из системы.'
+    }
+
+    def get(self, request):
+        logout(request)
+        messages.success(request, self.messages['success'])
+        return redirect(settings.INDEX_URL)
+
+
 class AccountSettingsView(TemplateView):
 
     template_name = f'{accounts_config.name}/account-settings.html'
 
 
-@method_decorator(login_required(redirect_field_name=None), name='dispatch')
 class AccountDeleteView(View):
 
     template_name = f'{accounts_config.name}/account-delete.html'
@@ -94,7 +91,6 @@ class AccountDeleteView(View):
         return redirect(settings.INDEX_URL)
 
 
-@method_decorator(login_required(redirect_field_name=None), name='dispatch')
 class AccountPasswordChangeView(View):
 
     template_name = f'{accounts_config.name}/account-password-change.html'
@@ -118,7 +114,6 @@ class AccountPasswordChangeView(View):
         return render(request, self.template_name, {'form': form})
 
 
-@method_decorator(login_required(redirect_field_name=None), name='dispatch')
 class AccountUsernameChangeView(View):
 
     template_name = f'{accounts_config.name}/account-username-change.html'

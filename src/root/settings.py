@@ -41,6 +41,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # Third party
+    'stronghold',
+
+    # Local
     'accounts.apps.AccountsConfig',
     'forum.apps.ForumConfig',
     'pages.apps.PagesConfig',
@@ -48,6 +52,7 @@ INSTALLED_APPS = [
     'quiz.apps.QuizConfig',
     'tickets.apps.TicketsConfig',
 
+    # Just for testing
     'tests',
 ]
 
@@ -65,6 +70,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # Third party
+    'stronghold.middleware.LoginRequiredMiddleware',
 ]
 
 # Template engine settings.
@@ -177,8 +184,6 @@ LOGIN_URL = accounts_config.ACCOUNT_LOGIN_URL
 # Used in anonymous_required decorator.
 LOGIN_REDIRECT_URL = profiles_config.PROFILE_REDIRECT_URL
 
-PROFILE_REDIRECT_URL = profiles_config.PROFILE_REDIRECT_URL
-
 # Messages.
 # ------------------------------------------------------------------------------
 
@@ -195,3 +200,5 @@ MESSAGE_TAGS = {
 
 SESSION_SAVE_EVERY_REQUEST = True
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+
+STRONGHOLD_PUBLIC_NAMED_URLS = (INDEX_URL, )
