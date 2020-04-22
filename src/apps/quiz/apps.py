@@ -6,3 +6,4 @@ class QuizConfig(AppConfig):
 
     QUIZ_TICKET_URL = 'quiz-ticket'
     QUIZ_RESULT_URL = 'quiz-result'
+    QUIZ_SAVE_URL = 'quiz-save'

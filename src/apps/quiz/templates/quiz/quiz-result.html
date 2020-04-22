@@ -10,13 +10,11 @@
 
 {% block content %}
   <div class="container">
-      <h2>Ваш результат: {{ result }}%.</h2>
+    <h3><u>Билет</u>: {{ quiz.ticket.name }}</h3>
+    <h3><u>Результат</u>: {{ percent }}%.</h3>
 
-      <form class="" method="POST" action="{% url QUIZ_RESULT_URL quiz.id %}">
-        {% csrf_token %}
-        <button class="btn btn-blue" type="submit">Сохранить</button>
-      </form>
-
-      <button class="btn btn-blue">Просмотрeть ошибки</button>
+    <a class="btn btn-blue" href="{% url QUIZ_SAVE_URL quiz.id %}">Сохранить</a>
+    <a class="btn btn-blue">Пройти заново</a>
+    <a class="btn btn-blue">Работа над ошибками</a>
   </div>
 {% endblock %}

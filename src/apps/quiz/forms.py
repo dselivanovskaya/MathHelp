@@ -24,12 +24,12 @@ class QuizForm(forms.Form):
     def clean(self):
         '''
             Calculate total percentage of correct answers and store it
-            inside self.cleaned_data['result'].
+            inside self.cleaned_data['percent'].
         '''
         cleaned_data = super().clean()
         correct_answers = 0
         for question, answer_id in cleaned_data.items():
             if Answer.objects.get(id=answer_id).is_correct:
                 correct_answers += 1
-        cleaned_data['result'] = int((correct_answers / len(self.fields)) * 100)
+        cleaned_data['percent'] = int((correct_answers / len(self.fields)) * 100)
         return cleaned_data

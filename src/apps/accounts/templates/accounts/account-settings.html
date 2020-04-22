@@ -7,6 +7,11 @@
 {% block content %}
   <div class="container">
     <ul>
+      {% if request.user.is_superuser %}
+        <li>
+          <a href="/admin/" class="btn btn-blue">Администрация</a>
+        </li>
+      {% endif %}
       <li>
         <a href="{% url ACCOUNT_USERNAME_CHANGE_URL %}" class="btn btn-blue" >
           Изменить имя пользователя

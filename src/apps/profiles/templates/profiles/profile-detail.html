@@ -83,21 +83,28 @@
 
           {% if request.session.taken_quizzes %}
 
-            <b>Сегодня ты
-              {% if user.profile.is_male %}
-                проходил
-              {% elif user.profile.is_female %}
-                проходила
-              {% endif %}
-            тесты по следующим билетам:</b>
+            <h3>Результаты по тестам за сегодня:</h3>
 
-            <ul>
-            {% for quiz in request.session.taken_quizzes %}
-                <li>
-                  <i>{{ quiz }}</i>
-                </li>
-            {% endfor %}
-            </ul>
+            <table>
+              <tr>
+                <td>
+                  <b>Название</b>
+                </td>
+                <td>
+                  <b>Результат</b>
+                </td>
+              </tr>
+              {% for quiz, data in request.session.taken_quizzes.items %}
+                <tr>
+                  <td>
+                    {{ data.name }}
+                  </td>
+                  <td>
+                    {{ data.percent }}%
+                  </td>
+                </tr>
+              {% endfor %}
+            </table>
 
           {% endif %}
 

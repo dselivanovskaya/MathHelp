@@ -14,4 +14,4 @@ def initialize_session_entries(request, user, **kwargs):
     request.session['watched_tickets'] = []
     request.session['read_tickets'] = []
     request.session['watched_quizzes'] = []
-    request.session['taken_quizzes'] = []
+    request.session['taken_quizzes'] = {}

@@ -13,6 +13,10 @@ class Quiz(models.Model):
     def __str__(self):
         return self.ticket.name
 
+    def session_update(self, request, lst):
+        if self.ticket.name not in request.session[lst]:
+            request.session[lst].append(self.ticket.name)
+
 
 class Question(models.Model):
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)

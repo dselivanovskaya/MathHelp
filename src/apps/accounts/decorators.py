@@ -4,7 +4,9 @@ from django.shortcuts import redirect
 
 
 def anonymous_required(function=None, redirect_url=None):
-
+    '''
+        Restrict access to view for users who are authenticated.
+    '''
     if not redirect_url:
         redirect_url = settings.LOGIN_REDIRECT_URL
 
@@ -15,3 +17,23 @@ def anonymous_required(function=None, redirect_url=None):
     )
 
     return actual_decorator(function) if function else actual_decorator
+
+
+def session_required(entry, redirect_url=None):
+    '''
+        Restrict access to view for users who don't have session['entry'].
+    '''
+
+    if not redirect_url:
+        redirect_url = settings.LOGIN_REDIRECT_URL
+
+    def outer(function):
+
+        def inner(request, *args, **kwargs):
+            if not request.session.get(entry, None):
+                return redirect(redirect_url)
+            return function(request, *args, **kwargs)
+
+        return inner
+
+    return outer

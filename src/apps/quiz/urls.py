@@ -1,7 +1,7 @@
 from django.urls import path
 
 from .apps import QuizConfig as quiz_config
-from .views import QuizTicketView, QuizResultView
+from .views import QuizTicketView, QuizResultView, QuizSaveView
 
 
 urlpatterns = [
@@ -14,5 +14,10 @@ urlpatterns = [
         '<int:quiz_id>/result',
         QuizResultView.as_view(),
         name=quiz_config.QUIZ_RESULT_URL,
+    ),
+    path(
+        '<int:quiz_id>/result/save',
+        QuizSaveView.as_view(),
+        name=quiz_config.QUIZ_SAVE_URL,
     )
 ]
