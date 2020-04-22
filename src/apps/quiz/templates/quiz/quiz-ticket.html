@@ -17,7 +17,7 @@
       </tr>
     </table>
 
-    <form class="quiz-form" action="{% url QUIZ_TICKET_URL ticket.id %}" method="POST">
+    <form class="quiz-form" action="{% url QUIZ_TICKET_URL quiz.id %}" method="POST">
       {% csrf_token %}
       {{ form.as_p }}
       <button type="submit" class="btn btn-blue">Проверить</button>
