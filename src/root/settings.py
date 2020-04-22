@@ -4,7 +4,6 @@ import sys
 from django.contrib.messages import constants as message_constants
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 APPS_DIR = os.path.join(BASE_DIR, 'apps')
 sys.path.insert(0, APPS_DIR)
 
@@ -178,6 +177,8 @@ LOGIN_URL = accounts_config.ACCOUNT_LOGIN_URL
 # Used in anonymous_required decorator.
 LOGIN_REDIRECT_URL = profiles_config.PROFILE_REDIRECT_URL
 
+PROFILE_REDIRECT_URL = profiles_config.PROFILE_REDIRECT_URL
+
 # Messages.
 # ------------------------------------------------------------------------------
 
@@ -192,5 +193,5 @@ MESSAGE_TAGS = {
 # Session.
 # ------------------------------------------------------------------------------
 
-SESSION_SAVE_EVERY_REQUEST = False
+SESSION_SAVE_EVERY_REQUEST = True
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False

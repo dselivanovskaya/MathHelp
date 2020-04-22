@@ -27,6 +27,10 @@ class TicketDetailView(View):
 
     def get(self, request, ticket_id):
         ticket = get_object_or_404(Ticket, id=ticket_id)
+
+        if ticket.name not in request.session['watched_tickets']:
+            request.session['watched_tickets'].append(ticket.name)
+
         context = {
                 'form':     self.form_class(ticket, request.user),
                 'ticket':   ticket,
@@ -40,8 +44,10 @@ class TicketReadPDFView(View):
 
     def get(self, request, ticket_filename):
         ticket = get_object_or_404(Ticket, filename=ticket_filename)
-        if ticket.name not in request.session['watched_tickets']:
-            request.session['watched_tickets'].append(ticket.name)
+
+        if ticket.name not in request.session['read_tickets']:
+            request.session['read_tickets'].append(ticket.name)
+
         try:
             return FileResponse(open(ticket.get_absolute_path(), 'rb'))
         except FileNotFoundError:

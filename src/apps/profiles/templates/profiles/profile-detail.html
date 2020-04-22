@@ -19,30 +19,96 @@
             Редактировать
           </a>
         </td>
+
         <td class="user-stat">
           <h2 id="greeting">{{ user.first_name }}</h2>
+
           {% if request.session.watched_tickets %}
-            {% if user.profile.is_male %}
-              <b>Сегодня ты посмотрел:</b>
-            {% elif user.profile.is_female %}
-              <b>Сегодня ты посмотрела:</b>
-            {% else %}
-              <b>Сегодня вы посмотрели:</b>
-            {% endif %}
+
+            <b>Сегодня ты
+              {% if user.profile.is_male %}
+                просматривал
+              {% elif user.profile.is_female %}
+                просматривала
+              {% endif %}
+            эти билеты:</b>
+
             <ul>
             {% for ticket in request.session.watched_tickets %}
-                <li>{{ ticket }}</li>
+                <li>
+                  <i>{{ ticket }}</i>
+                </li>
             {% endfor %}
             </ul>
-          {% else %}
-            {% if user.profile.is_male %}
-                <b>Сегодня ты еще не занимался :( Давай исправим это!</b>
-            {% elif user.profile.is_female %}
-                <b>Сегодня ты еще не занималась :( Давай исправим это!</b>
-            {% else %}
-                <b>Сегодня вы еще не занимались :( Давай исправим это!</b>
-            {% endif %}
           {% endif %}
+
+          {% if request.session.read_tickets %}
+
+            <b>Сегодня ты
+              {% if user.profile.is_male %}
+                читал
+              {% elif user.profile.is_female %}
+                читала
+              {% endif %}
+            эти билеты:</b>
+
+            <ul>
+            {% for ticket in request.session.read_tickets %}
+                <li>
+                  <i>{{ ticket }}</i>
+                </li>
+            {% endfor %}
+            </ul>
+          {% endif %}
+
+          {% if request.session.watched_quizzes %}
+
+            <b>Сегодня ты
+              {% if user.profile.is_male %}
+                просматривал
+              {% elif user.profile.is_female %}
+                просматривала
+              {% endif %}
+            тесты по следующим билетам:</b>
+
+            <ul>
+            {% for quiz in request.session.watched_quizzes %}
+                <li>
+                  <i>{{ quiz }}</i>
+                </li>
+            {% endfor %}
+            </ul>
+
+          {% endif %}
+
+          {% if request.session.taken_quizzes %}
+
+            <b>Сегодня ты
+              {% if user.profile.is_male %}
+                проходил
+              {% elif user.profile.is_female %}
+                проходила
+              {% endif %}
+            тесты по следующим билетам:</b>
+
+            <ul>
+            {% for quiz in request.session.taken_quizzes %}
+                <li>
+                  <i>{{ quiz }}</i>
+                </li>
+            {% endfor %}
+            </ul>
+
+          {% endif %}
+
+            <!-- <b>Сегодня ты еще не -->
+            <!-- {% if user.profile.is_male %} -->
+            <!--     занимался -->
+            <!-- {% elif user.profile.is_female %} -->
+            <!--     занималась -->
+            <!-- {% endif %} -->
+            <!-- :( Давай исправим это!</b> -->
+
         </td>
       </tr>
     </table>

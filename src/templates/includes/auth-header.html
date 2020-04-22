@@ -10,6 +10,11 @@
         <li>
           <a href="{% url PROFILE_DETAIL_URL user.username %}">Мой профиль</a>
         </li>
+        {% if request.user.is_superuser %}
+        <li>
+          <a href="/admin/">Админ</a>
+        </li>
+        {% endif %}
         <li>
           <a href="{% url TICKET_LIST_URL %}">Билеты</a>
         </li>

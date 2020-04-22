@@ -14,7 +14,7 @@
     <h2>{{ ticket.name }}</h2>
     <a href="{{ ticket.get_absolute_url }}" download class="btn btn-blue">Скачать</a>
     <a href="{% url TICKET_READ_PDF_URL ticket.filename %}" class="btn btn-blue">Читать онлайн</a>
-    <a href="{% url QUIZ_TICKET_URL ticket.id %}" class="btn btn-blue">Пройти тест</a><br>
+    <a href="{% url QUIZ_TICKET_URL ticket.quiz.id %}" class="btn btn-blue">Пройти тест</a><br>
 
   <div class="comments">
       <table class="comments">
