@@ -1,7 +1,7 @@
 from django.apps import AppConfig
 
 
-class QuizzesConfig(AppConfig):
-    name = 'quizzes'
+class QuizConfig(AppConfig):
+    name = 'quiz'
 
     QUIZ_TICKET_URL = 'quiz-ticket'

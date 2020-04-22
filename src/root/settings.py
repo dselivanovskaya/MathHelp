@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'forum.apps.ForumConfig',
     'pages.apps.PagesConfig',
     'profiles.apps.ProfilesConfig',
-    'quizzes.apps.QuizzesConfig',
+    'quiz.apps.QuizConfig',
     'tickets.apps.TicketsConfig',
 
     'tests',
@@ -89,7 +89,7 @@ TEMPLATES = [
                 'accounts.context_processors.accounts',
                 'pages.context_processors.pages',
                 'profiles.context_processors.profiles',
-                'quizzes.context_processors.quizzes',
+                'quiz.context_processors.quiz',
                 'tickets.context_processors.tickets',
             ],
         },
