@@ -22,23 +22,23 @@
     padding-right:20px;
     padding-bottom:20px;
 }
-    
+
 .ticket:hover {
     text-decoration: underline;
 }
-    
+
 .ticket:active {
     text-decoration: none;
     opacity: 0.3;
 }
 
 /* Rating stars */
-  
+
 .star {
     vertical-align:top;
-    padding-top:20px;
+    padding-top:5px;
 }
-  
+
 .star img {
     padding-left: 10px;
     padding-right: 10px;
@@ -46,19 +46,98 @@
     width: 130px;
 }
 
-/* Comments table */
+/* Ticket detail */
 
-.actions {
-    background-color: #efefef;
-    position: relative;
-    width: 100%;
-    margin: 0 auto;
-    padding: 0 10px;
+.ticket-detail{
+    background: #efefef;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    margin-top: 30px;
 }
-.comments {
-    background-color: #d8e4f1;
-    position: relative;
+
+.ticket-detail h3{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-weight: normal;
+    line-height: 25px;
+}
+
+.ticket-actions{
+    text-align: center;
+}
+
+.comments-table{
     width: 100%;
-    margin: 0 auto;
-    padding: 0 10px;
+}
+
+.comments-table td{
+    border-left: 0px;
+    border-right: 0px;
+}
+
+.comments-table h3{
+    margin-top: 3px;
+    margin-bottom: 2px;
+    margin-left: 10px;
+    display: inline-block;
+    font-weight: normal;
+}
+
+.comments-table h5{
+    display: block;
+    float: right;
+    margin-top: 3px;
+    margin-bottom: 2px;
+}
+
+.comment-body{
+    background: #d8e4f2;
+    min-height: 30px;
+    border: none;
+    border-radius: 5px;
+    padding: 2px;
+}
+
+.comment-body p{
+    margin-left: 10px;
+    color: #404040;
+    font-size: 17px;
+    line-height: 20px;
+}
+
+.submit-comment{
+    padding: 10px;
+}
+
+.submit-comment textarea{
+    border: 1px solid;
+    border-color: #d1d5da;
+    border-radius: 5px;
+}
+
+.submit-comment h3{
+    padding-left: 5px;
+    font-weight: normal;
+}
+
+.submit-comment-instruction{
+    vertical-align: top;
+    padding: 20px;
+}
+
+.submit-comment-instruction p{
+    padding-left: 20px;
+    padding-right: 20px;
+    color: #404040;
+    font-size: 17px;
+    line-height: 20px;
+}
+
+.submit-comment-instruction div{
+    background: #efefef;
+    border: none;
+    border-radius: 5px;
+    padding: 2px;
+    width: 400px;
 }

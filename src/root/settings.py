@@ -4,7 +4,6 @@ import sys
 from django.contrib.messages import constants as message_constants
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 APPS_DIR = os.path.join(BASE_DIR, 'apps')
 sys.path.insert(0, APPS_DIR)
 
@@ -42,13 +41,18 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # Third party
+    'stronghold',
+
+    # Local
     'accounts.apps.AccountsConfig',
     'forum.apps.ForumConfig',
     'pages.apps.PagesConfig',
     'profiles.apps.ProfilesConfig',
-    'quizzes.apps.QuizzesConfig',
+    'quiz.apps.QuizConfig',
     'tickets.apps.TicketsConfig',
 
+    # Just for testing
     'tests',
 ]
 
@@ -66,6 +70,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # Third party
+    'stronghold.middleware.LoginRequiredMiddleware',
 ]
 
 # Template engine settings.
@@ -89,7 +95,7 @@ TEMPLATES = [
                 'accounts.context_processors.accounts',
                 'pages.context_processors.pages',
                 'profiles.context_processors.profiles',
-                'quizzes.context_processors.quizzes',
+                'quiz.context_processors.quiz',
                 'tickets.context_processors.tickets',
             ],
         },
@@ -192,5 +198,9 @@ MESSAGE_TAGS = {
 # Session.
 # ------------------------------------------------------------------------------
 
-SESSION_SAVE_EVERY_REQUEST = False
+SESSION_SAVE_EVERY_REQUEST = True
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+
+STRONGHOLD_PUBLIC_NAMED_URLS = (INDEX_URL,
+                                accounts_config.ACCOUNT_LOGIN_URL,
+                                accounts_config.ACCOUNT_CREATE_URL)

@@ -5,7 +5,7 @@
 {% block title %} Тест {% endblock %}
 
 {% block css %}
-  <link rel="stylesheet" href="{% static 'quizzes/css/quizzes.css' %}">
+  <link rel="stylesheet" href="{% static 'quiz/css/quiz.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -17,7 +17,7 @@
       </tr>
     </table>
 
-    <form class="quiz-form" action="{% url QUIZ_TICKET_URL ticket.id %}" method="POST">
+    <form class="quiz-form" action="{% url QUIZ_TICKET_URL quiz.id %}" method="POST">
       {% csrf_token %}
       {{ form.as_p }}
       <button type="submit" class="btn btn-blue">Проверить</button>

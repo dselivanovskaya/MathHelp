@@ -21,3 +21,7 @@ class Ticket(models.Model):
 
     def get_absolute_url(self):
         return os.path.join(settings.MEDIA_URL, 'tickets', self.filename)
+
+    def session_update(self, request, lst):
+        if self.name not in request.session[lst]:
+            request.session[lst].append(self.name)
