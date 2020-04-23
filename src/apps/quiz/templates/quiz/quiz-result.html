@@ -16,7 +16,7 @@
     {% if not quiz_saved %}
       <a class="btn btn-blue" href="{% url QUIZ_SAVE_URL quiz.id %}">Сохранить</a>
     {% endif %}
-    <a class="btn btn-blue">Пройти заново</a>
+    <a class="btn btn-blue" href="{% url QUIZ_RESTART_URL quiz.id %}">Пройти заново</a>
     <a class="btn btn-blue">Работа над ошибками</a>
   </div>
 {% endblock %}

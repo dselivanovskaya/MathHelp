@@ -23,25 +23,7 @@
         <td class="user-stat">
           <h2 id="greeting">{{ user.first_name }}</h2>
 
-          {% if request.session.watched_tickets %}
-
-            <b>Сегодня ты
-              {% if user.profile.is_male %}
-                просматривал
-              {% elif user.profile.is_female %}
-                просматривала
-              {% endif %}
-            эти билеты:</b>
-
-            <ul>
-            {% for ticket in request.session.watched_tickets %}
-                <li>
-                  <i>{{ ticket }}</i>
-                </li>
-            {% endfor %}
-            </ul>
-          {% endif %}
-
+          
           {% if request.session.read_tickets %}
 
             <b>Сегодня ты
@@ -61,26 +43,7 @@
             </ul>
           {% endif %}
 
-          {% if request.session.watched_quizzes %}
-
-            <b>Сегодня ты
-              {% if user.profile.is_male %}
-                просматривал
-              {% elif user.profile.is_female %}
-                просматривала
-              {% endif %}
-            тесты по следующим билетам:</b>
-
-            <ul>
-            {% for quiz in request.session.watched_quizzes %}
-                <li>
-                  <i>{{ quiz }}</i>
-                </li>
-            {% endfor %}
-            </ul>
-
-          {% endif %}
-
+          
           {% if request.session.taken_quizzes %}
 
             <h3>Результаты по тестам за сегодня:</h3>
@@ -93,6 +56,9 @@
                 <td>
                   <b>Результат</b>
                 </td>
+                <td>
+                  <b>Статус</b>
+                </td>
               </tr>
               {% for quiz, data in request.session.taken_quizzes.items %}
                 <tr>
@@ -102,11 +68,32 @@
                   <td>
                     {{ data.result }}%
                   </td>
+                  <td>
+                    {% if data.saved %}
+                    ✅
+                    {% else %}
+                    ❌
+                    {% endif %}
+                  </td>
                 </tr>
               {% endfor %}
             </table>
-
           {% endif %}
+
+    <b>Результаты за все время</b>
+          <table>
+            <tr>
+              <td>Тест</td>
+              <td>Результат</td>
+            </tr>
+            {% for result in results %}
+            <tr>
+              <td>{{ result.quiz.ticket.name }}</td>
+              <td>{{ result.percent }}%</td>
+            </tr>
+            {% endfor %}
+          </table>
+
 
             <!-- <b>Сегодня ты еще не -->
             <!-- {% if user.profile.is_male %} -->

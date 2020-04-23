@@ -149,3 +149,19 @@ class QuizSaveView(View):
         finally:
             request.session['taken_quizzes'][str(quiz_id)]['saved'] = True
             return redirect(settings.LOGIN_REDIRECT_URL)
+
+
+class QuizRestartView(View):
+
+    messages = {
+        'success':   '',
+    }
+
+    def get(self, request, quiz_id):
+        if str(quiz_id) not in request.session['taken_quizzes']:
+            return redirect(quiz_config.QUIZ_TICKET_URL, quiz_id)
+
+        del request.session['taken_quizzes'][str(quiz_id)]
+        messages.success(request, self.messages['success'])
+
+        return redirect(quiz_config.QUIZ_TICKET_URL, quiz_id)

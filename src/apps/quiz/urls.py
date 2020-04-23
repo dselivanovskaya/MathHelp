@@ -1,7 +1,7 @@
 from django.urls import path
 
 from .apps import QuizConfig as quiz_config
-from .views import QuizTicketView, QuizResultView, QuizSaveView
+from .views import QuizTicketView, QuizResultView, QuizSaveView, QuizRestartView
 
 
 urlpatterns = [
@@ -22,7 +22,7 @@ urlpatterns = [
     ),
     path(
         '<int:quiz_id>/restart',
-        QuizSaveView.as_view(),
-        name=quiz_config.QUIZ_SAVE_URL,
+        QuizRestartView.as_view(),
+        name=quiz_config.QUIZ_RESTART_URL,
     ),
 ]

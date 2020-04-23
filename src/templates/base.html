@@ -22,8 +22,10 @@
 
     {% if messages %}
       {% for message in messages %}
+      <div class="{{ message.tags }}">
         {{ message }}
-      {% endfor %}
+      </div>
+        {% endfor %}
     {% endif %}
 
     {% block content %} {% endblock %}

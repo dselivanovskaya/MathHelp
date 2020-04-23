@@ -22,6 +22,12 @@ class ProfileDetailView(TemplateView):
 
     template_name = f'{profiles_config.name}/profile-detail.html'
 
+    def get(self, request, **kwargs):
+        results = request.user.result_set.all()
+        context = {
+            'results': results
+        }
+        return render(request, self.template_name, context)
 
 class ProfileUpdateView(View):
 
