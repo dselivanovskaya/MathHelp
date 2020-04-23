@@ -16,6 +16,12 @@ body {
   padding: 0 10px;
 }
 
+.border-bottom{
+  padding-bottom: 10px;
+  border-bottom: 1px solid;
+  border-color: #d1d5da;
+}
+
 /* Header on home page */
 
 .main-header {
@@ -42,8 +48,8 @@ body {
 .second-head {
   text-align: justify;
   letter-spacing: 1px;
-  height: 8em;
-  padding: 2em 10%;
+  height: 90px;
+  padding: 5px;
   background: #D8E4F2;
   color: #000000;
   font-family: Arial, sans-serif;
@@ -51,8 +57,8 @@ body {
 
 .head-img {
   display:inline-block;
-  width: 250px;
-  height: 160px;
+  width: 230px;
+  height: 86px;
   margin: 0;
   padding: 0;
   vertical-align: middle;
@@ -69,16 +75,14 @@ body {
   display: inline-block;
   margin-left: 25px;
   vertical-align: middle;
-  font-size: 20px;
+  font-size: 18px;
   line-height: 24px;
 }
 
 .head-nav {
   display: block;
   float: right;
-  padding-top:50px;
-  font-size: 18px;
-  line-height: 24px;
+  padding-top:33px;
 }
 
 .head-nav a {
@@ -94,15 +98,37 @@ body {
   text-decoration: none;
   opacity: 0.3;
 }
+/* Submenu */
+
+.submenu{
+  display: none;
+  position: absolute;
+  background-color: #369;
+  margin-top: 10px;
+  margin-left: -10px;
+}
+
+.submenu a{
+  color: #fff;
+  text-decoration: none;
+}
+
+.head-nav li:hover ul{
+  display: block;
+}
+
+.head-nav li:hover li{
+  display: block;
+}
 
 /* Buttons */
 
 .btn {
   display: inline-block;
-  padding: 20px;
+  padding: 15px;
   margin: 5px;
-  font-size: 18px;
-  line-height: 24px;
+  font-size: 16px;
+  line-height: 14px;
   vertical-align: top;
   text-align: center;
   text-decoration: none;
@@ -111,6 +137,7 @@ body {
   cursor: pointer;
   outline: none;
   border: none;
+  border-radius:999px;
 }
 
 .btn-blue {
@@ -244,8 +271,8 @@ body {
 /*Forms*/
 
 .get-info {
-  padding-top: 85px;
-  padding-bottom: 65px;
+  padding-top: 60px;
+  padding-bottom: 60px;
   background-color: #ffffff;
 }
 
@@ -280,12 +307,6 @@ body {
   font-size: 18px;
   line-height: 60px;
   font-family: Arial, sans-serif;
-}
-
-.get-info-form .btn {
-  width: 504px;
-  height: 60px;
-  border-radius: 3px;
 }
 
 .get-info-instruction{
@@ -374,17 +395,18 @@ body {
 
 /* Toc on additions page */
 
-.toc {
-  background-color: #efefef;
-  width: 980px;
-  margin: 0 auto;
-  padding: 0 10px;
-  padding-bottom: 5px;
-  }
+.toc-body{
+  background: #efefef;
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+}
 
 .toc a{
- color: #1f2022;
- text-decoration: none;
+  text-decoration: none;
+  color: #404040;
+  font-size: 17px;
+  line-height: 20px;
 }
 
 .toc a:hover {
@@ -396,7 +418,7 @@ body {
   opacity: 0.3;
 }
 
-.toc h2{
+.toc h3{
   padding-top:10px;
 }
 
@@ -404,8 +426,8 @@ body {
   text-align: right;
 }
 
-h2:target {
-    text-decoration: underline;
+h3:target {
+  text-decoration: underline;
 }
 
 
@@ -429,6 +451,10 @@ padding-left:10px;
   height: 30px;
   color: #ffffff;
   background: #00114a;
+}
+
+.catalog th{
+  padding: 5px;
 }
 
 /* Blue blocks */
@@ -497,4 +523,149 @@ padding-bottom:20px;
   padding-top:10px;
 }
 
+<<<<<<< HEAD
+/* References */
 
+.reference-title {
+  background: #d8e4f2;
+  border: none;
+  border-radius: 5px;
+  text-align: center;
+  margin-top: 30px;
+}
+
+.reference-title h3 {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-weight: normal;
+  line-height: 25px;
+}
+
+.reference-body {
+  background: #efefef;
+  border: none;
+  border-radius: 5px;
+  margin: 0 auto;
+  padding: 0 10px;
+}
+
+.reference-body a{
+  color: #1f2022;
+  text-decoration: none;
+  display:block;
+  position:relative;
+  padding-right:20px;
+  padding-bottom:20px;
+  }
+
+  .reference-body p{
+    color: #404040;
+    font-size: 17px;
+    line-height: 20px;
+  }
+  
+  .reference-body a:hover {
+    text-decoration: underline;
+  }
+  
+  .reference-body a:active {
+    text-decoration: none;
+    opacity: 0.3;
+  }
+  
+  .reference-body h2{
+    text-align:center;
+    padding-top:10px;
+  }
+  
+  .reference-body-2 img{
+    margin-top: 15px;
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+
+  .reference-body-2 {
+    background: #ffffff;
+    border: none;
+    border-radius: 5px;
+    margin: 0 auto;
+    padding: 0 10px;
+  }
+
+  .reference-body-2 a{
+    color: #1f2022;
+    text-decoration: none;
+    display:block;
+    position:relative;
+    padding-right:20px;
+    padding-bottom:20px;
+    }
+
+    .reference-body-2 a:hover {
+      text-decoration: underline;
+    }
+    
+    .reference-body-2 a:active {
+      text-decoration: none;
+      opacity: 0.3;
+    }
+=======
+<<<<<<< HEAD
+/*Profile table*/
+
+.profile_table{
+  width: 100%;
+  border-collapse: collapse;
+  }
+  
+  .profile_table p{
+  display: inline-block;
+  color: #404040;
+  font-size: 18px;
+  line-height: 24px;
+  }
+  
+  .profile_gray{
+  background-color:#efefef;
+  width: 490px;
+  padding: 10px;
+  }
+  
+  .profile_blue{
+  background-color: #d8e4f1;
+  width: 490px;
+  padding: 10px;
+  }
+
+/*Profile-info table*/
+
+.profile-info{
+  border-collapse: collapse;
+  width: 980px;
+  }
+   
+.profile-info img{
+  padding: 10px;
+}
+
+.user-info{
+width: 250px;
+}
+
+.user-info b{
+  display: block;
+  margin: 0 auto 5px;
+  padding-left: 10px;
+}
+
+.user-stat{
+  vertical-align: top;
+}
+
+.user-stat b{
+  color: #404040;
+}
+=======
+
+>>>>>>> 5876f518648fa9b4aea9bdc7860dbb7609c67a14
+>>>>>>> defytheflow-master

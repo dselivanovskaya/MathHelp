@@ -201,4 +201,6 @@ MESSAGE_TAGS = {
 SESSION_SAVE_EVERY_REQUEST = True
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 
-STRONGHOLD_PUBLIC_NAMED_URLS = (INDEX_URL, )
+STRONGHOLD_PUBLIC_NAMED_URLS = (INDEX_URL,
+                                accounts_config.ACCOUNT_LOGIN_URL,
+                                accounts_config.ACCOUNT_CREATE_URL)

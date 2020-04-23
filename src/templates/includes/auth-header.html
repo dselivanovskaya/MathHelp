@@ -3,8 +3,9 @@
 <header class="second-head">
   <div class="container">
     <div class="head-img">
-      <img src="{% static 'img/logo-head2.jpg' %}" width="250" height="128" alt="MathHelp">
+      <img src="{% static 'img/logo-head2.png' %}" width="230" height="86" alt="MathHelp">
     </div>
+
     <nav class="head-nav">
       <ul class="head-ul">
         <li>
@@ -18,11 +19,17 @@
         </li>
         <li>
           <a href="{% url ACCOUNT_SETTINGS_URL %}">Настройки</a>
+          <ul class='submenu'>
+            <li><a href="">Изменить имя пользователя</a></li>
+            <li><a href="">Изменить пароль</a></li>
+            <li><a href="">Удалить аккаунт</a></li>
+          </ul>
         </li>
         <li>
           <a href="{% url ACCOUNT_LOGOUT_URL %}">Выход</a>
         </li>
       </ul>
     </nav>
+    
   </div>
 </header>

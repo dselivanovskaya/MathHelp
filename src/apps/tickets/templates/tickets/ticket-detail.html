@@ -11,33 +11,49 @@
 
 {% block content %}
 <div class="container">
-    <h2>{{ ticket.name }}</h2>
+
+  <div class="ticket-detail"> 
+    <h3>Билет: {{ ticket.name }}</h3>
+  </div>
+  <div class="border-bottom ticket-actions">
     <a href="{{ ticket.get_absolute_url }}" download class="btn btn-blue">Скачать</a>
     <a href="{% url TICKET_READ_PDF_URL ticket.filename %}" class="btn btn-blue">Читать онлайн</a>
     <a href="{% url QUIZ_TICKET_URL ticket.quiz.id %}" class="btn btn-blue">Пройти тест</a><br>
-
-  <div class="comments">
-      <table class="comments">
-        {% for comment in comments %}
-        <tr>
-          <td width="750px">
-            <h3>{{ comment.creator }}</h3>
-            <p>{{ comment.body }}</p>
-            <td width="200px"><h5>{{ comment.created }}</h5></td>
-          </td>
-        </tr>
-        {% endfor %}
-      </table>
-
-    <form action="{% url 'comment-post' ticket.id %}" method="POST">
-      {% csrf_token %}
-      {% for field in form %}
-        {{ field }}
-      {% endfor %}
-      <button type="submit" class="btn btn-blue">Комментировать</button>
-    </form>
-
   </div>
+    
+  <table class="comments-table">
+    {% for comment in comments %}
+      <tr>
+        <td class="border-bottom">
+          <h3>{{ comment.creator }}</h3>
+          <h5 class="comment-date">{{ comment.created }}</h5>
+          <div class="comment-body"><p>{{ comment.body }}</p></div>
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
 
+  <div class="submit-comment"> 
+    <h3>Оставьте свой комментарий</h3>
+    <table>
+      <tr>
+        <td>
+          <form action="{% url 'comment-post' ticket.id %}" method="POST">
+            {% csrf_token %}
+            {% for field in form %}
+              {{ field }}
+            {% endfor %}<br>
+            <button type="submit" class="btn btn-blue">Комментировать</button>
+          </form>
+        </td>
+        <td class="submit-comment-instruction">
+          <div>
+            <p>Здесь вы можете задать интересующие вас вопросы или опубликовать 
+              свои мысли по поводу решения задач. Возможно, они будут полезны другим пользователям.</p>
+          </div>
+        </td>
+      </tr>
+    </table>
+    </div>
   </div>
 {% endblock %}
