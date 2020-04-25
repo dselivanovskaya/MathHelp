@@ -10,3 +10,33 @@
 li {
   list-style-type: none;
 }
+
+.quiz-detail{
+  background: #efefef;
+  border: none;
+  border-radius: 5px;
+  text-align: center;
+  margin-top: 30px;
+}
+
+.quiz-detail h3{
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-weight: normal;
+  line-height: 25px;
+}
+
+.label-form{
+  color: #404040;
+  font-size: 17px;
+  line-height: 20px;
+  font-weight: 600;
+  padding-top: 5px;
+}
+
+.label-form-field{
+  color: #404040;
+  font-size: 16px;
+  line-height: 25px;
+  font-weight: normal;
+}

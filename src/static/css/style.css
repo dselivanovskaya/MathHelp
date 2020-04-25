@@ -98,14 +98,20 @@ body {
   text-decoration: none;
   opacity: 0.3;
 }
+
 /* Submenu */
 
 .submenu{
   display: none;
   position: absolute;
-  background-color: #369;
-  margin-top: 10px;
-  margin-left: -10px;
+  background-color: #00114a;
+}
+
+.submenu li{
+  margin-left: -20px;
+  margin-right: 17px;
+  margin-top: 4px;
+  margin-bottom: 4px;
 }
 
 .submenu a{
@@ -523,7 +529,7 @@ padding-bottom:20px;
   padding-top:10px;
 }
 
-<<<<<<< HEAD
+
 /* References */
 
 .reference-title {
@@ -609,63 +615,3 @@ padding-bottom:20px;
       text-decoration: none;
       opacity: 0.3;
     }
-=======
-<<<<<<< HEAD
-/*Profile table*/
-
-.profile_table{
-  width: 100%;
-  border-collapse: collapse;
-  }
-  
-  .profile_table p{
-  display: inline-block;
-  color: #404040;
-  font-size: 18px;
-  line-height: 24px;
-  }
-  
-  .profile_gray{
-  background-color:#efefef;
-  width: 490px;
-  padding: 10px;
-  }
-  
-  .profile_blue{
-  background-color: #d8e4f1;
-  width: 490px;
-  padding: 10px;
-  }
-
-/*Profile-info table*/
-
-.profile-info{
-  border-collapse: collapse;
-  width: 980px;
-  }
-   
-.profile-info img{
-  padding: 10px;
-}
-
-.user-info{
-width: 250px;
-}
-
-.user-info b{
-  display: block;
-  margin: 0 auto 5px;
-  padding-left: 10px;
-}
-
-.user-stat{
-  vertical-align: top;
-}
-
-.user-stat b{
-  color: #404040;
-}
-=======
-
->>>>>>> 5876f518648fa9b4aea9bdc7860dbb7609c67a14
->>>>>>> defytheflow-master

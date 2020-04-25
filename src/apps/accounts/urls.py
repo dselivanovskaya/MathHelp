@@ -4,8 +4,8 @@ from django.urls import path
 from .apps import AccountsConfig as accounts_config
 from .views import (
     AccountLoginView, AccountLogoutView,
-    AccountSettingsView,
     AccountCreateView, AccountDeleteView,
+    AccountSettingsView,
     AccountPasswordChangeView,
     AccountUsernameChangeView,
 )

@@ -68,7 +68,6 @@ class AccountLogoutView(View):
         messages.success(request, self.messages['success'])
         return redirect(settings.INDEX_URL)
 
-
 class AccountSettingsView(TemplateView):
 
     template_name = f'{accounts_config.name}/account-settings.html'
