@@ -10,7 +10,7 @@
 
 {% block content %}
   <div class="container">
-    
+
     <h3><u>Билет</u>: {{ quiz.ticket.name }}</h3>
     <h3><u>Результат</u>: {{ quiz_result }}%.</h3>
 
@@ -18,6 +18,6 @@
       <a class="btn btn-blue" href="{% url QUIZ_SAVE_URL quiz.id %}">Сохранить</a>
     {% endif %}
     <a class="btn btn-blue" href="{% url QUIZ_RESTART_URL quiz.id %}">Пройти заново</a>
-    <a class="btn btn-blue">Работа над ошибками</a>
+    <a class="btn btn-blue" href="{% url QUIZ_REPORT_URL quiz.id %}">Отчет</a>
   </div>
 {% endblock %}

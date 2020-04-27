@@ -4,6 +4,7 @@ from .models import Answer
 
 
 class QuizForm(forms.Form):
+    ''' A form for filling a quiz. '''
 
     def __init__(self, quiz, *args, **kwargs):
         '''
@@ -14,7 +15,8 @@ class QuizForm(forms.Form):
         super().__init__(*args, **kwargs)
         self.use_required_attribute = False
         for question in quiz.question_set.all():
-            field_name = f'question_{question.id}'
+            # field_name = f'question_{question.id}'
+            field_name = f'{question.id}'
             choices = [(ans.id, ans.text) for ans in question.answer_set.all()]
             self.fields[field_name] = forms.ChoiceField(
                 label=question.text, required=True,
@@ -27,9 +29,16 @@ class QuizForm(forms.Form):
             inside self.cleaned_data['result'].
         '''
         cleaned_data = super().clean()
+
+        answers = {}
         correct_answers = 0
-        for question, answer_id in cleaned_data.items():
+
+        for question_id, answer_id in cleaned_data.items():
             if Answer.objects.get(id=answer_id).is_correct:
                 correct_answers += 1
+            answers[question_id] = answer_id
+
+        cleaned_data['answers'] = answers
         cleaned_data['result'] = int((correct_answers / len(self.fields)) * 100)
+
         return cleaned_data

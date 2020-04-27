@@ -3,13 +3,20 @@ from django.utils.decorators import method_decorator
 from django.conf import settings
 from django.shortcuts import redirect, render, get_object_or_404
 from django.views import View
+from django.views.decorators.http import require_http_methods
 from django.core.exceptions import ObjectDoesNotExist
 
 from tickets.apps import TicketsConfig as tickets_config
 
 from .apps import QuizConfig as quiz_config
+from .decorators import quiz_taken_required
 from .forms import QuizForm
-from .models import Quiz, Result
+from .models import Quiz, Question, Answer, Result
+
+
+QUIZ_ACTION_DECORATORS = [
+    require_http_methods(["GET"]), quiz_taken_required,
+]
 
 
 class QuizTicketView(View):
@@ -62,9 +69,10 @@ class QuizTicketView(View):
         if form.is_valid():
             request.session['taken_quizzes'].update({
                 str(quiz_id): {
-                    'name':   quiz.ticket.name,
-                    'result': form.cleaned_data['result'],
-                    'saved':  False,
+                    'name':    quiz.ticket.name,
+                    'result':  form.cleaned_data['result'],
+                    'answers': form.cleaned_data['answers'],
+                    'saved':   False,
                 }
             })
             return redirect(quiz_config.QUIZ_RESULT_URL, quiz_id)
@@ -77,6 +85,7 @@ class QuizTicketView(View):
         return render(request, self.template_name, context)
 
 
+@method_decorator(QUIZ_ACTION_DECORATORS, name='dispatch')
 class QuizResultView(View):
 
     template_name = f'{quiz_config.name}/quiz-result.html'
@@ -91,9 +100,6 @@ class QuizResultView(View):
             If user has not yet saved the quiz result, allow to save it,
             else do not.
         '''
-        if str(quiz_id) not in request.session['taken_quizzes']:
-            return redirect(quiz_config.QUIZ_TICKET_URL, quiz_id)
-
         quiz = get_object_or_404(Quiz, id=quiz_id)
         taken_quizzes = request.session['taken_quizzes']
 
@@ -106,6 +112,7 @@ class QuizResultView(View):
         return render(request, self.template_name, context)
 
 
+@method_decorator(QUIZ_ACTION_DECORATORS, name='dispatch')
 class QuizSaveView(View):
 
     messages = {
@@ -128,9 +135,6 @@ class QuizSaveView(View):
 
             Mark quiz as saved in the session.
         '''
-        if str(quiz_id) not in request.session['taken_quizzes']:
-            return redirect(quiz_config.QUIZ_TICKET_URL, quiz_id)
-
         quiz = get_object_or_404(Quiz, id=quiz_id)
         result = request.session['taken_quizzes'][str(quiz_id)]['result']
 
@@ -143,7 +147,7 @@ class QuizSaveView(View):
             new_result.save()
             messages.success(request, self.messages['success-save'])
         else:
-            prev_result.persect = result
+            prev_result.percent = result
             prev_result.save()
             messages.success(request, self.messages['success-update'])
         finally:
@@ -151,17 +155,47 @@ class QuizSaveView(View):
             return redirect(settings.LOGIN_REDIRECT_URL)
 
 
+@method_decorator(QUIZ_ACTION_DECORATORS, name='dispatch')
 class QuizRestartView(View):
 
     messages = {
-        'success':   '',
+        'error':     'Произошла ошибка во время сброса результата.',
+        'success':   'Результат успешно сброшен.',
     }
 
     def get(self, request, quiz_id):
-        if str(quiz_id) not in request.session['taken_quizzes']:
+        ''' Delete 'quiz_id' from session['taken_quizzes']. '''
+        try:
+            del request.session['taken_quizzes'][str(quiz_id)]
+        except:
+            messages.error(request, self.messages['error'])
+        else:
+            messages.success(request, self.messages['success'])
+        finally:
             return redirect(quiz_config.QUIZ_TICKET_URL, quiz_id)
 
-        del request.session['taken_quizzes'][str(quiz_id)]
-        messages.success(request, self.messages['success'])
 
-        return redirect(quiz_config.QUIZ_TICKET_URL, quiz_id)
+@method_decorator(QUIZ_ACTION_DECORATORS, name='dispatch')
+class QuizReportView(View):
+
+    template_name = f'{quiz_config.name}/quiz-report.html'
+
+    def get(self, request, quiz_id):
+        '''  '''
+        quiz = get_object_or_404(Quiz, id=quiz_id)
+        taken_quiz_data = request.session['taken_quizzes'][str(quiz_id)]
+
+        questions = Question.objects.filter(quiz=quiz)
+        for question in questions:
+            user_answer_id =  taken_quiz_data['answers'][str(question.id)]
+            user_answer = Answer.objects.get(id=user_answer_id)
+            question.user_answer = user_answer
+            question.correct_answer = question.get_correct_answer()
+
+        context = {
+            'quiz': quiz,
+            'taken_quiz_data': taken_quiz_data,
+            'questions': questions,
+        }
+
+        return render(request, self.template_name, context)

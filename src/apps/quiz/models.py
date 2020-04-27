@@ -27,6 +27,12 @@ class Question(models.Model):
     def __str__(self):
        return self.text
 
+    def get_correct_answer(self):
+        ''' Return the correct answer for particularr question. '''
+        for answer in Answer.objects.filter(question=self):
+            if answer.is_correct:
+                return answer
+
 
 class Answer(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
