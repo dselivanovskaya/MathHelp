@@ -5,10 +5,12 @@ from tickets.models import Ticket
 
 
 class Quiz(models.Model):
-
     PASS_PERCENT = 70
 
     ticket = models.OneToOneField(Ticket, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name_plural = 'quizzes'  # for admin panel
 
     def __str__(self):
         return self.ticket.name

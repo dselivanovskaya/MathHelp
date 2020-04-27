@@ -15,4 +15,7 @@ class Comment(models.Model):
     body = models.TextField(max_length=2048)
 
     def __str__(self):
-        return f'{str(self.user)}: {str(self.ticket)}'
+        return (
+            f"{str(self.user)}: {str(self.ticket)} "
+            f"[ {self.date.strftime('%Y-%m-%d %H:%M:%S')} ]"
+        )

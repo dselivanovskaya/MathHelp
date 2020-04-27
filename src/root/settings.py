@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'stronghold',
 
     # Local
+    'root',
     'accounts.apps.AccountsConfig',
     'forum.apps.ForumConfig',
     'pages.apps.PagesConfig',
