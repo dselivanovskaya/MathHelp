@@ -12,7 +12,7 @@
 {% block content %}
 <div class="container">
 
-  <div class="ticket-detail"> 
+  <div class="ticket-detail">
     <h3>Билет: {{ ticket.name }}</h3>
   </div>
   <div class="border-bottom ticket-actions">
@@ -20,25 +20,28 @@
     <a href="{% url TICKET_READ_PDF_URL ticket.filename %}" class="btn btn-blue">Читать онлайн</a>
     <a href="{% url QUIZ_TICKET_URL ticket.quiz.id %}" class="btn btn-blue">Пройти тест</a><br>
   </div>
-    
+
   <table class="comments-table">
     {% for comment in comments %}
       <tr>
         <td class="border-bottom">
-          <h3>{{ comment.creator }}</h3>
-          <h5 class="comment-date">{{ comment.created }}</h5>
+          <h3>{{ comment.user }}</h3>
+          <h5 class="comment-date">{{ comment.date }}</h5>
           <div class="comment-body"><p>{{ comment.body }}</p></div>
+          {% if request.user == comment.user %}
+            <a class="btn btn-blue" href="{% url COMMENT_DELETE_URL comment.id %}">Удалить</a>
+          {% endif %}
         </td>
       </tr>
     {% endfor %}
   </table>
 
-  <div class="submit-comment"> 
+  <div class="submit-comment">
     <h3>Оставьте свой комментарий</h3>
     <table>
       <tr>
         <td>
-          <form action="{% url 'comment-post' ticket.id %}" method="POST">
+          <form action="{% url COMMENT_POST_URL ticket.id %}" method="POST">
             {% csrf_token %}
             {% for field in form %}
               {{ field }}
@@ -48,7 +51,7 @@
         </td>
         <td class="submit-comment-instruction">
           <div>
-            <p>Здесь вы можете задать интересующие вас вопросы или опубликовать 
+            <p>Здесь вы можете задать интересующие вас вопросы или опубликовать
               свои мысли по поводу решения задач. Возможно, они будут полезны другим пользователям.</p>
           </div>
         </td>

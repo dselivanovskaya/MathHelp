@@ -93,6 +93,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
 
                 'accounts.context_processors.accounts',
+                'forum.context_processors.forum',
                 'pages.context_processors.pages',
                 'profiles.context_processors.profiles',
                 'quiz.context_processors.quiz',
