@@ -1,9 +1,11 @@
 from django.contrib import messages
-from django.shortcuts import redirect, render, reverse
+from django.contrib.messages.views import SuccessMessageMixin
 
-from django.views import View
+from django.urls import reverse, reverse_lazy
+
 from django.views.generic import RedirectView
 from django.views.generic.detail import DetailView
+from django.views.generic.edit import UpdateView
 
 from .apps import ProfilesConfig
 from .forms import ProfileUpdateForm
@@ -25,7 +27,6 @@ class ProfileDetailView(DetailView):
     template_name = f'{ProfilesConfig.name}/profile-detail.html'
 
     def get_object(self):
-        ''' Overriden DetailView method. '''
         return None
 
     def get_context_data(self, **kwargs):
@@ -35,37 +36,13 @@ class ProfileDetailView(DetailView):
         return context
 
 
-# TODO two models in one form, cant detect proper changes, always says that
-# mode lhas been updated.
-class ProfileUpdateView(View):
+class ProfileUpdateView(SuccessMessageMixin, UpdateView):
 
+    model = Profile
     form_class = ProfileUpdateForm
     template_name = f'{ProfilesConfig.name}/profile-update.html'
+    success_url = reverse_lazy(ProfilesConfig.PROFILE_REDIRECT_URL)
+    success_message = 'Профиль был успешно обновлён.'
 
-    messages = {
-        'success': 'Профиль был успешно обновлён.'
-    }
-
-    def get(self, request, **kwargs):
-        ''' Populate form with user profile data. '''
-        form = self.form_class(request.user, initial={
-            'first_name': request.user.first_name,
-            'last_name':  request.user.last_name,
-            'photo':      request.user.profile.photo,
-            'gender':     request.user.profile.gender,
-            'age':        request.user.profile.age,
-        })
-        return render(request, self.template_name, {'form': form})
-
-    def post(self, request, **kwargs):
-        form = self.form_class(
-            request.user, request.POST, request.FILES,
-            instance=request.user.profile,
-        )
-        if form.is_valid():
-            form.save()
-            messages.success(request, self.messages['success'])
-            return redirect(
-                ProfilesConfig.PROFILE_UPDATE_URL, request.user.username
-            )
-        return render(request, self.template_name, {'form': form})
+    def get_object(self):
+        return self.request.user.profile

@@ -39,11 +39,13 @@ class AccountCreateForm(auth.forms.UserCreationForm):
     def save(self):
         user = super().save()
 
-        user.first_name = self.cleaned_data.get('first_name')
-        user.last_name = self.cleaned_data.get('last_name')
         user.email = self.cleaned_data.get('email')
-
         user.save()
+
+        user.profile.first_name = self.cleaned_data.get('first_name')
+        user.profile.last_name = self.cleaned_data.get('last_name')
+        user.profile.save()
+
         return user
 
 

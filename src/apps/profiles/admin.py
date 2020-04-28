@@ -5,5 +5,5 @@ from .models import Profile
 
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ['user', 'gender', 'age', 'login_count']
+    list_display = ['user', 'first_name', 'last_name', 'gender', 'age', 'login_count']
     list_filter = ['gender', 'age']

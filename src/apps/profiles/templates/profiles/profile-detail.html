@@ -18,7 +18,7 @@
         <td class="user-info">
           <div>
             <img src="{{ user.profile.photo.url }}" width="200px" height="200px">
-          <b>{{ user.first_name }} {{ user.last_name }}</b>
+          <b>{{ user.profile.first_name }} {{ user.profile.last_name }}</b>
           <a class="btn btn-blue" href="{% url PROFILE_UPDATE_URL user.username %}">
             Редактировать
           </a>
@@ -27,7 +27,7 @@
 
         <td class="user-stat">
           <div class='greeting'>
-            <h3 id="greeting">{{ user.first_name }}</h3>
+            <h3 id="greeting">{{ user.profile.first_name }}</h3>
           </div>
               {% if request.session.read_tickets %}
 
@@ -97,15 +97,6 @@
             </tr>
             {% endfor %}
           </table>
-
-
-            <!-- <b>Сегодня ты еще не -->
-            <!-- {% if user.profile.is_male %} -->
-            <!--     занимался -->
-            <!-- {% elif user.profile.is_female %} -->
-            <!--     занималась -->
-            <!-- {% endif %} -->
-            <!-- :( Давай исправим это!</b> -->
 
         </td>
       </tr>

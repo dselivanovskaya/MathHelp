@@ -7,10 +7,6 @@ from .models import Profile
 
 class ProfileUpdateForm(ModelForm):
 
-    first_name = forms.CharField(max_length=64, min_length=1, required=False)
-    last_name = forms.CharField(max_length=64, min_length=1, required=False)
-
-    field_order = ('first_name', 'last_name')
     error_messages = {
         'invalid_photo_size': (
             'Максимальный размер фотографии '
@@ -20,17 +16,16 @@ class ProfileUpdateForm(ModelForm):
 
     class Meta:
         model = Profile
-        fields = ('photo', 'gender', 'age')
+        fields = ("first_name", "last_name", 'photo', 'gender', 'age')
 
-    def __init__(self, user, *args, **kwargs):
-        self.user = user
+    def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.use_required_attribute = False
 
     def clean_photo(self):
         photo = self.cleaned_data.get('photo')
         # If user uploads a new image
-        if photo != self.user.profile.photo:
+        if photo != self.instance.photo:
             # Check uploaded photo dimension
             width, height = get_image_dimensions(photo)
             if width > Profile.PHOTO_MAX_WIDTH:
@@ -43,24 +38,3 @@ class ProfileUpdateForm(ModelForm):
                 )
             self.user.profile.delete_photo()
         return photo
-
-    def save(self, *args, **kwargs):
-        profile = super().save(*args, **kwargs)
-
-        first_name = self.cleaned_data.get('first_name')
-        last_name = self.cleaned_data.get('last_name')
-
-        changed = False
-
-        if first_name != profile.user.first_name:
-            profile.user.first_name = first_name
-            changed = True
-
-        if last_name != profile.user.last_name:
-            profile.user.last_name = last_name
-            changed = True
-
-        if changed:
-            profile.user.save()
-
-        return profile
