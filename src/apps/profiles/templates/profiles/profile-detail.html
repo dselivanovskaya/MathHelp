@@ -30,7 +30,7 @@
             <h3 id="greeting">{{ user.first_name }}</h3>
           </div>
               {% if request.session.read_tickets %}
-              
+
               <div class="heading">
                 <h3>Сегодня ты
                   {% if user.profile.is_male %}
@@ -40,19 +40,19 @@
                   {% endif %}
                 эти билеты:</h3>
               </div>
-              
+
               {% for ticket in request.session.read_tickets %}
               <div class="border-bottom">
                 <p class="body-font">{{ ticket }}</p>
               </div>
               {% endfor %}
-      
+
               {% endif %}
 
-          
 
 
-    
+
+
             {% if request.session.taken_quizzes %}
             <div class="heading">
               <h3>Результаты по тестам за сегодня:</h3>
@@ -78,9 +78,9 @@
                 {% endfor %}
               </table>
             {% endif %}
- 
 
-          
+
+
          <div class="heading">
           <h3>Результаты за все время</h3>
          </div>

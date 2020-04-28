@@ -1,10 +1,9 @@
 from django.contrib import messages
-from django.shortcuts import redirect, render
-from django.shortcuts import reverse
-from django.utils.decorators import method_decorator
+from django.shortcuts import redirect, render, reverse
 
 from django.views import View
-from django.views.generic.base import TemplateView, RedirectView
+from django.views.generic import RedirectView
+from django.views.generic.detail import DetailView
 
 from .apps import ProfilesConfig
 from .forms import ProfileUpdateForm
@@ -20,10 +19,14 @@ class ProfileRedirectView(RedirectView):
         )
 
 
-class ProfileDetailView(TemplateView):
+class ProfileDetailView(DetailView):
     ''' Display profile information and quiz results. '''
 
     template_name = f'{ProfilesConfig.name}/profile-detail.html'
+
+    def get_object(self):
+        ''' Overriden DetailView method. '''
+        return None
 
     def get_context_data(self, **kwargs):
         ''' Add quiz results to context. '''
