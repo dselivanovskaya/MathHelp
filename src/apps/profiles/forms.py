@@ -52,12 +52,21 @@ class ProfileUpdateForm(ModelForm):
         last_name = self.cleaned_data.get('last_name')
         email = self.cleaned_data.get('email')
 
-        if first_name:
-            profile.user.first_name = first_name
-        if last_name:
-            profile.user.last_name = last_name
-        if email:
-            profile.user.email = email
+        changed = False
 
-        profile.user.save()
+        if first_name != profile.user.first_name:
+            profile.user.first_name = first_name
+            changed = True
+
+        if last_name != profile.user.last_name:
+            profile.user.last_name = last_name
+            changed = True
+
+        if email != profile.user.email:
+            profile.user.email = email
+            changed = True
+
+        if changed:
+            profile.user.save()
+
         return profile

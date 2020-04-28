@@ -1,44 +1,50 @@
 from django.contrib import messages
 from django.shortcuts import redirect, render
+from django.shortcuts import reverse
 from django.utils.decorators import method_decorator
-from django.views import View
-from django.views.generic.base import TemplateView
 
-from .apps import ProfilesConfig as profiles_config
+from django.views import View
+from django.views.generic.base import TemplateView, RedirectView
+
+from .apps import ProfilesConfig
 from .forms import ProfileUpdateForm
 from .models import Profile
 
 
-class ProfileRedirectView(View):
-    ''' Redirects user to his profile. '''
+class ProfileRedirectView(RedirectView):
+    ''' Redirect user to his profile. '''
 
-    def get(self, request):
-        return redirect(
-            profiles_config.PROFILE_DETAIL_URL, request.user.username
+    def get_redirect_url(self, *args, **kwargs):
+        return reverse(
+            ProfilesConfig.PROFILE_DETAIL_URL, args=[self.request.user.username]
         )
 
 
 class ProfileDetailView(TemplateView):
+    ''' Display profile information and quiz results. '''
 
-    template_name = f'{profiles_config.name}/profile-detail.html'
+    template_name = f'{ProfilesConfig.name}/profile-detail.html'
 
-    def get(self, request, **kwargs):
-        results = request.user.result_set.all()
-        context = {
-            'results': results
-        }
-        return render(request, self.template_name, context)
+    def get_context_data(self, **kwargs):
+        ''' Add quiz results to context. '''
+        context = super().get_context_data(**kwargs)
+        context['results'] = self.request.user.result_set.all()
+        return context
 
+
+# TODO two models in one form, cant detect proper changes, always says that
+# mode lhas been updated.
 class ProfileUpdateView(View):
 
     form_class = ProfileUpdateForm
-    template_name = f'{profiles_config.name}/profile-update.html'
+    template_name = f'{ProfilesConfig.name}/profile-update.html'
 
     messages = {
-        'success': 'Профиль был успешно изменён.'
+        'success': 'Профиль был успешно обновлён.'
     }
 
     def get(self, request, **kwargs):
+        ''' Populate form with user profile data. '''
         form = self.form_class(request.user, initial={
             'first_name': request.user.first_name,
             'last_name':  request.user.last_name,
@@ -52,12 +58,12 @@ class ProfileUpdateView(View):
     def post(self, request, **kwargs):
         form = self.form_class(
             request.user, request.POST, request.FILES,
-            instance=Profile.objects.get(user=request.user)
+            instance=request.user.profile,
         )
         if form.is_valid():
             form.save()
             messages.success(request, self.messages['success'])
             return redirect(
-                profiles_config.PROFILE_UPDATE_URL, request.user.username
+                ProfilesConfig.PROFILE_UPDATE_URL, request.user.username
             )
         return render(request, self.template_name, {'form': form})
