@@ -8,88 +8,92 @@
   <link rel="stylesheet" href="{% static 'profiles/css/profiles.css' %}">
 {% endblock %}
 
+
+
 {% block content %}
+
   <div class="container">
     <table class="profile-info">
       <tr>
         <td class="user-info">
-          <img src="{{ user.profile.photo.url }}" width="200px" height="200px">
+          <div>
+            <img src="{{ user.profile.photo.url }}" width="200px" height="200px">
           <b>{{ user.first_name }} {{ user.last_name }}</b>
           <a class="btn btn-blue" href="{% url PROFILE_UPDATE_URL user.username %}">
             Редактировать
           </a>
+          </div>
         </td>
 
         <td class="user-stat">
-          <h2 id="greeting">{{ user.first_name }}</h2>
-
-          
-          {% if request.session.read_tickets %}
-
-            <b>Сегодня ты
-              {% if user.profile.is_male %}
-                читал
-              {% elif user.profile.is_female %}
-                читала
+          <div class='greeting'>
+            <h3 id="greeting">{{ user.first_name }}</h3>
+          </div>
+              {% if request.session.read_tickets %}
+              
+              <div class="heading">
+                <h3>Сегодня ты
+                  {% if user.profile.is_male %}
+                    читал
+                  {% elif user.profile.is_female %}
+                    читала
+                  {% endif %}
+                эти билеты:</h3>
+              </div>
+              
+              {% for ticket in request.session.read_tickets %}
+              <div class="border-bottom">
+                <p class="body-font">{{ ticket }}</p>
+              </div>
+              {% endfor %}
+      
               {% endif %}
-            эти билеты:</b>
-
-            <ul>
-            {% for ticket in request.session.read_tickets %}
-                <li>
-                  <i>{{ ticket }}</i>
-                </li>
-            {% endfor %}
-            </ul>
-          {% endif %}
 
           
-          {% if request.session.taken_quizzes %}
 
-            <h3>Результаты по тестам за сегодня:</h3>
 
-            <table>
+    
+            {% if request.session.taken_quizzes %}
+            <div class="heading">
+              <h3>Результаты по тестам за сегодня:</h3>
+            </div>
+            <table class="today-results">
               <tr>
-                <td>
-                  <b>Название</b>
-                </td>
-                <td>
-                  <b>Результат</b>
-                </td>
-                <td>
-                  <b>Статус</b>
+                <th><p class="body-font">Название</p></th>
+                <th><p class="body-font">Результат</p></th>
+                <th><p class="body-font">Сохранен</p></th>
+              </tr>
+                {% for quiz, data in request.session.taken_quizzes.items %}
+              <tr>
+                <td class="border-bottom"><p class="body-font">{{ data.name }}</p></td>
+                <td class="border-bottom"><p class="body-font">{{ data.result }}%</p></td>
+                <td class="border-bottom">
+                  {% if data.saved %}
+                  <img src="{% static 'profiles/img/check.png' %}" width="20" height="20">
+                  {% else %}
+                  <img src="{% static 'profiles/img/cross.png' %}" width="20" height="20">
+                  {% endif %}
                 </td>
               </tr>
-              {% for quiz, data in request.session.taken_quizzes.items %}
-                <tr>
-                  <td>
-                    {{ data.name }}
-                  </td>
-                  <td>
-                    {{ data.result }}%
-                  </td>
-                  <td>
-                    {% if data.saved %}
-                    ✅
-                    {% else %}
-                    ❌
-                    {% endif %}
-                  </td>
-                </tr>
-              {% endfor %}
-            </table>
-          {% endif %}
+                {% endfor %}
+              </table>
+            {% endif %}
+ 
 
-    <b>Результаты за все время</b>
-          <table>
+          
+         <div class="heading">
+          <h3>Результаты за все время</h3>
+         </div>
+
+          <table class="all-results">
             <tr>
-              <td>Тест</td>
-              <td>Результат</td>
+              <th>Тест</th>
+              <th>Результат</th>
             </tr>
             {% for result in results %}
             <tr>
-              <td>{{ result.quiz.ticket.name }}</td>
-              <td>{{ result.percent }}%</td>
+              <td class="border-bottom"><p class="body-font">{{ result.quiz.ticket.name }}</p></td>
+              <td class="border-bottom"><p class="body-font">{{ result.percent }}%</p></td>
             </tr>
             {% endfor %}
           </table>

@@ -37,6 +37,12 @@
 
 .user-info {
     width: 250px;
+    vertical-align: top;
+    padding-top: 20px;
+}
+
+.user-info div{
+    text-align: center;
 }
 
 .user-info b {
@@ -47,8 +53,45 @@
 
 .user-stat {
     vertical-align: top;
+    padding-top: 20px;
 }
 
 .user-stat b {
     color: #404040;
+}
+
+.greeting h3{
+    font-weight: 500;
+    line-height: 20px;
+    color: #1f2022;
+}
+
+.heading{
+    background: #efefef;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    margin-top: 30px;
+}
+
+.heading h3{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-weight: normal;
+    line-height: 25px;
+    color: #404040;
+} 
+
+.body-font{
+    color: #404040;
+    font-size: 17px;
+    line-height: 15px;
+}
+
+.all-results td:last-child{
+    text-align: center;
+}
+
+.today-results td:nth-last-child(-n+2){
+    text-align: center;
 }
