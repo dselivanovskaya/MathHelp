@@ -6,7 +6,7 @@ from django.db import models
 
 def get_profile_photo_upload_path(profile, filename):
     ''' Custom folder for every user. '''
-    return os.path.join('profiles', profile.user.username, 'photos', filename)
+    return os.path.join('profiles', str(profile.user.id), 'photos', filename)
 
 
 def get_default_profile_photo_path():
@@ -36,16 +36,20 @@ class Profile(models.Model):
     def __str__(self):
         return self.user.username
 
-    # def has_default_photo(self):
-    #     ''' Check if user's profile photo is default. '''
-    #     return self.photo.path == get_default_profile_photo_path()
+    def has_default_photo(self):
+        ''' Check if user's profile photo is default. '''
+        return self.photo.path == get_default_profile_photo_path()
+
+    def has_uploaded_photo(self):
+        ''' Check if user's profile photo is uploaded. '''
+        return self.photo.path != get_default_profile_photo_path()
 
     def delete_photo(self):
         ''' Delete user's profile photo. '''
         try:
             os.remove(self.photo.path)
-        except FileNotFoundError as err:
-            print(err)
+        except FileNotFoundError as e:
+            print(e)
 
     def is_male(self):
         return self.gender == self.MALE

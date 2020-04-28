@@ -5,10 +5,12 @@ from tickets.models import Ticket
 
 
 class Quiz(models.Model):
-
     PASS_PERCENT = 70
 
     ticket = models.OneToOneField(Ticket, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name_plural = 'quizzes'  # for admin panel
 
     def __str__(self):
         return self.ticket.name
@@ -24,6 +26,12 @@ class Question(models.Model):
 
     def __str__(self):
        return self.text
+
+    def get_correct_answer(self):
+        ''' Return the correct answer for particularr question. '''
+        for answer in Answer.objects.filter(question=self):
+            if answer.is_correct:
+                return answer
 
 
 class Answer(models.Model):

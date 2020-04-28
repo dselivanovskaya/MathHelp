@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %} Тест {% endblock %}
+
+{% block css %}
+  <link rel="stylesheet" href="{% static 'quiz/css/quiz.css' %}">
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <div class='quiz-detail'>
+      <h3>Отчет по тесту: {{ quiz.ticket.name }}</h3>
+      <h3>Результат: {{ taken_quiz_data.result }}%</h3>
+    </div>
+
+      <table>
+        <tr>
+          <th>
+            Вопрос
+          </th>
+          <th>
+            Правильный ответ
+          </th>
+          <th>
+            Мой ответ
+          </th>
+          <th>
+            Статус
+          </th>
+        </tr>
+        {% for question in questions %}
+          <tr>
+            <td>
+              {{ question.text }}
+            </td>
+            <td>
+              {{ question.correct_answer }}
+            </td>
+            <td>
+              {{ question.user_answer }}
+            </td>
+            <td>
+              {% if question.user_answer == question.correct_answer %}
+                ✅
+              {% else %}
+                ❌
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      </table>
+    </form>
+  </div>
+{% endblock %}
