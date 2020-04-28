@@ -9,9 +9,8 @@ class ProfileUpdateForm(ModelForm):
 
     first_name = forms.CharField(max_length=64, min_length=1, required=False)
     last_name = forms.CharField(max_length=64, min_length=1, required=False)
-    email = forms.EmailField(max_length=128, required=False)
 
-    field_order = ('first_name', 'last_name', 'email')
+    field_order = ('first_name', 'last_name')
     error_messages = {
         'invalid_photo_size': (
             'Максимальный размер фотографии '
@@ -50,7 +49,6 @@ class ProfileUpdateForm(ModelForm):
 
         first_name = self.cleaned_data.get('first_name')
         last_name = self.cleaned_data.get('last_name')
-        email = self.cleaned_data.get('email')
 
         changed = False
 
@@ -60,10 +58,6 @@ class ProfileUpdateForm(ModelForm):
 
         if last_name != profile.user.last_name:
             profile.user.last_name = last_name
-            changed = True
-
-        if email != profile.user.email:
-            profile.user.email = email
             changed = True
 
         if changed:

@@ -12,7 +12,7 @@
          {% csrf_token %}
          <button type="submit" class="btn btn-blue">Удалить</button>
        </form>
-       <a class="btn btn-blue" href="{% url ACCOUNT_SETTINGS_URL %}">Отмена</a>
+       <a class="btn btn-blue" href="{% url PROFILE_DETAIL_URL user.username %}">Отмена</a>
       </form>
     </div>
   </section>

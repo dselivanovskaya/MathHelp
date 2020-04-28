@@ -51,7 +51,6 @@ class ProfileUpdateView(View):
         form = self.form_class(request.user, initial={
             'first_name': request.user.first_name,
             'last_name':  request.user.last_name,
-            'email':      request.user.email,
             'photo':      request.user.profile.photo,
             'gender':     request.user.profile.gender,
             'age':        request.user.profile.age,

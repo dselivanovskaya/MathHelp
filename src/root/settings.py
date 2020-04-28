@@ -183,8 +183,11 @@ INDEX_URL = pages_config.INDEX_URL
 LOGIN_URL = accounts_config.ACCOUNT_LOGIN_URL
 
 # The named URL pattern where requests are redirected after login.
-# Used in anonymous_required decorator.
+# Used in anonymous_required decorator and LoginView.
 LOGIN_REDIRECT_URL = profiles_config.PROFILE_REDIRECT_URL
+
+# The names URL pattern used by django built-in LogoutView.
+LOGOUT_REDIRECT_URL = pages_config.INDEX_URL
 
 # Messages.
 # ------------------------------------------------------------------------------
