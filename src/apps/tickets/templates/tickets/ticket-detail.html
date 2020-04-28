@@ -29,7 +29,10 @@
           <h5 class="comment-date">{{ comment.date }}</h5>
           <div class="comment-body"><p>{{ comment.body }}</p></div>
           {% if request.user == comment.user %}
-            <a class="btn btn-blue" href="{% url COMMENT_DELETE_URL comment.id %}">Удалить</a>
+            <form action="{% url COMMENT_DELETE_URL comment.id %}" method="POST">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-blue">Удалить</button>
+            </form>
           {% endif %}
         </td>
       </tr>
@@ -41,7 +44,7 @@
     <table>
       <tr>
         <td>
-          <form action="{% url COMMENT_POST_URL ticket.id %}" method="POST">
+          <form action="{% url COMMENT_CREATE_URL ticket.id %}" method="POST">
             {% csrf_token %}
             {% for field in form %}
               {{ field }}

@@ -38,7 +38,7 @@ class AccountCreateView(SuccessMessageMixin, CreateView):
 class AccountDeleteView(DeleteView):
 
     model = get_user_model()
-    template_name = f'{AccountsConfig.name}/account-delete.html'
+    template_name = f'{AccountsConfig.name}/account-confirm-delete.html'
     success_url = reverse_lazy(settings.INDEX_URL)
     success_message = "Ваш аккаунт был успешно удалён."
 
