@@ -115,10 +115,7 @@ class QuizResultView(View):
 @method_decorator(QUIZ_ACTION_DECORATORS, name='dispatch')
 class QuizSaveView(View):
 
-    messages = {
-        'success-update': 'Ваш результат был успешно обновлён.',
-        'success-save':   'Ваш результат был успешно сохранён.',
-    }
+    success_message = 'Ваш результат был успешно сохранён.'
 
     def get(self, request, quiz_id):
         '''
@@ -145,12 +142,11 @@ class QuizSaveView(View):
                 quiz=quiz, user=request.user, percent=result
             )
             new_result.save()
-            messages.success(request, self.messages['success-save'])
         else:
             prev_result.percent = result
             prev_result.save()
-            messages.success(request, self.messages['success-update'])
         finally:
+            messages.success(request, self.success_message)
             request.session['taken_quizzes'][str(quiz_id)]['saved'] = True
             return redirect(settings.LOGIN_REDIRECT_URL)
 
@@ -158,19 +154,17 @@ class QuizSaveView(View):
 @method_decorator(QUIZ_ACTION_DECORATORS, name='dispatch')
 class QuizRestartView(View):
 
-    messages = {
-        'error':     'Произошла ошибка во время сброса результата.',
-        'success':   'Результат успешно сброшен.',
-    }
+    success_message = 'Результат успешно сброшен.'
+    error_message =  'Произошла ошибка во время сброса результата.',
 
     def get(self, request, quiz_id):
         ''' Delete 'quiz_id' from session['taken_quizzes']. '''
         try:
             del request.session['taken_quizzes'][str(quiz_id)]
         except:
-            messages.error(request, self.messages['error'])
+            messages.error(request, self.error_message)
         else:
-            messages.success(request, self.messages['success'])
+            messages.success(request, self.success_message)
         finally:
             return redirect(quiz_config.QUIZ_TICKET_URL, quiz_id)
 
