@@ -7,7 +7,10 @@
 {% block content %}
   <section class="get-info">
     <div class="container">
-      <h2 class="get-info-form title">Изменить имя пользователя</h2>
+      <div class="heading">
+        <h3>Изменить имя пользователя</h3>
+      </div>
+      
       <form class="get-info-form" action="{% url ACCOUNT_USERNAME_UPDATE_URL %}" method="POST">
         {% csrf_token %}
 

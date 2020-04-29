@@ -7,7 +7,11 @@
 {% block content %}
   <section class="get-info">
     <div class="container">
-      <h2 class="get-info-form title">Изменить адрес электронной почты</h2>
+
+      <div class="heading">
+        <h3>Изменить адрес электронной почты</h3>
+      </div>
+
       <form class="get-info-form" action="{% url ACCOUNT_EMAIL_UPDATE_URL %}" method="POST">
         {% csrf_token %}
 

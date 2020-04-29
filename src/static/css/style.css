@@ -277,9 +277,8 @@ body {
 /*Forms*/
 
 .get-info {
-  padding-top: 60px;
-  padding-bottom: 60px;
-  background-color: #ffffff;
+  padding-top: 30px;
+  padding-bottom: 50px;
 }
 
 .get-info .container {
@@ -289,7 +288,7 @@ body {
 }
 
 .get-info-form {
-  float: left;
+  margin: 0 auto;
   width: 500px;
 }
 
@@ -562,13 +561,13 @@ padding-bottom:20px;
   position:relative;
   padding-right:20px;
   padding-bottom:20px;
-  }
+}
 
-  .reference-body p{
-    color: #404040;
-    font-size: 17px;
-    line-height: 20px;
-  }
+.reference-body p{
+  color: #404040;
+  font-size: 17px;
+  line-height: 20px;
+}
   
   .reference-body a:hover {
     text-decoration: underline;
@@ -615,3 +614,18 @@ padding-bottom:20px;
       text-decoration: none;
       opacity: 0.3;
     }
+
+.heading{
+  background: #efefef;
+  border: none;
+  border-radius: 5px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.heading h3{
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-weight: normal;
+  line-height: 25px;
+}

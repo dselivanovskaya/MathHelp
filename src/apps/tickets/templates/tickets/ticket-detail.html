@@ -16,7 +16,7 @@
     <h3>Билет: {{ ticket.name }}</h3>
   </div>
   <div class="border-bottom ticket-actions">
-    <a href="{{ ticket.get_absolute_url }}" download class="btn btn-blue">Скачать</a>
+    <a href="{{ ticket.get_absolute_url }}" class="btn btn-blue">Скачать</a>
     <a href="{% url TICKET_READ_PDF_URL ticket.filename %}" class="btn btn-blue">Читать онлайн</a>
     <a href="{% url QUIZ_TICKET_URL ticket.quiz.id %}" class="btn btn-blue">Пройти тест</a><br>
   </div>
