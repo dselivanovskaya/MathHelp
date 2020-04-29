@@ -141,3 +141,16 @@
     padding: 2px;
     width: 400px;
 }
+
+.delete-comment{
+    font-size: 12px;
+    line-height: 12px;
+    display: block;
+    float: right;
+    margin-top: 5px;
+    margin-bottom: 2px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-left: 6px;
+    padding-right: 6px;
+}

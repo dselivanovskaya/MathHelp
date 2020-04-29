@@ -26,12 +26,12 @@
       <tr>
         <td class="border-bottom">
           <h3>{{ comment.user }}</h3>
-          <h5 class="comment-date">{{ comment.date }}</h5>
+          <h5>{{ comment.date }}</h5>
           <div class="comment-body"><p>{{ comment.body }}</p></div>
           {% if request.user == comment.user %}
             <form action="{% url COMMENT_DELETE_URL comment.id %}" method="POST">
               {% csrf_token %}
-              <button type="submit" class="btn btn-blue">Удалить</button>
+              <button type="submit" class="btn btn-blue delete-comment">Удалить</button>
             </form>
           {% endif %}
         </td>
