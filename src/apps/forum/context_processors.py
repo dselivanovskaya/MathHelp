@@ -1,8 +1,8 @@
-from .apps import ForumConfig as forum_config
+from .apps import ForumConfig
 
 
 def forum(request):
     return {
-        'COMMENT_POST_URL':   forum_config.COMMENT_POST_URL,
-        'COMMENT_DELETE_URL': forum_config.COMMENT_DELETE_URL,
+        'COMMENT_CREATE_URL': ForumConfig.COMMENT_CREATE_URL,
+        'COMMENT_DELETE_URL': ForumConfig.COMMENT_DELETE_URL,
     }

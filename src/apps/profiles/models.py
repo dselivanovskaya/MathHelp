@@ -1,6 +1,6 @@
 import os
 
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.db import models
 
 
@@ -22,7 +22,9 @@ class Profile(models.Model):
     PHOTO_MAX_WIDTH = 250
     PHOTO_MAX_HEIGHT = 250
 
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE)
+    first_name = models.CharField(max_length=128, default='')
+    last_name = models.CharField(max_length=128, default='')
     photo = models.ImageField(
         upload_to=get_profile_photo_upload_path,
         default=get_default_profile_photo_path

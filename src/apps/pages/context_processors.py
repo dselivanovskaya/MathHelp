@@ -1,8 +1,8 @@
-from .apps import PagesConfig as pages_config
+from .apps import PagesConfig
 
 
 def pages(request):
     return {
-        'INDEX_URL':      pages_config.INDEX_URL,
-        'REFERENCES_URL': pages_config.REFERENCES_URL,
+        'INDEX_URL':      PagesConfig.INDEX_URL,
+        'REFERENCES_URL': PagesConfig.REFERENCES_URL,
     }

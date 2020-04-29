@@ -1,36 +1,39 @@
 from django.http import FileResponse, Http404
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404
+
 from django.views import View
 from django.views.generic import ListView
+from django.views.generic.detail import DetailView
 
 from forum.forms import CommentForm
 from forum.models import Comment
 
-from .apps import TicketsConfig as tickets_config
+from .apps import TicketsConfig
 from .models import Ticket
 
 
 class TicketListView(ListView):
+    ''' List all tickets. '''
 
     model = Ticket
-    template_name = f'{tickets_config.name}/ticket-list.html'
+    template_name = f'{TicketsConfig.name}/ticket-list.html'
 
 
-class TicketDetailView(View):
+class TicketDetailView(DetailView):
+    ''' Show information about a particular ticket. '''
 
-    form_class = CommentForm
-    template_name = f'{tickets_config.name}/ticket-detail.html'
+    model = Ticket
+    template_name = f'{TicketsConfig.name}/ticket-detail.html'
+    pk_url_kwarg = 'ticket_id'
 
-    def get(self, request, ticket_id):
-        ticket = get_object_or_404(Ticket, id=ticket_id)
-        ticket.session_update(request, 'watched_tickets')
-
-        context = {
-                'form':     self.form_class(ticket, request.user),
-                'ticket':   ticket,
-                'comments': Comment.objects.filter(ticket__id=ticket_id)
-        }
-        return render(request, self.template_name, context)
+    def get_context_data(self, **kwargs):
+        ''' Return Comments and CommentForm. '''
+        context = super().get_context_data(**kwargs)
+        context.update({
+            'comments': Comment.objects.filter(ticket=self.get_object()),
+            'form':     CommentForm(self.get_object(), self.request.user),
+        })
+        return context
 
 
 class TicketReadPDFView(View):

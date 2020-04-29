@@ -1,11 +1,15 @@
+from django.utils.decorators import method_decorator
 from django.views.generic.base import TemplateView
 
-from .apps import PagesConfig as pages_config
+from accounts.decorators import anonymous_required
+
+from .apps import PagesConfig
 
 
+@method_decorator(anonymous_required, name='dispatch')
 class IndexView(TemplateView):
-    template_name = f'{pages_config.name}/index.html'
+    template_name = f'{PagesConfig.name}/index.html'
 
 
 class ReferenceView(TemplateView):
-    template_name = f'{pages_config.name}/reference.html'
+    template_name = f'{PagesConfig.name}/reference.html'

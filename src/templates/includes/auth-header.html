@@ -20,11 +20,12 @@
         <li>
           <a>Настройки</a>
             <ul class='submenu'>
-              <li><a href="{% url ACCOUNT_USERNAME_CHANGE_URL %}">Изменить имя пользователя</a></li>
+              <li><a href="/admin/">Администрация</a></li>
+              <li><a href="{% url ACCOUNT_USERNAME_UPDATE_URL %}">Изменить имя пользователя</a></li>
+              <li><a href="{% url ACCOUNT_EMAIL_UPDATE_URL %}">Изменить адрес электронной почты</a></li>
               <li><a href="{% url ACCOUNT_PASSWORD_CHANGE_URL %}">Изменить пароль</a></li>
               <li><a href="{% url ACCOUNT_DELETE_URL %}">Удалить аккаунт</a></li>
               {% if request.user.is_superuser %}
-              <li><a href="/admin/">Администрация</a></li>
               {% endif %}
             </ul>
         </li>
@@ -33,6 +34,6 @@
         </li>
       </ul>
     </nav>
-    
+
   </div>
 </header>

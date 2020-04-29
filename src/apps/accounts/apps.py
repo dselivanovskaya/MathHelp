@@ -10,7 +10,8 @@ class AccountsConfig(AppConfig):
     ACCOUNT_CREATE_URL = 'account-create'
     ACCOUNT_DELETE_URL = 'account-delete'
     ACCOUNT_PASSWORD_CHANGE_URL = 'account-password-change'
-    ACCOUNT_USERNAME_CHANGE_URL = 'account-username-change'
+    ACCOUNT_USERNAME_UPDATE_URL = 'account-username-update'
+    ACCOUNT_EMAIL_UPDATE_URL = 'account-email-update'
 
     def ready(self):
         from . import signals

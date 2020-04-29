@@ -1,9 +1,9 @@
-from .apps import TicketsConfig as tickets_config
+from .apps import TicketsConfig
 
 
 def tickets(request):
     return {
-        'TICKET_LIST_URL':     tickets_config.TICKET_LIST_URL,
-        'TICKET_DETAIL_URL':   tickets_config.TICKET_DETAIL_URL,
-        'TICKET_READ_PDF_URL': tickets_config.TICKET_READ_PDF_URL,
+        'TICKET_LIST_URL':     TicketsConfig.TICKET_LIST_URL,
+        'TICKET_DETAIL_URL':   TicketsConfig.TICKET_DETAIL_URL,
+        'TICKET_READ_PDF_URL': TicketsConfig.TICKET_READ_PDF_URL,
     }

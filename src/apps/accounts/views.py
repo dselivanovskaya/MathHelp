@@ -1,135 +1,82 @@
 from django.conf import settings
+
 from django.contrib import messages
-from django.contrib.auth import login, logout, get_user_model
-from django.shortcuts import redirect, render
+from django.contrib.auth import get_user_model
+from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
+from django.contrib.messages.views import SuccessMessageMixin
+
+from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
-from django.views import View
-from django.views.generic.base import TemplateView
 
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
-from .apps import AccountsConfig as accounts_config
+from .apps import AccountsConfig
 from .decorators import anonymous_required
-from .forms import (
-    AccountLoginForm, AccountCreateForm,
-    AccountPasswordChangeForm, AccountUsernameChangeForm,
-)
+from .forms import AccountLoginForm, AccountCreateForm, AccountPasswordChangeForm
 
 
-@method_decorator(anonymous_required, name='dispatch')
-class AccountLoginView(View):
+class AccountLoginView(LoginView):
 
     form_class = AccountLoginForm
-    template_name = f'{accounts_config.name}/account-login.html'
+    template_name = f'{AccountsConfig.name}/account-login.html'
+    redirect_authenticated_user = True
 
-    def get(self, request):
-        form = self.form_class()
-        return render(request, self.template_name, {'form': form})
 
-    def post(self, request):
-        form = self.form_class(data=request.POST)
-        if form.is_valid():
-            user = form.get_user()
-            login(request, user)
-            return redirect(settings.LOGIN_REDIRECT_URL)
-        return render(request, self.template_name, {'form': form})
+class AccountLogoutView(LogoutView):
+    pass  # Consistency :)
 
 
 @method_decorator(anonymous_required, name='dispatch')
-class AccountCreateView(View):
+class AccountCreateView(SuccessMessageMixin, CreateView):
 
-    template_name = f'{accounts_config.name}/account-create.html'
     form_class = AccountCreateForm
-
-    messages = {
-        'success': 'Пользователь был успешно создан.'
-    }
-
-    def get(self, request):
-        form = self.form_class()
-        return render(request, self.template_name, {'form': form})
-
-    def post(self, request):
-        form = self.form_class(data=request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, self.messages['success'])
-            return redirect(settings.LOGIN_URL)
-        return render(request, self.template_name, {'form': form})
+    template_name = f'{AccountsConfig.name}/account-create.html'
+    success_url = reverse_lazy(settings.LOGIN_URL)
+    success_message = 'Пользователь был успешно создан.'
 
 
-class AccountLogoutView(View):
+class AccountDeleteView(DeleteView):
 
-    messages = {
-        'success': 'Вы вышли из системы.'
-    }
+    model = get_user_model()
+    template_name = f'{AccountsConfig.name}/account-confirm-delete.html'
+    success_url = reverse_lazy(settings.INDEX_URL)
+    success_message = "Ваш аккаунт был успешно удалён."
 
-    def get(self, request):
-        logout(request)
-        messages.success(request, self.messages['success'])
-        return redirect(settings.INDEX_URL)
+    def get_object(self):
+        return self.request.user
 
-class AccountSettingsView(TemplateView):
-
-    template_name = f'{accounts_config.name}/account-settings.html'
-
-
-class AccountDeleteView(View):
-
-    template_name = f'{accounts_config.name}/account-delete.html'
-
-    messages = {
-        'success': 'Ваш аккаунт был успешно удалён.',
-    }
-
-    def get(self, request):
-        return render(request, self.template_name, {})
-
-    def post(self, request):
-        get_user_model().objects.get(id=request.user.id).delete()
-        messages.success(request, self.messages['success'])
-        return redirect(settings.INDEX_URL)
+    def delete(self, request, *args, **kwargs):
+        messages.success(self.request, self.success_message)
+        return super().delete(request, *args, **kwargs)
 
 
-class AccountPasswordChangeView(View):
+class AccountPasswordChangeView(SuccessMessageMixin, PasswordChangeView):
 
-    template_name = f'{accounts_config.name}/account-password-change.html'
     form_class = AccountPasswordChangeForm
-
-    messages = {
-        'success': 'Пароль был успешно изменён.'
-    }
-
-    def get(self, request):
-        form = self.form_class(user=request.user)
-        return render(request, self.template_name, {'form': form})
-
-    def post(self, request):
-        form = self.form_class(user=request.user, data=request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
-            messages.success(request, self.messages['success'])
-            return redirect(accounts_config.ACCOUNT_SETTINGS_URL)
-        return render(request, self.template_name, {'form': form})
+    template_name = f'{AccountsConfig.name}/account-password-change.html'
+    success_url = reverse_lazy(settings.LOGIN_REDIRECT_URL)
+    success_message = 'Пароль был успешно изменён.'
 
 
-class AccountUsernameChangeView(View):
+class AccountUsernameUpdateView(SuccessMessageMixin, UpdateView):
 
-    template_name = f'{accounts_config.name}/account-username-change.html'
-    form_class = AccountUsernameChangeForm
+    model = get_user_model()
+    fields = ['username']
+    template_name = f'{AccountsConfig.name}/account-username-update.html'
+    success_url = reverse_lazy(settings.LOGIN_REDIRECT_URL)
+    success_message = 'Имя пользователя было успешно изменено.'
 
-    messages = {
-        'success': 'Имя пользователя было успешно изменено.'
-    }
+    def get_object(self):
+        return self.request.user
 
-    def get(self, request):
-        form = self.form_class(user=request.user)
-        return render(request, self.template_name, {'form': form})
 
-    def post(self, request):
-        form = self.form_class(user=request.user, data=request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, self.messages['success'])
-            return redirect(accounts_config.ACCOUNT_SETTINGS_URL)
-        return render(request, self.template_name, {'form': form})
+class AccountEmailUpdateView(SuccessMessageMixin, UpdateView):
+
+    model = get_user_model()
+    fields = ['email']
+    template_name = f'{AccountsConfig.name}/account-email-update.html'
+    success_url = reverse_lazy(settings.LOGIN_REDIRECT_URL)
+    success_message = 'Адрес электронной почты был успешно изменён.'
+
+    def get_object(self):
+        return self.request.user

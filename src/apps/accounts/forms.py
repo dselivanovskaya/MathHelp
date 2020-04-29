@@ -1,6 +1,5 @@
 from django import forms
 from django.contrib import auth
-from django.contrib.auth import get_user_model
 
 
 class AccountLoginForm(auth.forms.AuthenticationForm):
@@ -40,40 +39,14 @@ class AccountCreateForm(auth.forms.UserCreationForm):
     def save(self):
         user = super().save()
 
-        user.first_name = self.cleaned_data.get('first_name')
-        user.last_name = self.cleaned_data.get('last_name')
         user.email = self.cleaned_data.get('email')
-
         user.save()
+
+        user.profile.first_name = self.cleaned_data.get('first_name')
+        user.profile.last_name = self.cleaned_data.get('last_name')
+        user.profile.save()
+
         return user
-
-
-class AccountUsernameChangeForm(forms.Form):
-
-    new_username = forms.CharField(max_length=128)
-
-    error_messages = {
-        'invalid_new_username': 'Пользователь с таким именем уже существует.'
-    }
-
-    def __init__(self, user, *args, **kwargs):
-        self.user = user
-        super().__init__(*args, **kwargs)
-        self.use_required_attribute = False
-
-    def clean_new_username(self):
-        new_username = self.cleaned_data.get('new_username')
-        if get_user_model().objects.filter(username=new_username).exists():
-            raise forms.ValidationError(
-                self.error_messages['invalid_new_username']
-            )
-        return new_username
-
-    def save(self):
-        new_username = self.cleaned_data.get('new_username')
-        self.user.username = new_username
-        self.user.save()
-        return self.user
 
 
 class AccountPasswordChangeForm(auth.forms.PasswordChangeForm):
