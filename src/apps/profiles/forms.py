@@ -36,5 +36,5 @@ class ProfileUpdateForm(ModelForm):
                 raise forms.ValidationError(
                     self.error_messages['invalid_photo_size']
                 )
-            self.user.profile.delete_photo()
+            self.instance.delete_photo()
         return photo

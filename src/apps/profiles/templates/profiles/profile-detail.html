@@ -2,7 +2,7 @@
 
 {% load static %}
 
-{% block title %} {{ user.first_name }} {{ user.last_name }} {% endblock %}
+{% block title %} {{ user.profile.first_name }} {{ user.profile.last_name }} {% endblock %}
 
 {% block css %}
   <link rel="stylesheet" href="{% static 'profiles/css/profiles.css' %}">
@@ -41,19 +41,15 @@
                 эти билеты:</h3>
               </div>
 
-              {% for ticket in request.session.read_tickets %}
+              {% for ticket in read_tickets %}
               <div class="border-bottom">
-                <p class="body-font">{{ ticket }}</p>
+                <p class="body-font"><a href="{{ ticket.get_absolute_url }}">{{ ticket.name }}</a></p>
               </div>
               {% endfor %}
 
               {% endif %}
 
-
-
-
-
-            {% if request.session.taken_quizzes %}
+            {% if taken_quizzes %}
             <div class="heading">
               <h3>Результаты по тестам за сегодня:</h3>
             </div>
@@ -63,12 +59,12 @@
                 <th><p class="body-font">Результат</p></th>
                 <th><p class="body-font">Сохранен</p></th>
               </tr>
-                {% for quiz, data in request.session.taken_quizzes.items %}
+                {% for quiz in taken_quizzes %}
               <tr>
-                <td class="border-bottom"><p class="body-font">{{ data.name }}</p></td>
-                <td class="border-bottom"><p class="body-font">{{ data.result }}%</p></td>
+                <td class="border-bottom"><p class="body-font"><a href="{{ quiz.get_absolute_url }}">{{ quiz.ticket.name }}</a></p></td>
+                <td class="border-bottom"><p class="body-font">{{ quiz.result }}%</p></td>
                 <td class="border-bottom">
-                  {% if data.saved %}
+                  {% if quiz.saved %}
                   <img src="{% static 'profiles/img/check.png' %}" width="20" height="20">
                   {% else %}
                   <img src="{% static 'profiles/img/cross.png' %}" width="20" height="20">

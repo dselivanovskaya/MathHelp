@@ -7,6 +7,9 @@ from django.views.generic import RedirectView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import UpdateView
 
+from tickets.models import Ticket
+from quiz.models import Quiz
+
 from .apps import ProfilesConfig
 from .forms import ProfileUpdateForm
 from .models import Profile
@@ -32,7 +35,18 @@ class ProfileDetailView(DetailView):
     def get_context_data(self, **kwargs):
         ''' Add quiz results to context. '''
         context = super().get_context_data(**kwargs)
+        context['read_tickets'] = [
+            Ticket.objects.get(id=ticket_id) 
+            for ticket_id in self.request.session['read_tickets']
+        ]
         context['results'] = self.request.user.result_set.all()
+        context['taken_quizzes'] = []
+        for quiz_id, quiz_data in self.request.session['taken_quizzes'].items():
+            quiz = Quiz.objects.get(id=quiz_id)
+            quiz.result = quiz_data['result']
+            quiz.saved = quiz_data['saved']
+            context['taken_quizzes'].append(quiz)
+              
         return context
 
 

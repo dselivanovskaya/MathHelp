@@ -2,7 +2,9 @@ import os
 
 from django.conf import settings
 from django.db import models
+from django.urls import reverse
 
+from .apps import TicketsConfig
 
 class Ticket(models.Model):
 
@@ -20,8 +22,11 @@ class Ticket(models.Model):
         return os.path.join(settings.MEDIA_ROOT, 'tickets', self.filename)
 
     def get_absolute_url(self):
+        return reverse(TicketsConfig.TICKET_DETAIL_URL, args=[self.id])
+
+    def get_absolute_pdf_url(self):
         return os.path.join(settings.MEDIA_URL, 'tickets', self.filename)
 
     def session_update(self, request, lst):
-        if self.name not in request.session[lst]:
-            request.session[lst].append(self.name)
+        if self.id not in request.session[lst]:
+            request.session[lst].append(self.id)

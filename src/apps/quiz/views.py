@@ -38,7 +38,6 @@ class QuizTicketView(View):
             return redirect(quiz_config.QUIZ_RESULT_URL, quiz_id)
 
         quiz = get_object_or_404(Quiz, id=quiz_id)
-        quiz.session_update(request, 'watched_quizzes')
 
         context = {
             'quiz': quiz,
