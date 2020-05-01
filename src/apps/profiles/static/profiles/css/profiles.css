@@ -82,10 +82,26 @@
     color: #404040;
 } 
 
+.body-font2{
+    color: #404040;
+    font-size: 17px;
+    line-height: 15px;
+}
+
 .body-font{
     color: #404040;
     font-size: 17px;
     line-height: 15px;
+    text-decoration: none;
+}
+
+.body-font:hover {
+    text-decoration: underline;
+}
+  
+.body-font:active {
+    text-decoration: none;
+    opacity: 0.3;
 }
 
 .all-results td:last-child{

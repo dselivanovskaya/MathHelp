@@ -40,3 +40,37 @@ li {
   line-height: 25px;
   font-weight: normal;
 }
+
+.result{
+  background: #fae6ae;
+  border: none;
+  border-radius: 5px;
+  margin-top: 5px;
+  margin-bottom: 20px;
+}
+
+.result h3{
+  padding-top: 10px;
+  padding-right: 40px;
+  padding-bottom: 10px;
+  font-weight: 500;
+  line-height: 25px;
+  padding-left: 40px;
+  display: inline-block;
+}
+
+.buttons{
+  display: block;
+  float: right;
+  margin-top: 15px;
+  margin-bottom: 10px;
+  margin-right: 40px;
+}
+
+.buttons a{
+  display: inline-block;
+}
+
+.score-scale{
+  text-align: center;
+}
