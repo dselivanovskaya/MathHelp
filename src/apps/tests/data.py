@@ -1,24 +1,25 @@
-''' These constants are used in test cases. '''
-
 from django.contrib.auth import get_user_model
 
 
 class TestUser:
     ''' Class for storing test users credentials.  '''
 
-    def __init__(self, first_name, last_name, email, username, password):
-        self.first_name = first_name
-        self.last_name = last_name
-        self.email = email
+    def __init__(self, username, email, password, is_superuser=False):
         self.username = username
+        self.email = email
         self.password = password
+        self.is_superuser = is_superuser
 
     def create_in_db(self):
-        return get_user_model().objects.create_user(
-            username=self.username, email=self.email, password=self.password,
-            first_name=self.first_name, last_name=self.last_name,
+        if self.is_superuser:
+            create_user_fun = get_user_model().objects.create_superuser
+        else:
+            create_user_fun = get_user_model().objects.create_user
+        return create_user_fun(
+            username=self.username, email=self.email, password=self.password
         )
 
 
-USER1 = TestUser('John', 'Smith', 'john@gmail.com', 'john', 'johny_123')
-USER2 = TestUser('Alice', 'Brooks', 'alice@gmail.com', 'alice', 'alicia_123')
+USER1 = TestUser('john',  'john@gmail.com',  'johny_123')
+USER2 = TestUser('alice', 'alice@gmail.com', 'alicia_123')
+ADMIN = TestUser('admin', 'admin@gmail.com', 'adminn_123', is_superuser=True)

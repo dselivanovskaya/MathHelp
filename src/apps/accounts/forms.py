@@ -5,7 +5,7 @@ from django.contrib import auth
 class AccountLoginForm(auth.forms.AuthenticationForm):
 
     error_messages = {
-        'invalid_login': 'Неправильное имя пользователя или пароль.',
+        'invalid_login': 'Неверное имя пользователя или пароль.',
     }
 
     def __init__(self, *args, **kwargs):
