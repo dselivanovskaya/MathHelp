@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.urls import reverse
 
-from tests.data import USER1
+from tests.data import USER_MALE
 
 from profiles.apps import ProfilesConfig
 from profiles.models import Profile
@@ -11,8 +11,8 @@ class ProfileModelTest(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        cls.user = USER1.create_in_db()
-        cls.profile = USER1.init_profile(cls.user, 'John', 'Smith', 'M', 20)
+        cls.user = USER_MALE.create_in_db()
+        cls.profile = cls.user.profile
 
     def test_get_absolute_url(self):
         self.assertEquals(

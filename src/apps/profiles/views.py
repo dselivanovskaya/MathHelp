@@ -33,20 +33,28 @@ class ProfileDetailView(DetailView):
         return None
 
     def get_context_data(self, **kwargs):
-        ''' Add quiz results to context. '''
+        '''
+            Context:
+                read_tickets:  List[Ticket],
+                taken_quizzes: List[Quiz],
+                results:       List[Result],
+        '''
         context = super().get_context_data(**kwargs)
+
         context['read_tickets'] = [
-            Ticket.objects.get(id=ticket_id) 
+            Ticket.objects.get(id=ticket_id)
             for ticket_id in self.request.session['read_tickets']
         ]
-        context['results'] = self.request.user.result_set.all()
+
         context['taken_quizzes'] = []
         for quiz_id, quiz_data in self.request.session['taken_quizzes'].items():
             quiz = Quiz.objects.get(id=quiz_id)
             quiz.result = quiz_data['result']
             quiz.saved = quiz_data['saved']
             context['taken_quizzes'].append(quiz)
-              
+
+        context['results'] = self.request.user.result_set.all()
+
         return context
 
 

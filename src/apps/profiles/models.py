@@ -21,8 +21,8 @@ class Profile(models.Model):
 
     # Fields
     user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE)
-    first_name = models.CharField(max_length=128, default='')
-    last_name = models.CharField(max_length=128, default='')
+    first_name = models.CharField(max_length=128, default='', blank=True)
+    last_name = models.CharField(max_length=128, default='', blank=True)
     photo = models.ImageField(
         upload_to=get_photo_upload_path, default=DEFAULT_PHOTO_PATH
     )
