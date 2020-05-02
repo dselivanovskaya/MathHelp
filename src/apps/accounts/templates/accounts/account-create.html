@@ -5,25 +5,19 @@
 {% block content %}
   <section class="get-info">
     <div class="container">
-
       <div class="heading">
         <h3>Создать аккаунт</h3>
       </div>
-
       <form class="get-info-form" action="{% url ACCOUNT_CREATE_URL %}" method="POST">
         {% csrf_token %}
-
         {{ form.as_p }}
-
-        <button type="submit" class="get-info-form btn btn-blue">
+        <button class="get-info-form btn btn-blue" type="submit">
           Создать аккаунт
         </button>
-
         <p class="get-info-instruction">
           У вас уже есть аккаунт?
           <a href="{% url ACCOUNT_LOGIN_URL %}"><strong>Войти</strong></a>
         </p>
-
       </form>
     </div>
   </section>
