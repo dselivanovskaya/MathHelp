@@ -2,9 +2,7 @@
 
 {% load static %}
 
-{% block title %}
-  {{ user.profile.first_name }} {{ user.profile.last_name }}
-{% endblock %}
+{% block title %} {{ user.profile.get_full_name }} {% endblock %}
 
 {% block css %}
   <link rel="stylesheet" href="{% static 'profiles/css/profiles.css' %}">
@@ -17,7 +15,7 @@
         <td class="user-info">
           <div>
             <img src="{{ user.profile.photo.url }}" width="200px" height="200px">
-            <b>{{ user.profile.first_name }} {{ user.profile.last_name }}</b>
+            <b>{{ user.profile.get_full_name }}</b>
             <a class="btn btn-blue" href="{{ user.profile.get_absolute_update_url }}">
               Редактировать
             </a>

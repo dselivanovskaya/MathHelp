@@ -19,6 +19,18 @@ class TestUser:
             username=self.username, email=self.email, password=self.password
         )
 
+    def init_profile(self, user, first_name, last_name, gender, age):
+        try:
+            user.profile.first_name = first_name
+            user.profile.last_name = last_name
+            user.profile.genfer = gender
+            user.profile.age = age
+        except Exception as e:
+            print('Error in init_profile(): ', e)
+        else:
+            return user.profile
+
+
 
 USER1 = TestUser('john',  'john@gmail.com',  'johny_123')
 USER2 = TestUser('alice', 'alice@gmail.com', 'alicia_123')
