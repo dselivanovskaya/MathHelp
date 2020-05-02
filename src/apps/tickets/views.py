@@ -17,6 +17,7 @@ class TicketListView(ListView):
 
     model = Ticket
     template_name = f'{TicketsConfig.name}/ticket-list.html'
+    context_object_name = 'tickets'
 
 
 class TicketDetailView(DetailView):
@@ -36,13 +37,15 @@ class TicketDetailView(DetailView):
         return context
 
 
-class TicketReadPDFView(View):
+class TicketPDFView(View):
 
     def get(self, request, ticket_filename):
         ticket = get_object_or_404(Ticket, filename=ticket_filename)
-        ticket.session_update(request, 'read_tickets')
+
+        if ticket.id not in request.session['read_tickets']:
+            request.session['read_tickets'].append(ticket.id)
 
         try:
-            return FileResponse(open(ticket.get_absolute_path(), 'rb'))
+            return FileResponse(open(ticket.get_absolute_pdf_path(), 'rb'))
         except FileNotFoundError:
             raise Http404

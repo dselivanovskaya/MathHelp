@@ -18,12 +18,9 @@ class Quiz(models.Model):
     def __str__(self):
         return self.ticket.name
 
-    # def session_update(self, request, lst):
-    #     if self.ticket.name not in request.session[lst]:
-    #         request.session[lst].append(self.ticket.name)
-
     def get_absolute_url(self):
         return reverse(QuizConfig.QUIZ_TICKET_URL, args=[self.id])
+
 
 
 class Question(models.Model):
@@ -57,4 +54,4 @@ class Result(models.Model):
     def __str__(self):
         return f'{self.user.username}: {self.quiz.ticket}'
 
-    
+

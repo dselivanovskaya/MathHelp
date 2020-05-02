@@ -6,6 +6,7 @@ from django.urls import reverse
 
 from .apps import TicketsConfig
 
+
 class Ticket(models.Model):
 
     name = models.CharField(max_length=256, unique=True)
@@ -15,18 +16,15 @@ class Ticket(models.Model):
     def __str__(self):
         return self.name
 
-    def get_level_image_name(self):
-        return os.path.join('tickets', 'img', f'{self.level}-star.png')
-
-    def get_absolute_path(self):
-        return os.path.join(settings.MEDIA_ROOT, 'tickets', self.filename)
-
     def get_absolute_url(self):
         return reverse(TicketsConfig.TICKET_DETAIL_URL, args=[self.id])
 
     def get_absolute_pdf_url(self):
-        return os.path.join(settings.MEDIA_URL, 'tickets', self.filename)
+        return reverse(TicketsConfig.TICKET_PDF_URL, args=[self.filename])
 
-    def session_update(self, request, lst):
-        if self.id not in request.session[lst]:
-            request.session[lst].append(self.id)
+    def get_absolute_img_path(self):
+        return os.path.join('tickets', 'img', f'{self.level}-star.png')
+
+    def get_absolute_pdf_path(self):
+        ''' For TicketReadPDF View. '''
+        return os.path.join(settings.MEDIA_ROOT, 'tickets', 'pdf', self.filename)

@@ -10,21 +10,22 @@
 
 {% block content %}
   <div class="container">
-    <input type="text" id="ticket-search" onkeyup="searchTicket()" placeholder="Искать билет...">
+    <input type="text" id="ticket-search" onkeyup="searchTicket()"
+      placeholder="Искать билет...">
     <table class="catalog" id="tickets-table">
       <tr>
-        <th width='794'>Название</th>
-        <th width='152'>Сложность</th>
+        <th width="794">Название</th>
+        <th width="152">Сложность</th>
       </tr>
-      {% for ticket in object_list %}
+      {% for ticket in tickets %}
         <tr>
           <td>
-            <a href="{% url TICKET_DETAIL_URL ticket.id %}" class="ticket">
+            <a href="{{ ticket.get_absolute_url }}" class="ticket">
               {{ ticket.name }}
             </a>
           </td>
           <td class="star">
-            <img src="{% static ticket.get_level_image_name %}">
+            <img src="{% static ticket.get_absolute_img_path %}">
           </td>
         </tr>
       {% endfor %}

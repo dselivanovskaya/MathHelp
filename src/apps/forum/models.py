@@ -1,7 +1,10 @@
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.urls import reverse
 
 from tickets.models import Ticket
+
+from .apps import ForumConfig
 
 
 class Comment(models.Model):
@@ -19,3 +22,6 @@ class Comment(models.Model):
             f"{str(self.user)}: {str(self.ticket)} "
             f"[ {self.date.strftime('%Y-%m-%d %H:%M:%S')} ]"
         )
+
+    def get_absolute_delete_url(self):
+        return reverse(ForumConfig.COMMENT_DELETE_URL, args=[self.id])
