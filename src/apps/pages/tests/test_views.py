@@ -39,7 +39,7 @@ class IndexViewTest(TestCase):
         self.assertContains(response, 'Администрация')
 
 
-class ReferenceViewTest(TestCase):
+class ReferencesViewTest(TestCase):
 
     @classmethod
     def setUpTestData(cls):
