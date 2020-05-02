@@ -5,7 +5,7 @@ from django.views import View
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 
-from forum.forms import CommentForm
+from forum.forms import CommentCreateForm
 from forum.models import Comment
 
 from .apps import TicketsConfig
@@ -32,7 +32,7 @@ class TicketDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context.update({
             'comments': Comment.objects.filter(ticket=self.get_object()),
-            'form':     CommentForm(self.get_object(), self.request.user),
+            'form': CommentCreateForm(self.get_object(), self.request.user),
         })
         return context
 

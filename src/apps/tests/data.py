@@ -6,11 +6,12 @@ class TestUser:
 
     def __init__(self, username, email, password, first_name='', last_name='',
                  gender='M', age=0, is_superuser=False):
+        # User data
         self.username = username
         self.email = email
         self.password = password
         self.is_superuser = is_superuser
-
+        # Profile data
         self.first_name = first_name
         self.last_name = last_name
         self.gender = gender
@@ -18,11 +19,11 @@ class TestUser:
 
     def create_in_db(self):
         if self.is_superuser:
-            create_user_fun = get_user_model().objects.create_superuser
+            create_user_function = get_user_model().objects.create_superuser
         else:
-            create_user_fun = get_user_model().objects.create_user
+            create_user_function = get_user_model().objects.create_user
 
-        user = create_user_fun(
+        user = create_user_function(
             username=self.username, email=self.email, password=self.password
         )
 

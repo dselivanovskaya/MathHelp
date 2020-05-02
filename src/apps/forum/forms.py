@@ -1,9 +1,9 @@
-from django.forms import ModelForm
+from django import forms
 
 from .models import Comment
 
 
-class CommentForm(ModelForm):
+class CommentCreateForm(forms.ModelForm):
     ''' User fills out this form to post a comment on forum. '''
 
     class Meta:

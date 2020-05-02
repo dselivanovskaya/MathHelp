@@ -24,4 +24,4 @@ class Comment(models.Model):
         )
 
     def get_absolute_delete_url(self):
-        return reverse(ForumConfig.COMMENT_DELETE_URL, args=[self.id])
+        return reverse(ForumConfig.FORUM_COMMENT_DELETE_URL, args=[self.id])
