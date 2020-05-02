@@ -24,6 +24,7 @@ class Quiz(models.Model):
 
 
 class Question(models.Model):
+
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
     text = models.CharField(max_length=512)
 
@@ -38,6 +39,7 @@ class Question(models.Model):
 
 
 class Answer(models.Model):
+
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     text = models.CharField(max_length=512)
     is_correct = models.BooleanField()
@@ -47,6 +49,7 @@ class Answer(models.Model):
 
 
 class Result(models.Model):
+
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     percent = models.PositiveSmallIntegerField()
@@ -54,4 +57,5 @@ class Result(models.Model):
     def __str__(self):
         return f'{self.user.username}: {self.quiz.ticket}'
 
-
+    def get_ticket_name(self):
+        return self.quiz.ticket.name

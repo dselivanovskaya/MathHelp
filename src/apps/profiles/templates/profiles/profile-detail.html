@@ -2,54 +2,54 @@
 
 {% load static %}
 
-{% block title %} {{ user.profile.first_name }} {{ user.profile.last_name }} {% endblock %}
+{% block title %}
+  {{ user.profile.first_name }} {{ user.profile.last_name }}
+{% endblock %}
 
 {% block css %}
   <link rel="stylesheet" href="{% static 'profiles/css/profiles.css' %}">
 {% endblock %}
 
-
-
 {% block content %}
-
   <div class="container">
     <table class="profile-info">
       <tr>
         <td class="user-info">
           <div>
             <img src="{{ user.profile.photo.url }}" width="200px" height="200px">
-          <b>{{ user.profile.first_name }} {{ user.profile.last_name }}</b>
-          <a class="btn btn-blue" href="{% url PROFILE_UPDATE_URL user.username %}">
-            Редактировать
-          </a>
+            <b>{{ user.profile.first_name }} {{ user.profile.last_name }}</b>
+            <a class="btn btn-blue" href="{{ user.profile.get_absolute_update_url }}">
+              Редактировать
+            </a>
           </div>
         </td>
 
         <td class="user-stat">
-          <div class='greeting'>
+          <div class="greeting">
             <h3 id="greeting">{{ user.profile.first_name }}</h3>
           </div>
-              {% if request.session.read_tickets %}
 
-              <div class="heading">
-                <h3>Сегодня ты
-                  {% if user.profile.is_male %}
-                    читал
-                  {% elif user.profile.is_female %}
-                    читала
-                  {% endif %}
-                эти билеты:</h3>
-              </div>
+          {% if read_tickets %}
+            <div class="heading">
+              <h3>Сегодня ты
+                {% if user.profile.is_male %}
+                  читал
+                {% elif user.profile.is_female %}
+                  читала
+                {% endif %}
+              эти билеты:</h3>
+            </div>
 
-              {% for ticket in read_tickets %}
+            {% for ticket in read_tickets %}
               <div class="border-bottom">
-                <a class="body-font" href="{{ ticket.get_absolute_url }}">{{ ticket.name }}</a>
+                <a class="body-font" href="{{ ticket.get_absolute_url }}">
+                  {{ ticket.name }}
+                </a>
               </div>
-              {% endfor %}
+            {% endfor %}
+          {% endif %}
 
-              {% endif %}
-
-            {% if taken_quizzes %}
+          {% if taken_quizzes %}
             <div class="heading">
               <h3>Результаты по тестам за сегодня:</h3>
             </div>
@@ -59,27 +59,33 @@
                 <th>Результат</th>
                 <th>Сохранен</th>
               </tr>
-                {% for quiz in taken_quizzes %}
-              <tr>
-                <td class="border-bottom"><a class="body-font" href="{{ quiz.get_absolute_url }}">{{ quiz.ticket.name }}</a><br></td>
-                <td class="border-bottom"><p class="body-font">{{ quiz.result }}%</p></td>
-                <td class="border-bottom">
-                  {% if quiz.saved %}
-                  <img src="{% static 'profiles/img/check.png' %}" width="25" height="25">
-                  {% else %}
-                  <img src="{% static 'profiles/img/cross.png' %}" width="25" height="25">
-                  {% endif %}
-                </td>
-              </tr>
-                {% endfor %}
-              </table>
-            {% endif %}
+              {% for quiz in taken_quizzes %}
+                <tr>
+                  <td class="border-bottom">
+                    <a class="body-font" href="{{ quiz.get_absolute_url }}">
+                      {{ quiz.ticket.name }}
+                    </a>
+                  </td>
+                  <td class="border-bottom">
+                    <p class="body-font">
+                      {{ quiz.result }}%
+                    </p>
+                  </td>
+                  <td class="border-bottom">
+                    {% if quiz.saved %}
+                      <img src="{% static 'profiles/img/check.png' %}" width="25" height="25">
+                    {% else %}
+                      <img src="{% static 'profiles/img/cross.png' %}" width="25" height="25">
+                    {% endif %}
+                  </td>
+                </tr>
+              {% endfor %}
+            </table>
+          {% endif %}
 
-
-
-         <div class="heading">
-          <h3>Результаты за все время:</h3>
-         </div>
+          <div class="heading">
+            <h3>Результаты за все время:</h3>
+          </div>
 
           <table class="all-results">
             <tr>
@@ -87,10 +93,14 @@
               <th>Результат</th>
             </tr>
             {% for result in results %}
-            <tr>
-              <td class="border-bottom"><p class="body-font2">{{ result.quiz.ticket.name }}</p></td>
-              <td class="border-bottom"><p class="body-font2">{{ result.percent }}%</p></td>
-            </tr>
+              <tr>
+                <td class="border-bottom">
+                  <p class="body-font2">{{ result.get_ticket_name }}</p>
+                </td>
+                <td class="border-bottom">
+                  <p class="body-font2">{{ result.percent }}%</p>
+                </td>
+              </tr>
             {% endfor %}
           </table>
 

@@ -2,6 +2,9 @@ import os
 
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.urls import reverse
+
+from .apps import ProfilesConfig
 
 
 def get_profile_photo_upload_path(profile, filename):
@@ -38,6 +41,18 @@ class Profile(models.Model):
     def __str__(self):
         return self.user.username
 
+    def get_absolute_url(self):
+        return reverse(ProfilesConfig.PROFILE_DETAIL_URL, args=[self.user.username])
+
+    def get_absolute_update_url(self):
+        return reverse(ProfilesConfig.PROFILE_UPDATE_URL, args=[self.user.username])
+
+    def is_male(self):
+        return self.gender == self.MALE
+
+    def is_female(self):
+        return self.gender == self.FEMALE
+
     def has_default_photo(self):
         ''' Check if user's profile photo is default. '''
         return self.photo.path == get_default_profile_photo_path()
@@ -52,9 +67,3 @@ class Profile(models.Model):
             os.remove(self.photo.path)
         except FileNotFoundError as e:
             print(e)
-
-    def is_male(self):
-        return self.gender == self.MALE
-
-    def is_female(self):
-        return self.gender == self.FEMALE

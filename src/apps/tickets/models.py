@@ -23,6 +23,7 @@ class Ticket(models.Model):
         return reverse(TicketsConfig.TICKET_PDF_URL, args=[self.filename])
 
     def get_absolute_img_path(self):
+        ''' For TicketListView (ticket-list.html). '''
         return os.path.join('tickets', 'img', f'{self.level}-star.png')
 
     def get_absolute_pdf_path(self):

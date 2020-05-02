@@ -9,7 +9,7 @@
     <nav class="head-nav">
       <ul class="head-ul">
         <li>
-          <a href="{% url PROFILE_DETAIL_URL user.username %}">Мой профиль</a>
+          <a href="{{ user.profile.get_absolute_url }}">Мой профиль</a>
         </li>
         <li>
           <a href="{% url TICKET_LIST_URL %}">Билеты</a>
