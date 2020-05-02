@@ -16,21 +16,25 @@
     </div>
 
     <div class="result">
-      <h3>Ваш результат: {{ quiz_result }}%</h3>
+      <h3>Ваш результат: {{ quiz.result }}%</h3>
       <div class="buttons">
-        {% if not quiz_saved %}
-          <a class="btn btn-blue" href="{% url QUIZ_SAVE_URL quiz.id %}">Сохранить</a>
+        {% if not quiz.saved %}
+        <a class="btn btn-blue" href="{{ quiz.get_absolute_save_url }}">
+          Сохранить
+        </a>
         {% endif %}
-        <a class="btn btn-blue" href="{% url QUIZ_RESTART_URL quiz.id %}">Пройти заново</a>
-        <a class="btn btn-blue" href="{% url QUIZ_REPORT_URL quiz.id %}">Отчет</a>
+        <a class="btn btn-blue" href="{{ quiz.get_absolute_restart_url }}">
+          Пройти заново
+        </a>
+        <a class="btn btn-blue" href="{{ quiz.get_absolute_report_url }}">
+          Отчет
+        </a>
     </div>
     </div>
 
   <div class='score-scale'>
-    <img src="{% static 'quiz/img/score-scale.png' %}">
+    <img src="{% static 'quiz/img/result-assessment-scale.png' %}">
   </div>
-    
-    
 
   </div>
 {% endblock %}

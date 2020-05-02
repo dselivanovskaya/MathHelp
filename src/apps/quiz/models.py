@@ -19,8 +19,16 @@ class Quiz(models.Model):
         return self.ticket.name
 
     def get_absolute_url(self):
-        return reverse(QuizConfig.QUIZ_TICKET_URL, args=[self.id])
+        return reverse(QuizConfig.QUIZ_FORM_URL, args=[self.id])
 
+    def get_absolute_save_url(self):
+        return reverse(QuizConfig.QUIZ_SAVE_URL, args=[self.id])
+
+    def get_absolute_restart_url(self):
+        return reverse(QuizConfig.QUIZ_RESTART_URL, args=[self.id])
+
+    def get_absolute_report_url(self):
+        return reverse(QuizConfig.QUIZ_REPORT_URL, args=[self.id])
 
 
 class Question(models.Model):

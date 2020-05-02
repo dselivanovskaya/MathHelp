@@ -1,10 +1,14 @@
 from django import forms
 
-from .models import Answer
+from .models import Answer, Quiz
 
 
-class QuizForm(forms.Form):
+class QuizForm(forms.ModelForm):
     ''' A form for filling a quiz. '''
+
+    class Meta:
+        model = Quiz
+        fields = []
 
     def __init__(self, quiz, *args, **kwargs):
         '''
@@ -15,7 +19,6 @@ class QuizForm(forms.Form):
         super().__init__(*args, **kwargs)
         self.use_required_attribute = False
         for question in quiz.question_set.all():
-            # field_name = f'question_{question.id}'
             field_name = f'{question.id}'
             choices = [(ans.id, ans.text) for ans in question.answer_set.all()]
             self.fields[field_name] = forms.ChoiceField(

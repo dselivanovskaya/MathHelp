@@ -2,7 +2,7 @@
 
 {% load static %}
 
-{% block title %} Тест {% endblock %}
+{% block title %} Отчёт {% endblock %}
 
 {% block css %}
   <link rel="stylesheet" href="{% static 'quiz/css/quiz.css' %}">
@@ -12,9 +12,8 @@
   <div class="container">
     <div class='quiz-detail'>
       <h3>Отчет по тесту: {{ quiz.ticket.name }}</h3>
-      <h3>Результат: {{ taken_quiz_data.result }}%</h3>
+      <h3>Результат: {{ quiz.result }}%</h3>
     </div>
-
       <table>
         <tr>
           <th>

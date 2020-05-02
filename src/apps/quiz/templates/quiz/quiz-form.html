@@ -10,24 +10,22 @@
 
 {% block content %}
   <div class="container">
-
     <div class='quiz-detail'>
       <h3>Тест по теме: {{ quiz.ticket.name }}</h3>
     </div>
-
-    <form class="quiz-form" action="{% url QUIZ_TICKET_URL quiz.id %}" method="POST">
+    <form class="quiz-form" action="{{ quiz.get_absolute_url }}" method="POST">
       {% csrf_token %}
       {% for field in form %}
-      <div class='border-bottom'>
-      <div class='label-form'>
-        {{ field.label_tag }}
-      </div>
-      <div class='label-form-field'>
-        {{ field }}
-      </div>
-      </div>
+        <div class='border-bottom'>
+          <div class='label-form'>
+            {{ field.label_tag }}
+          </div>
+          <div class='label-form-field'>
+            {{ field }}
+          </div>
+        </div>
       {% endfor %}
-      <button type="submit" class="btn btn-blue">Проверить</button>
+      <button class="btn btn-blue" type="submit">Проверить</button>
     </form>
   </div>
 {% endblock %}
