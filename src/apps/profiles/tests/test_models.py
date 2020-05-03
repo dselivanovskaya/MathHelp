@@ -1,10 +1,10 @@
+from django.core.exceptions import ValidationError
 from django.test import TestCase
 from django.urls import reverse
 
 from tests.data import USER_MALE
 
 from profiles.apps import ProfilesConfig
-from profiles.models import Profile
 
 
 class ProfileModelTest(TestCase):
@@ -38,3 +38,12 @@ class ProfileModelTest(TestCase):
     def test_has_default_uploaded_photo(self):
         self.assertTrue(self.profile.has_default_photo())
         self.assertFalse(self.profile.has_uploaded_photo())
+
+    def test_delete_photo(self):
+        with self.assertRaises(ValidationError):
+            self.profile.delete_photo()
+
+    def test_get_max_photo_size_display(self):
+        self.assertEquals(self.profile.get_max_photo_size_display(),
+            f'{self.profile.PHOTO_MAX_WIDTH} x {self.profile.PHOTO_MAX_HEIGHT}'
+        )

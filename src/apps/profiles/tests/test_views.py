@@ -1,11 +1,9 @@
-from django.conf import settings
 from django.test import TestCase
 from django.urls import reverse
 
 from tests.data import USER_MALE
 
-from profiles.apps import ProfilesConfig
-from profiles.views import ProfileDetailView, ProfileUpdateView
+from profiles.views import ProfileUpdateView
 
 
 class ProfileDetailViewTest(TestCase):
@@ -16,10 +14,10 @@ class ProfileDetailViewTest(TestCase):
         cls.profile = cls.user.profile
         cls.url = cls.profile.get_absolute_url()
 
-    def test_anonymous_request(self):
+    def test_anonymous_get_request(self):
         self.assertEqual(self.client.get(self.url).status_code, 302)
 
-    def test_authenticated_request(self):
+    def test_authenticated_get_request(self):
         self.client.login(username=USER_MALE.username, password=USER_MALE.password)
         self.assertEqual(self.client.get(self.url).status_code, 200)
 
@@ -33,10 +31,10 @@ class ProfileUpdateViewTest(TestCase):
         cls.url = cls.profile.get_absolute_update_url()
         cls.view_class = ProfileUpdateView
 
-    def test_anonymous_request(self):
+    def test_anonymous_get_request(self):
         self.assertEqual(self.client.get(self.url).status_code, 302)
 
-    def test_authenticated_request(self):
+    def test_authenticated_get_request(self):
         self.client.login(username=USER_MALE.username, password=USER_MALE.password)
         self.assertEqual(self.client.get(self.url).status_code, 200)
 
