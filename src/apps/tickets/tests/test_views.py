@@ -47,7 +47,7 @@ class TicketPDFViewTest(TestCase):
         cls.ticket = Ticket.objects.create(
             name='New ticket', level=4, filename='new-ticket.pdf'
         )
-        cls.url = cls.ticket.get_absolute_pdf_url()
+        cls.url = cls.ticket.pdf_url
         USER_MALE.create_in_db()
 
     def test_anonymous_request(self):

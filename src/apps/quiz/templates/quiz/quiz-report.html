@@ -5,13 +5,18 @@
 {% block title %} Отчёт {% endblock %}
 
 {% block css %}
-  <link rel="stylesheet" href="{% static 'quiz/css/quiz.css' %}">
+  <link rel="stylesheet" href="{% static 'quiz/css/style.css' %}">
 {% endblock %}
 
 {% block content %}
   <div class="container">
     <div class='quiz-detail'>
+<<<<<<< HEAD
       <h3>Отчет по тесту: {{ quiz.ticket.name }}</h3>
+=======
+      <h3>Отчет по тесту: {{ quiz.ticket }}</h3>
+      <h3>Результат: {{ quiz.result }}%</h3>
+>>>>>>> Refactor Ticket model and write tests for it
     </div>
     <div class="report-result">
       <h3>Ваш результат: {{ quiz.result }}%</h3>

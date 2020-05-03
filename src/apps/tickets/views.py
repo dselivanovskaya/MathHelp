@@ -1,4 +1,4 @@
-from django.http import FileResponse, Http404
+from django.http import FileResponse
 from django.shortcuts import get_object_or_404
 
 from django.views import View
@@ -6,7 +6,6 @@ from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 
 from forum.forms import CommentCreateForm
-from forum.models import Comment
 
 from .apps import TicketsConfig
 from .models import Ticket
@@ -30,10 +29,7 @@ class TicketDetailView(DetailView):
     def get_context_data(self, **kwargs):
         ''' Return Comments and CommentForm. '''
         context = super().get_context_data(**kwargs)
-        context.update({
-            'comments': Comment.objects.filter(ticket=self.get_object()),
-            'form': CommentCreateForm(self.get_object(), self.request.user),
-        })
+        context['comment_form'] = CommentCreateForm(self.get_object(), self.request.user)
         return context
 
 
@@ -45,7 +41,4 @@ class TicketPDFView(View):
         if ticket.id not in request.session['read_tickets']:
             request.session['read_tickets'].append(ticket.id)
 
-        try:
-            return FileResponse(open(ticket.get_absolute_pdf_path(), 'rb'))
-        except FileNotFoundError:
-            raise Http404
+        return FileResponse(ticket.pdf)

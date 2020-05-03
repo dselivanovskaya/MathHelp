@@ -7,9 +7,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 APPS_DIR = os.path.join(BASE_DIR, 'apps')
 sys.path.insert(0, APPS_DIR)
 
-from accounts.apps import AccountsConfig as accounts_config
-from pages.apps import PagesConfig as pages_config
-from profiles.apps import ProfilesConfig as profiles_config
+from accounts.apps import AccountsConfig
+from pages.apps import PagesConfig
+from profiles.apps import ProfilesConfig
 
 # Debugging.
 # ------------------------------------------------------------------------------
@@ -46,6 +46,7 @@ INSTALLED_APPS = [
 
     # Local
     'root',
+    'tests',
     'accounts.apps.AccountsConfig',
     'forum.apps.ForumConfig',
     'pages.apps.PagesConfig',
@@ -53,8 +54,6 @@ INSTALLED_APPS = [
     'quiz.apps.QuizConfig',
     'tickets.apps.TicketsConfig',
 
-    # Just for testing
-    'tests',
 ]
 
 # HTTP.
@@ -96,7 +95,6 @@ TEMPLATES = [
                 'accounts.context_processors.accounts',
                 'forum.context_processors.forum',
                 'pages.context_processors.pages',
-                'profiles.context_processors.profiles',
                 'quiz.context_processors.quiz',
                 'tickets.context_processors.tickets',
             ],
@@ -176,18 +174,18 @@ MEDIA_URL = '/media/'
 AUTH_USER_MODEL = 'auth.User'
 
 # The named URL pattern where requests are redirected for index page.
-INDEX_URL = pages_config.INDEX_URL
+INDEX_URL = PagesConfig.INDEX_URL
 
 # The named URL pattern where requests are redirected for login.
 # Used in login_required decorator.
-LOGIN_URL = accounts_config.ACCOUNT_LOGIN_URL
+LOGIN_URL = AccountsConfig.ACCOUNT_LOGIN_URL
 
 # The named URL pattern where requests are redirected after login.
 # Used in anonymous_required decorator and LoginView.
-LOGIN_REDIRECT_URL = profiles_config.PROFILE_REDIRECT_URL
+LOGIN_REDIRECT_URL = ProfilesConfig.PROFILE_REDIRECT_URL
 
 # The names URL pattern used by django built-in LogoutView.
-LOGOUT_REDIRECT_URL = pages_config.INDEX_URL
+LOGOUT_REDIRECT_URL = PagesConfig.INDEX_URL
 
 # Messages.
 # ------------------------------------------------------------------------------
@@ -206,6 +204,8 @@ MESSAGE_TAGS = {
 SESSION_SAVE_EVERY_REQUEST = True
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 
-STRONGHOLD_PUBLIC_NAMED_URLS = (INDEX_URL,
-                                accounts_config.ACCOUNT_LOGIN_URL,
-                                accounts_config.ACCOUNT_CREATE_URL)
+STRONGHOLD_PUBLIC_NAMED_URLS = (
+    PagesConfig.INDEX_URL,
+    AccountsConfig.ACCOUNT_LOGIN_URL,
+    AccountsConfig.ACCOUNT_CREATE_URL
+)
