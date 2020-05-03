@@ -7,14 +7,14 @@ from django.views import View
 from tickets.apps import TicketsConfig
 from tickets.models import Ticket
 
-from .forms import CommentForm
+from .forms import CommentCreateForm
 from .models import Comment
 
 
 class CommentCreateView(View):
     ''' Create a new Comment. '''
 
-    form_class = CommentForm
+    form_class = CommentCreateForm
     error_message = 'Произошла ошибка во время оставления комментария.'
 
     def post(self, request, ticket_id):

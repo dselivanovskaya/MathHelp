@@ -1,0 +1,48 @@
+{% load static %}
+
+<header class="second-head">
+  <div class="container">
+    <div class="head-img">
+      <img src="{% static 'img/logo-head2.png' %}" width="230" height="86" alt="MathHelp">
+    </div>
+
+    <nav class="head-nav">
+      <ul class="head-ul">
+        <li>
+          <a href="{{ user.profile.get_absolute_url }}">Мой профиль</a>
+        </li>
+        <li>
+          <a href="{% url TICKET_LIST_URL %}">Билеты</a>
+        </li>
+        <li>
+          <a href="{% url REFERENCES_URL %}">Ссылки</a>
+        </li>
+        <li>
+          <a>Настройки</a>
+            <ul class='submenu'>
+              {% if request.user.is_superuser %}
+              <li>
+                <a href="/admin/">Администрация</a>
+              </li>
+              {% endif %}
+              <li>
+                <a href="{% url ACCOUNT_USERNAME_UPDATE_URL %}">Изменить имя пользователя</a>
+              </li>
+              <li>
+                <a href="{% url ACCOUNT_EMAIL_UPDATE_URL %}">Изменить адрес электронной почты</a>
+              </li>
+              <li>
+                <a href="{% url ACCOUNT_PASSWORD_CHANGE_URL %}">Изменить пароль</a>
+              </li>
+              <li>
+                <a href="{% url ACCOUNT_DELETE_URL %}">Удалить аккаунт</a>
+              </li>
+              <li>
+                <a href="{% url ACCOUNT_LOGOUT_URL %}">Выход</a>
+              </li>
+            </ul>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>

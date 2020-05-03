@@ -6,4 +6,4 @@ class TicketsConfig(AppConfig):
 
     TICKET_LIST_URL = 'ticket-list'
     TICKET_DETAIL_URL = 'ticket-detail'
-    TICKET_READ_PDF_URL = 'ticket-read-pdf'
+    TICKET_PDF_URL = 'ticket-pdf'

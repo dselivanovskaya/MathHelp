@@ -1,58 +1,54 @@
 from django.test import TestCase
 from django.urls import reverse
 
-from tests.data import USER1
+from tests.data import USER_MALE, USER_ADMIN
 
-from pages.apps import PagesConfig as pages_config
-from pages.views import IndexView, ReferenceView
+from pages.apps import PagesConfig
 
 
 class IndexViewTest(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        cls.url = reverse(pages_config.INDEX_URL)
-        cls.view_class = IndexView
-        cls.template_name = cls.view_class.template_name
-        USER1.create_in_db()
+        cls.url = reverse(PagesConfig.INDEX_URL)
+        cls.auth_header = 'pages/includes/auth-header.html'
+        cls.anon_header = 'pages/includes/anon-header.html'
+        USER_MALE.create_in_db()
+        USER_ADMIN.create_in_db()
 
-    def test_url_exists(self):
+    def test_anonymous_request(self):
         self.assertEqual(self.client.get(self.url).status_code, 200)
 
-    def test_renders_correct_template(self):
-        self.assertTemplateUsed(self.client.get(self.url), self.template_name)
+    def test_authenticated_request(self):
+        self.client.login(username=USER_MALE.username, password=USER_MALE.password)
+        self.assertEqual(self.client.get(self.url).status_code, 302)
 
-    def test_renders_correct_header_for_authenticated_user(self):
-        self.client.login(username=USER1.username, password=USER1.password)
-        self.assertTemplateUsed(
-            self.client.get(self.url), 'includes/auth-header.html'
-        )
+    def test_anonymous_request_header(self):
+        self.assertTemplateUsed(self.client.get(self.url), self.anon_header)
 
-    def test_renders_correct_header_for_anonymous_user(self):
-        self.assertTemplateUsed(
-            self.client.get(self.url), 'includes/anon-header.html'
-        )
+    def test_authenticated_request_header(self):
+        self.client.login(username=USER_MALE.username, password=USER_MALE.password)
+        response = self.client.get(self.url, follow=True)
+        self.assertTemplateUsed(response, self.auth_header)
+        self.assertNotContains(response, 'Администрация')
 
-    def test_renders_create_account_href_for_anonymous_user(self):
-        response = self.client.get(self.url)
-        self.assertContains(response, 'Создать аккаунт')
-
-    def test_doesnt_render_create_account_href_for_authenticated_user(self):
-        self.client.login(username=USER1.username, password=USER1.password)
-        response = self.client.get(self.url)
-        self.assertNotContains(response, 'Создать аккаунт')
+    def test_superuser_request_header(self):
+        self.client.login(username=USER_ADMIN.username, password=USER_ADMIN.password)
+        response = self.client.get(self.url, follow=True)
+        self.assertTemplateUsed(response, self.auth_header)
+        self.assertContains(response, 'Администрация')
 
 
-class ReferenceViewTest(TestCase):
+class ReferencesViewTest(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        cls.url = reverse(pages_config.REFERENCES_URL)
-        cls.view_class = ReferenceView
-        cls.template_name = cls.view_class.template_name
+        cls.url = reverse(PagesConfig.REFERENCES_URL)
+        USER_MALE.create_in_db()
 
-    def test_view_url_exists(self):
+    def test_anonymous_request(self):
+        self.assertEqual(self.client.get(self.url).status_code, 302)
+
+    def test_authenticated_request(self):
+        self.client.login(username=USER_MALE.username, password=USER_MALE.password)
         self.assertEqual(self.client.get(self.url).status_code, 200)
-
-    def test_view_renders_correct_template(self):
-        self.assertTemplateUsed(self.client.get(self.url), self.template_name)

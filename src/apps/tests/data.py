@@ -1,24 +1,48 @@
-''' These constants are used in test cases. '''
-
 from django.contrib.auth import get_user_model
 
 
 class TestUser:
     ''' Class for storing test users credentials.  '''
 
-    def __init__(self, first_name, last_name, email, username, password):
+    def __init__(self, username, email, password, first_name='', last_name='',
+                 gender='M', age=0, is_superuser=False):
+        # User data
+        self.username = username
+        self.email = email
+        self.password = password
+        self.is_superuser = is_superuser
+        # Profile data
         self.first_name = first_name
         self.last_name = last_name
-        self.email = email
-        self.username = username
-        self.password = password
+        self.gender = gender
+        self.age = age
 
     def create_in_db(self):
-        return get_user_model().objects.create_user(
-            username=self.username, email=self.email, password=self.password,
-            first_name=self.first_name, last_name=self.last_name,
+        if self.is_superuser:
+            create_user_function = get_user_model().objects.create_superuser
+        else:
+            create_user_function = get_user_model().objects.create_user
+
+        user = create_user_function(
+            username=self.username, email=self.email, password=self.password
         )
 
+        user.profile.first_name = self.first_name
+        user.profile.last_name = self.last_name
+        user.profile.gender = self.gender
+        user.profile.age = self.age
 
-USER1 = TestUser('John', 'Smith', 'john@gmail.com', 'john', 'johny_123')
-USER2 = TestUser('Alice', 'Brooks', 'alice@gmail.com', 'alice', 'alicia_123')
+        return user
+
+
+USER_MALE = TestUser(
+    'john',  'john@gmail.com',  'johny_123', 'John', 'Smith', 'M', 20
+)
+
+USER_FEMALE = TestUser(
+    'alice', 'alice@gmail.com', 'alicia_123', 'Alice', 'Michaels', 'F', 22
+)
+
+USER_ADMIN = TestUser(
+    'admin', 'admin@gmail.com', 'adminn_123', is_superuser=True
+)

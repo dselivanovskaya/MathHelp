@@ -11,5 +11,5 @@ class IndexView(TemplateView):
     template_name = f'{PagesConfig.name}/index.html'
 
 
-class ReferenceView(TemplateView):
-    template_name = f'{PagesConfig.name}/reference.html'
+class ReferencesView(TemplateView):
+    template_name = f'{PagesConfig.name}/references.html'

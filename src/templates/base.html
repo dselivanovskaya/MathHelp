@@ -2,7 +2,6 @@
 <!doctype html>
 
 <html lang="rus">
-
   <head>
     <meta charset="utf-8">
     <title>{% block title %} {% endblock %}</title>
@@ -15,9 +14,9 @@
 
   <body>
     {% if user.is_authenticated %}
-      {% include 'includes/auth-header.html' %}
+      {% include 'pages/includes/auth-header.html' %}
     {% else %}
-      {% include 'includes/anon-header.html' %}
+      {% include 'pages/includes/anon-header.html' %}
     {% endif %}
 
     {% if messages %}
@@ -32,9 +31,8 @@
 
     {% block content %} {% endblock %}
 
-    {% include 'includes/footer.html' %}
+    {% include 'pages/includes/footer.html' %}
 
     {% block js %}{% endblock %}
   </body>
-
 </html>

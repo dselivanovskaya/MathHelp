@@ -1,31 +1,54 @@
-from django.conf import settings
 from django.test import TestCase
 from django.urls import reverse
 
-from tests.data import USER1
+from tests.data import USER_MALE
 
-from tickets.apps import TicketsConfig as tickets_config
-from tickets.views import TicketListView
+from tickets.apps import TicketsConfig
+from tickets.models import Ticket
 
 
 class TicketListViewTest(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        cls.url = reverse(tickets_config.TICKET_LIST_URL)
-        cls.view_class = TicketListView
-        cls.template = cls.view_class.template_name
-        USER1.create_in_db()
+        cls.url = reverse(TicketsConfig.TICKET_LIST_URL)
+        USER_MALE.create_in_db()
 
-    def test_url_exists_for_authenticated_user(self):
-        self.client.login(username=USER1.username, password=USER1.password)
+    def test_anonymous_request(self):
+        self.assertEqual(self.client.get(self.url).status_code, 302)
+
+    def test_authenticated_request(self):
+        self.client.login(username=USER_MALE.username, password=USER_MALE.password)
         self.assertEqual(self.client.get(self.url).status_code, 200)
 
-    def test_redirects_anonymous_user_to_login_page(self):
-        self.assertRedirects(
-            self.client.get(self.url), reverse(settings.LOGIN_URL)
-        )
 
-    def test_renders_correct_template(self):
-        self.client.login(username=USER1.username, password=USER1.password)
-        self.assertTemplateUsed(self.client.get(self.url), self.template)
+class TicketDetailViewTest(TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.ticket = Ticket.objects.create(
+            name='New ticket', level=4, filename='new-ticket.pdf'
+        )
+        cls.url = cls.ticket.get_absolute_url()
+        USER_MALE.create_in_db()
+
+    def test_anonymous_request(self):
+        self.assertEqual(self.client.get(self.url).status_code, 302)
+
+    def test_authenticated_request(self):
+        self.client.login(username=USER_MALE.username, password=USER_MALE.password)
+        self.assertEqual(self.client.get(self.url).status_code, 200)
+
+
+class TicketPDFViewTest(TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.ticket = Ticket.objects.create(
+            name='New ticket', level=4, filename='new-ticket.pdf'
+        )
+        cls.url = cls.ticket.get_absolute_pdf_url()
+        USER_MALE.create_in_db()
+
+    def test_anonymous_request(self):
+        self.assertEqual(self.client.get(self.url).status_code, 302)

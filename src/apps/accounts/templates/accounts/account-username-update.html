@@ -10,16 +10,12 @@
       <div class="heading">
         <h3>Изменить имя пользователя</h3>
       </div>
-      
       <form class="get-info-form" action="{% url ACCOUNT_USERNAME_UPDATE_URL %}" method="POST">
         {% csrf_token %}
-
         {{ form.as_p }}
-
-        <button type="submit" class="get-info-form btn btn-blue">
+        <button class="get-info-form btn btn-blue" type="submit">
           Сохранить
         </button>
-
       </form>
     </div>
   </section>

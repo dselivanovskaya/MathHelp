@@ -1,7 +1,7 @@
 from django.urls import path
 
 from .apps import TicketsConfig
-from .views import TicketDetailView, TicketListView, TicketReadPDFView
+from .views import TicketDetailView, TicketListView, TicketPDFView
 
 
 urlpatterns = [
@@ -17,7 +17,7 @@ urlpatterns = [
     ),
     path(
         '<str:ticket_filename>',
-        TicketReadPDFView.as_view(),
-        name=TicketsConfig.TICKET_READ_PDF_URL
+        TicketPDFView.as_view(),
+        name=TicketsConfig.TICKET_PDF_URL
     ),
 ]

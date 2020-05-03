@@ -18,15 +18,21 @@ class Quiz(models.Model):
     def __str__(self):
         return self.ticket.name
 
-    # def session_update(self, request, lst):
-    #     if self.ticket.name not in request.session[lst]:
-    #         request.session[lst].append(self.ticket.name)
-
     def get_absolute_url(self):
-        return reverse(QuizConfig.QUIZ_TICKET_URL, args=[self.id])
+        return reverse(QuizConfig.QUIZ_FORM_URL, args=[self.id])
+
+    def get_absolute_save_url(self):
+        return reverse(QuizConfig.QUIZ_SAVE_URL, args=[self.id])
+
+    def get_absolute_restart_url(self):
+        return reverse(QuizConfig.QUIZ_RESTART_URL, args=[self.id])
+
+    def get_absolute_report_url(self):
+        return reverse(QuizConfig.QUIZ_REPORT_URL, args=[self.id])
 
 
 class Question(models.Model):
+
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
     text = models.CharField(max_length=512)
 
@@ -41,6 +47,7 @@ class Question(models.Model):
 
 
 class Answer(models.Model):
+
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     text = models.CharField(max_length=512)
     is_correct = models.BooleanField()
@@ -50,6 +57,7 @@ class Answer(models.Model):
 
 
 class Result(models.Model):
+
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     percent = models.PositiveSmallIntegerField()
@@ -57,4 +65,5 @@ class Result(models.Model):
     def __str__(self):
         return f'{self.user.username}: {self.quiz.ticket}'
 
-    
+    def get_ticket_name(self):
+        return self.quiz.ticket.name
