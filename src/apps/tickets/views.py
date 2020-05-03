@@ -41,4 +41,4 @@ class TicketPDFView(View):
         if ticket.id not in request.session['read_tickets']:
             request.session['read_tickets'].append(ticket.id)
 
-        return FileResponse(ticket.pdf)
+        return FileResponse(ticket.get_pdf())

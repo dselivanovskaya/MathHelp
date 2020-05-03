@@ -18,15 +18,15 @@
     <div class="result">
       <h3>Ваш результат: {{ quiz.result }}%</h3>
       <div class="buttons">
-        {% if not quiz.saved %}
-        <a class="btn btn-blue" href="{{ quiz.get_absolute_save_url }}">
+        {% if not quiz.is_saved %}
+        <a class="btn btn-blue" href="{{ quiz.get_save_url }}">
           Сохранить
         </a>
         {% endif %}
-        <a class="btn btn-blue" href="{{ quiz.get_absolute_restart_url }}">
+        <a class="btn btn-blue" href="{{ quiz.get_restart_url }}">
           Пройти заново
         </a>
-        <a class="btn btn-blue" href="{{ quiz.get_absolute_report_url }}">
+        <a class="btn btn-blue" href="{{ quiz.get_report_url }}">
           Отчет
         </a>
     </div>

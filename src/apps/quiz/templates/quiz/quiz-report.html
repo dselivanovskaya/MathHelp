@@ -29,14 +29,29 @@
           <th class="border-bottom">Мой ответ</th>
           <th class="border-bottom">Статус</th>
         </tr>
-        {% for question in questions %}
+        {% for question in quiz.get_questions %}
           <tr>
+<<<<<<< HEAD
             <td class="border-bottom"><p class="body-font">{{ question.text }}</p></td>
             <td class="border-bottom"><p class="body-font">{{ question.correct_answer }}</p></td>
             <td class="border-bottom"><p class="body-font">{{ question.user_answer }}</p></td>
             <td class="border-bottom">
               {% if question.user_answer == question.correct_answer %}
               <img src="{% static 'quiz/img/success.png' %}" width="25" height="25">
+=======
+            <td>
+              {{ question.text }}
+            </td>
+            <td>
+              {{ question.get_correct_answer }}
+            </td>
+            <td>
+              {{ question.user_answer }}
+            </td>
+            <td>
+              {% if question.user_answer == question.get_correct_answer %}
+                ✅
+>>>>>>> Refactor quiz models and views
               {% else %}
               <img src="{% static 'quiz/img/error.png' %}" width="25" height="25">
               {% endif %}

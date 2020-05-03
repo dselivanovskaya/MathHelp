@@ -20,13 +20,13 @@ class TicketModelTest(TestCase):
             name='Ticket name', level=5, filename='ticket.pdf'
         )
 
-    def test_objects_create(self):
+    def test_objects_create_no_fields(self):
         ''' Can not create a Ticket without fields. '''
         with  self.assertRaises(TypeError):
             self.model.objects.create()
 
-    def test_ticket_save(self):
-        ''' Can not save a ticket with an invalid level value. '''
+    def test_objects_create_invalid_level_field(self):
+        ''' Can not create a ticket with an invalid level value. '''
         error_message = self.model.error_messages['invalid_level']
         with self.assertRaisesRegexp(ValidationError, error_message):
             self.model.objects.create(
@@ -39,9 +39,9 @@ class TicketModelTest(TestCase):
             reverse(TicketsConfig.TICKET_DETAIL_URL, args=[self.ticket.id])
         )
 
-    def test_pdf_url(self):
+    def test_get_pdf_url(self):
         self.assertEquals(
-            self.ticket.pdf_url,
+            self.ticket.get_pdf_url(),
             reverse(TicketsConfig.TICKET_PDF_URL, args=[self.ticket.filename])
         )
 
