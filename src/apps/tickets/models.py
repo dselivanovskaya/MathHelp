@@ -33,12 +33,6 @@ class Ticket(models.Model):
 
     objects = TicketManager()
 
-    @classmethod
-    def create(cls, name, level, filename):
-        instance = cls(name=name, level=level, filename=filename)
-        instance.save()
-        return instance
-
     def __str__(self):
         return self.name
 
