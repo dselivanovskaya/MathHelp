@@ -74,3 +74,30 @@ li {
 .score-scale {
   text-align: center;
 }
+
+.table-font{
+  color: #404040;
+  font-size: 17px;
+  line-height: 15px;
+  text-decoration: none;
+}
+
+.report-table td:nth-last-child(-n+3){
+  text-align: center;
+}
+
+.report-result {
+  background: #fae6ae;
+  border: none;
+  border-radius: 5px;
+  margin-top: 5px;
+  margin-bottom: 30px;
+}
+
+.report-result h3 {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 20px;
+  font-weight: 500;
+  line-height: 25px;
+}
