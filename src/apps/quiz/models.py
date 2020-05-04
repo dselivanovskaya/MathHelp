@@ -17,6 +17,12 @@ class Quiz(models.Model):
     class Meta:
         verbose_name_plural = 'quizzes'
 
+    @classmethod
+    def create(cls, ticket):
+        instance = cls(ticket=ticket)
+        instance.save()
+        return instance
+
     def __str__(self):
         return str(self.ticket)
 
@@ -47,6 +53,12 @@ class Question(models.Model):
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
     text = models.CharField(max_length=512)  # TODO unique = True fails
 
+    @classmethod
+    def create(cls, quiz, text):
+        instance = cls(quiz=quiz, text=text)
+        instance.save()
+        return instance
+
     def __str__(self):
        return self.text
 
@@ -67,6 +79,12 @@ class Answer(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     text = models.CharField(max_length=512)  # TODO unique = True fails
     is_correct = models.BooleanField()
+
+    @classmethod
+    def create(cls, question, text, is_correct):
+        instance = cls(question=question, text=text, is_correct=is_correct)
+        instance.save()
+        return instance
 
     def __str__(self):
         return self.text

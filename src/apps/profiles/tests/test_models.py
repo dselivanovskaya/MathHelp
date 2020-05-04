@@ -2,7 +2,7 @@ from django.core.exceptions import ValidationError
 from django.test import TestCase
 from django.urls import reverse
 
-from tests.data import USER_MALE
+from tests.data import MALE_USER
 
 from profiles.apps import ProfilesConfig
 
@@ -11,7 +11,7 @@ class ProfileModelTest(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        cls.user = USER_MALE.create_in_db()
+        cls.user = MALE_USER.create()
         cls.profile = cls.user.profile
 
     def test_get_absolute_url(self):

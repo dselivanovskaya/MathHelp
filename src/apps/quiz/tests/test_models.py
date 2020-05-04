@@ -1,8 +1,5 @@
-from django.core.exceptions import ValidationError
 from django.test import TestCase
 from django.urls import reverse
-
-from tests.data import USER_MALE
 
 from tickets.models import Ticket
 
@@ -14,11 +11,8 @@ class QuizModelTest(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        cls.model = Quiz
-        ticket = Ticket.objects.create(
-            name='Ticket name', level=5, filename='ticket.pdf'
-        )
-        cls.quiz = Quiz.objects.create(ticket=ticket)
+        ticket = Ticket.create(name='ticket', level=5, filename='ticket.pdf')
+        cls.quiz = Quiz.create(ticket=ticket)
 
     def test_get_absolute_url(self):
         self.assertEquals(

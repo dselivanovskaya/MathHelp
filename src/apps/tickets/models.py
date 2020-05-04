@@ -33,15 +33,19 @@ class Ticket(models.Model):
 
     objects = TicketManager()
 
+    @classmethod
+    def create(cls, name, level, filename):
+        instance = cls(name=name, level=level, filename=filename)
+        instance.save()
+        return instance
+
     def __str__(self):
         return self.name
 
-    @property
-    def level_img_path(self):
+    def get_level_img_path(self):
         return os.path.join(TicketsConfig.name, 'img', f'{self.level}-star.png')
 
-    @property
-    def pdf_path(self):
+    def get_pdf_path(self):
         return os.path.join(settings.MEDIA_ROOT, TicketsConfig.name, 'pdf', self.filename)
 
     def get_absolute_url(self):
@@ -56,7 +60,7 @@ class Ticket(models.Model):
 
     def get_pdf(self):
         ''' Return ticket's pdf file. '''
-        return open(self.pdf_path, 'rb')
+        return open(self.get_pdf_path(), 'rb')
 
     def get_comments(self):
         ''' Return tickets's forum comments. '''
