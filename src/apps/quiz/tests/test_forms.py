@@ -14,10 +14,10 @@ class QuizFormTest(TestCase):
     def setUpTestData(cls):
 
         MALE_USER.create()
-        ticket = Ticket.create(name='ticket', level=4, filename='ticket.pdf')
-        quiz = Quiz.create(ticket=ticket)
-        question =Question.create(quiz=quiz, text='sample')
-        answer = Answer.create(question=question, text='answer', is_correct=True)
+        ticket = Ticket.objects.create(name='ticket', level=4, filename='ticket.pdf')
+        quiz = Quiz.objects.create(ticket=ticket)
+        question =Question.objects.create(quiz=quiz, text='sample')
+        answer = Answer.objects.create(question=question, text='answer', is_correct=True)
 
         cls.quiz = quiz
         cls.action_url = quiz.get_absolute_url()
