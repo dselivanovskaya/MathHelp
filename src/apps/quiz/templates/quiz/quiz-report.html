@@ -10,56 +10,40 @@
 
 {% block content %}
   <div class="container">
-    <div class='quiz-detail'>
-<<<<<<< HEAD
-      <h3>Отчет по тесту: {{ quiz.ticket.name }}</h3>
-=======
-      <h3>Отчет по тесту: {{ quiz.ticket }}</h3>
-      <h3>Результат: {{ quiz.result }}%</h3>
->>>>>>> Refactor Ticket model and write tests for it
+    <div class="quiz-detail">
+      <h3>Отчет по тесту: {{ quiz }}</h3>
     </div>
     <div class="report-result">
       <h3>Ваш результат: {{ quiz.result }}%</h3>
     </div>
 
-      <table class="report-table">
+    <table class="report-table">
+      <tr>
+        <th class="border-bottom" width="350px">Вопрос</th>
+        <th class="border-bottom">Правильный ответ</th>
+        <th class="border-bottom">Мой ответ</th>
+        <th class="border-bottom">Статус</th>
+      </tr>
+      {% for question in quiz.get_questions %}
         <tr>
-          <th class="border-bottom" width="350px">Вопрос</th>
-          <th class="border-bottom">Правильный ответ</th>
-          <th class="border-bottom">Мой ответ</th>
-          <th class="border-bottom">Статус</th>
-        </tr>
-        {% for question in quiz.get_questions %}
-          <tr>
-<<<<<<< HEAD
-            <td class="border-bottom"><p class="body-font">{{ question.text }}</p></td>
-            <td class="border-bottom"><p class="body-font">{{ question.correct_answer }}</p></td>
-            <td class="border-bottom"><p class="body-font">{{ question.user_answer }}</p></td>
-            <td class="border-bottom">
-              {% if question.user_answer == question.correct_answer %}
+          <td class="border-bottom">
+            <p class="body-font">{{ question.text }}</p>
+          </td>
+          <td class="border-bottom">
+            <p class="body-font">{{ question.get_correct_answer }}</p>
+          </td>
+          <td class="border-bottom">
+            <p class="body-font">{{ question.user_answer }}</p>
+          </td>
+          <td class="border-bottom">
+            {% if question.user_answer == question.get_correct_answer %}
               <img src="{% static 'quiz/img/success.png' %}" width="25" height="25">
-=======
-            <td>
-              {{ question.text }}
-            </td>
-            <td>
-              {{ question.get_correct_answer }}
-            </td>
-            <td>
-              {{ question.user_answer }}
-            </td>
-            <td>
-              {% if question.user_answer == question.get_correct_answer %}
-                ✅
->>>>>>> Refactor quiz models and views
-              {% else %}
+            {% else %}
               <img src="{% static 'quiz/img/error.png' %}" width="25" height="25">
-              {% endif %}
-            </td>
-          </tr>
-        {% endfor %}
-      </table>
-
-    </form>
+            {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
   </div>
 {% endblock %}

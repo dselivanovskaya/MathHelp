@@ -5,7 +5,6 @@ from django.utils.decorators import method_decorator
 
 from django.views import View
 from django.views.generic import RedirectView
-from django.views.generic.detail import DetailView
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import FormView
 
@@ -16,12 +15,20 @@ from .models import Quiz, Question, Answer, Result
 
 
 @method_decorator(quiz_not_taken_required, name='dispatch')
-class QuizFormView(DetailView, FormView):
+class QuizFormView(FormView):
 
-    model = Quiz
     form_class = QuizForm
     template_name = f'{QuizConfig.name}/quiz-form.html'
-    pk_url_kwarg='quiz_id'
+
+    def get_object(self):
+        if not hasattr(self, 'object'):
+            self.object = get_object_or_404(Quiz, id=self.kwargs['quiz_id'])
+        return self.object
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context['quiz'] = self.get_object()
+        return context
 
     def get_form_kwargs(self, *args, **kwargs):
         kwargs = super().get_form_kwargs(*args, **kwargs)
@@ -29,11 +36,11 @@ class QuizFormView(DetailView, FormView):
         return kwargs
 
     def form_valid(self, form):
-        self.request.session['taken_quizzes'].update({
+        self.request.session.get('taken_quizzes').update({
             self.get_object().id: {
-                'result':   form.cleaned_data['result'],
-                'answers':  form.cleaned_data['answers'],
-                'is_saved': False,
+                'result':  form.cleaned_data['result'],
+                'answers': form.cleaned_data['answers'],
+                'is_saved':   False,
             }
         })
         return super().form_valid(form)

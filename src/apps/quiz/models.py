@@ -45,10 +45,15 @@ class Quiz(models.Model):
 class Question(models.Model):
 
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
-    text = models.CharField(max_length=512, unique=True)
+    text = models.CharField(max_length=512)  # TODO unique = True fails
 
     def __str__(self):
        return self.text
+
+    def get_answers(self):
+        if not hasattr(self, '_answers'):
+           self._answers = self.answer_set.all()
+        return self._answers
 
     def get_correct_answer(self):
         ''' Return the correct answer for particularr question. '''
@@ -60,7 +65,7 @@ class Question(models.Model):
 class Answer(models.Model):
 
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    text = models.CharField(max_length=512, unique=True)
+    text = models.CharField(max_length=512)  # TODO unique = True fails
     is_correct = models.BooleanField()
 
     def __str__(self):
