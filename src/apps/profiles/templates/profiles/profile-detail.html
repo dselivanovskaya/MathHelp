@@ -5,7 +5,7 @@
 {% block title %} {{ user.profile.get_full_name }} {% endblock %}
 
 {% block css %}
-  <link rel="stylesheet" href="{% static 'profiles/css/profiles.css' %}">
+  <link rel="stylesheet" href="{% static 'profiles/css/style.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -70,7 +70,7 @@
                     </p>
                   </td>
                   <td class="border-bottom">
-                    {% if quiz.saved %}
+                    {% if quiz.is_saved %}
                       <img src="{% static 'profiles/img/check.png' %}" width="25" height="25">
                     {% else %}
                       <img src="{% static 'profiles/img/cross.png' %}" width="25" height="25">
@@ -93,7 +93,7 @@
             {% for result in results %}
               <tr>
                 <td class="border-bottom">
-                  <p class="body-font2">{{ result.get_ticket_name }}</p>
+                  <p class="body-font2">{{ result.ticket_name }}</p>
                 </td>
                 <td class="border-bottom">
                   <p class="body-font2">{{ result.percent }}%</p>

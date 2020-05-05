@@ -50,7 +50,7 @@ class ProfileDetailView(DetailView):
         for quiz_id, quiz_data in self.request.session['taken_quizzes'].items():
             quiz = Quiz.objects.get(id=quiz_id)
             quiz.result = quiz_data['result']
-            quiz.saved = quiz_data['saved']
+            quiz.is_saved = quiz_data['is_saved']
             context['taken_quizzes'].append(quiz)
 
         context['results'] = self.request.user.result_set.all()

@@ -2,8 +2,8 @@ from django.urls import path
 
 from .apps import QuizConfig
 from .views import (
-    QuizFormView, QuizResultView, QuizSaveView,
-    QuizRestartView, QuizReportView,
+    QuizFormView, QuizResultView,
+    QuizSaveView, QuizRestartView, QuizReportView,
 )
 
 

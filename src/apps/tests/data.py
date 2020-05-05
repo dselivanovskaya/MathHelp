@@ -17,7 +17,7 @@ class TestUser:
         self.gender = gender
         self.age = age
 
-    def create_in_db(self):
+    def create(self):
         if self.is_superuser:
             create_user_function = get_user_model().objects.create_superuser
         else:
@@ -35,14 +35,14 @@ class TestUser:
         return user
 
 
-USER_MALE = TestUser(
+MALE_USER = TestUser(
     'john',  'john@gmail.com',  'johny_123', 'John', 'Smith', 'M', 20
 )
 
-USER_FEMALE = TestUser(
+FEMALE_USER = TestUser(
     'alice', 'alice@gmail.com', 'alicia_123', 'Alice', 'Michaels', 'F', 22
 )
 
-USER_ADMIN = TestUser(
+SUPER_USER = TestUser(
     'admin', 'admin@gmail.com', 'adminn_123', is_superuser=True
 )

@@ -5,7 +5,7 @@
 {% block title %} {{ ticket.name }} {% endblock %}
 
 {% block css %}
-  <link rel="stylesheet" href="{% static 'tickets/css/tickets.css' %}">
+  <link rel="stylesheet" href="{% static 'tickets/css/style.css' %}">
 {% endblock %}
 
 
@@ -16,13 +16,13 @@
     <h3>Билет: {{ ticket.name }}</h3>
   </div>
   <div class="border-bottom ticket-actions">
-    <a class="btn btn-blue" href="{{ ticket.get_absolute_pdf_url }}" download>Скачать</a>
-    <a class="btn btn-blue" href="{{ ticket.get_absolute_pdf_url }}">Читать онлайн</a>
-    <a class="btn btn-blue" href="{{ ticket.quiz.get_absolute_url }}">Пройти тест</a>
+    <a class="btn btn-blue" href="{{ ticket.get_pdf_url }}" download>Скачать</a>
+    <a class="btn btn-blue" href="{{ ticket.get_pdf_url }}">Читать онлайн</a>
+    <a class="btn btn-blue" href="{{ ticket.get_quiz_url }}">Пройти тест</a>
   </div>
 
   <table class="comments-table">
-    {% for comment in comments %}
+    {% for comment in ticket.get_comments %}
       <tr>
         <td class="border-bottom">
           <h3>{{ comment.user }}</h3>
@@ -48,7 +48,7 @@
         <td>
           <form action="{% url FORUM_COMMENT_CREATE_URL ticket.id %}" method="POST">
             {% csrf_token %}
-            {% for field in form %}
+            {% for field in comment_form %}
               {{ field }}
             {% endfor %}<br>
             <button type="submit" class="btn btn-blue">Комментировать</button>

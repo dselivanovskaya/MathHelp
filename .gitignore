@@ -1,2 +1,4 @@
 __pycache__
 *.pyc
+src/htmlcov
+src/.coverage

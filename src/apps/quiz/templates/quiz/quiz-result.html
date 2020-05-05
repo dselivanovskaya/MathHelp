@@ -5,28 +5,28 @@
 {% block title %} Результат {% endblock %}
 
 {% block css %}
-  <link rel="stylesheet" href="{% static 'quiz/css/quiz.css' %}">
+  <link rel="stylesheet" href="{% static 'quiz/css/style.css' %}">
 {% endblock %}
 
 {% block content %}
   <div class="container">
 
     <div class="heading">
-      <h3>Билет: {{ quiz.ticket.name }}</h3>
+      <h3>Билет: {{ quiz.ticket }}</h3>
     </div>
 
     <div class="result">
       <h3>Ваш результат: {{ quiz.result }}%</h3>
       <div class="buttons">
-        {% if not quiz.saved %}
-        <a class="btn btn-blue" href="{{ quiz.get_absolute_save_url }}">
+        {% if not quiz.is_saved %}
+        <a class="btn btn-blue" href="{{ quiz.get_save_url }}">
           Сохранить
         </a>
         {% endif %}
-        <a class="btn btn-blue" href="{{ quiz.get_absolute_restart_url }}">
+        <a class="btn btn-blue" href="{{ quiz.get_restart_url }}">
           Пройти заново
         </a>
-        <a class="btn btn-blue" href="{{ quiz.get_absolute_report_url }}">
+        <a class="btn btn-blue" href="{{ quiz.get_report_url }}">
           Отчет
         </a>
     </div>

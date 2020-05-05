@@ -5,13 +5,13 @@
 {% block title %} Тест {% endblock %}
 
 {% block css %}
-  <link rel="stylesheet" href="{% static 'quiz/css/quiz.css' %}">
+  <link rel="stylesheet" href="{% static 'quiz/css/style.css' %}">
 {% endblock %}
 
 {% block content %}
   <div class="container">
     <div class='quiz-detail'>
-      <h3>Тест по теме: {{ quiz.ticket.name }}</h3>
+      <h3>Тест по теме: {{ quiz.ticket }}</h3>
     </div>
     <form class="quiz-form" action="{{ quiz.get_absolute_url }}" method="POST">
       {% csrf_token %}
@@ -23,6 +23,7 @@
           <div class='label-form-field'>
             {{ field }}
           </div>
+            {{ field.errors }}
         </div>
       {% endfor %}
       <button class="btn btn-blue" type="submit">Проверить</button>

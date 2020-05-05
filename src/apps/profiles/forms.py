@@ -1,4 +1,4 @@
-from django import forms
+from django.forms import ModelForm
 
 from django.core.exceptions import ValidationError
 from django.core.files.images import get_image_dimensions
@@ -6,24 +6,26 @@ from django.core.files.images import get_image_dimensions
 from .models import Profile
 
 
-class ProfileUpdateForm(forms.ModelForm):
+class ProfileUpdateForm(ModelForm):
 
     error_messages = {
-        'invalid_photo_size': (
-            'Максимальный размер фотографии '
-            f'{Profile.PHOTO_MAX_WIDTH} x {Profile.PHOTO_MAX_HEIGHT} пикселей.'
-        )
+        'invalid_photo_size': \
+            f'Максимальный размер фото {Profile.get_max_photo_size_display()}.'
     }
 
     class Meta:
         model = Profile
-        fields = ['first_name', 'last_name', 'photo', 'gender', 'age']
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.use_required_attribute = False
+        exclude = ['user', 'login_count']
+        labels = {
+            'first_name': 'Имя',
+            'last_name':  'Фамилия',
+            'photo':      'Фото',
+            'gender':     'Пол',
+            'age':        'Возраст',
+        }
 
     def clean_photo(self):
+        ''' Validate photo size. '''
         photo = self.cleaned_data.get('photo')
         # If user uploads a new image
         if photo != self.instance.photo:

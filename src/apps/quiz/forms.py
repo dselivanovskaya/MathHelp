@@ -3,27 +3,16 @@ from django import forms
 from .models import Answer, Quiz
 
 
-class QuizForm(forms.ModelForm):
-    ''' A form for filling a quiz. '''
-
-    class Meta:
-        model = Quiz
-        fields = []
+class QuizForm(forms.Form):
 
     def __init__(self, quiz, *args, **kwargs):
-        '''
-            Construct a form for a quiz where each label is a related
-            question text and each field is a ChoiceField where choices
-            are related answers.
-        '''
         super().__init__(*args, **kwargs)
         self.use_required_attribute = False
-        for question in quiz.question_set.all():
-            field_name = f'{question.id}'
-            choices = [(ans.id, ans.text) for ans in question.answer_set.all()]
-            self.fields[field_name] = forms.ChoiceField(
-                label=question.text, required=True,
-                choices=choices, widget=forms.RadioSelect()
+
+        for question in quiz.get_questions():
+            choices = [(answer.id, answer.text) for answer in question.get_answers()]
+            self.fields[str(question.id)] = forms.ChoiceField(
+                label=question.text, choices=choices, widget=forms.RadioSelect()
             )
 
     def clean(self):
