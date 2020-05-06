@@ -27,18 +27,18 @@
             <h3 id="greeting">{{ user.profile.first_name }}</h3>
           </div>
 
-
+          <div class="heading">
+            <h3>Текущие результаты:</h3>
+          </div>
   
           {% if taken_quizzes %}
-            <div class="heading">
-              <h3>Текущие результаты:</h3>
-            </div>
+            
             <table class="today-results">
               <tr>
                 <th>Название</th>
+                <th>Прочитан</th>
                 <th>Результат</th>
                 <th>Сохранен</th>
-                <th>Прочитан</th>
               </tr>
               {% for quiz in taken_quizzes %}
                 <tr>
@@ -48,7 +48,14 @@
                     </a>
                   </td>
                   <td class="border-bottom">
-                    <p class="body-font">
+                    {% if quiz.ticket in read_tickets %}
+                    <img src="{% static 'profiles/img/success.png' %}" width="25" height="25">
+                    {% else %}
+                    <img src="{% static 'profiles/img/error.png' %}" width="25" height="25">
+                    {% endif %}
+                  </td>
+                  <td class="border-bottom">
+                    <p class="body-font2">
                       {{ quiz.result }}%
                     </p>
                   </td>
@@ -59,22 +66,20 @@
                       <img src="{% static 'profiles/img/error.png' %}" width="25" height="25">
                     {% endif %}
                   </td>
-                  <td class="border-bottom">
-                    {% if quiz.ticket in read_tickets %}
-                    <img src="{% static 'profiles/img/success.png' %}" width="25" height="25">
-                    {% else %}
-                    <img src="{% static 'profiles/img/error.png' %}" width="25" height="25">
-                    {% endif %}
-                  </td>
                 </tr>
               {% endfor %}
             </table>
+
+          {% else %}
+          <p class="instruction">В этом блоке будет отображаться текущая статистика по обучению.</p>
           {% endif %}
 
-      {% if results %}
+
           <div class="heading">
             <h3>Результаты за все время:</h3>
           </div>
+
+      {% if results %}
 
           <table class="all-results">
             <tr>
@@ -94,7 +99,7 @@
           </table>
 
       {% else %}
-      <h3>Проходи тесты!!!!!!</h3>
+      <p class="instruction">Для того, чтобы твои результаты появились в этом блоке, тебе необходимо сохранить их после прохождения теста.</p>
       {% endif %}
 
         </td>

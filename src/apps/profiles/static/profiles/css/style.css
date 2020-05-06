@@ -111,3 +111,9 @@
 .today-results td:nth-last-child(-n+2){
     text-align: center;
 }
+
+.instruction{
+    color: #404040;
+    font-size: 17px;
+    line-height: 15px;
+}
