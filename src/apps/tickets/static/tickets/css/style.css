@@ -91,12 +91,20 @@
   margin-bottom: 2px;
 }
 
+.comment img{
+  display:block;
+  float: left;
+  margin-left: 10px;
+  margin-right: 5px;
+}
+
 .comment-body {
   background: #d8e4f2;
-  min-height: 30px;
+  min-height: 40px;
   border: none;
   border-radius: 5px;
   padding: 2px;
+  margin-left: 100px;
 }
 
 .comment-body p {

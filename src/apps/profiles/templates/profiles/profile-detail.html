@@ -27,26 +27,8 @@
             <h3 id="greeting">{{ user.profile.first_name }}</h3>
           </div>
 
-          {% if read_tickets %}
-            <div class="heading">
-              <h3>Сегодня ты
-                {% if user.profile.is_male %}
-                  читал
-                {% elif user.profile.is_female %}
-                  читала
-                {% endif %}
-              эти билеты:</h3>
-            </div>
 
-            {% for ticket in read_tickets %}
-              <div class="border-bottom">
-                <a class="body-font" href="{{ ticket.get_absolute_url }}">
-                  {{ ticket.name }}
-                </a>
-              </div>
-            {% endfor %}
-          {% endif %}
-
+  
           {% if taken_quizzes %}
             <div class="heading">
               <h3>Текущие результаты:</h3>
@@ -56,6 +38,7 @@
                 <th>Название</th>
                 <th>Результат</th>
                 <th>Сохранен</th>
+                <th>Прочитан</th>
               </tr>
               {% for quiz in taken_quizzes %}
                 <tr>
@@ -76,11 +59,19 @@
                       <img src="{% static 'profiles/img/cross.png' %}" width="25" height="25">
                     {% endif %}
                   </td>
+                  <td class="border-bottom">
+                    {% if quiz.ticket in read_tickets %}
+                    <img src="{% static 'profiles/img/check.png' %}" width="25" height="25">
+                    {% else %}
+                    <img src="{% static 'profiles/img/cross.png' %}" width="25" height="25">
+                    {% endif %}
+                  </td>
                 </tr>
               {% endfor %}
             </table>
           {% endif %}
 
+      {% if results %}
           <div class="heading">
             <h3>Результаты за все время:</h3>
           </div>
@@ -101,6 +92,10 @@
               </tr>
             {% endfor %}
           </table>
+
+      {% else %}
+      <h3>Проходи тесты!!!!!!</h3>
+      {% endif %}
 
         </td>
       </tr>

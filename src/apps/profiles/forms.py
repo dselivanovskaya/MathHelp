@@ -33,5 +33,6 @@ class ProfileUpdateForm(ModelForm):
             width, height = get_image_dimensions(photo)
             if width > Profile.PHOTO_MAX_WIDTH or height > Profile.PHOTO_MAX_HEIGHT:
                 raise ValidationError(self.error_messages['invalid_photo_size'])
-            self.instance.delete_photo()
+            if self.instance.has_uploaded_photo():
+                self.instance.delete_photo()
         return photo
