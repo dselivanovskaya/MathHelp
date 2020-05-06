@@ -54,16 +54,16 @@
                   </td>
                   <td class="border-bottom">
                     {% if quiz.is_saved %}
-                      <img src="{% static 'profiles/img/check.png' %}" width="25" height="25">
+                      <img src="{% static 'profiles/img/success.png' %}" width="25" height="25">
                     {% else %}
-                      <img src="{% static 'profiles/img/cross.png' %}" width="25" height="25">
+                      <img src="{% static 'profiles/img/error.png' %}" width="25" height="25">
                     {% endif %}
                   </td>
                   <td class="border-bottom">
                     {% if quiz.ticket in read_tickets %}
-                    <img src="{% static 'profiles/img/check.png' %}" width="25" height="25">
+                    <img src="{% static 'profiles/img/success.png' %}" width="25" height="25">
                     {% else %}
-                    <img src="{% static 'profiles/img/cross.png' %}" width="25" height="25">
+                    <img src="{% static 'profiles/img/error.png' %}" width="25" height="25">
                     {% endif %}
                   </td>
                 </tr>
