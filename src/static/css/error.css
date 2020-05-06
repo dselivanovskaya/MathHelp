@@ -15,9 +15,47 @@
 /* django.contrib.messages */
 
 .success {
-    background-color: #98fb98;
+  background-color: #cce657;
+}
+
+.success p:before{
+  content:url("../img/success.png");
+  display: inline-block;
+  margin-right: 5px;
+  margin-top: 7px;
+}
+
+.success p{
+  display: inline-block;
+  margin-left: 10px;
+  color: #404040;
+  font-size: 17px;
+  line-height: 20px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding: 3px;
+  padding-top: 0px;
 }
 
 .error {
-    background-color: #ff7f50;
+  background-color: #ff6262;
+}
+
+.error p:before{
+  content:url("../img/error.png");
+  display: inline-block;
+  margin-right: 5px;
+  margin-top: 7px;
+}
+
+.error p{
+  display: inline-block;
+  margin-left: 10px;
+  color: #404040;
+  font-size: 17px;
+  line-height: 20px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding: 3px;
+  padding-top: 0px;
 }
