@@ -202,77 +202,57 @@ body {
 /*Sprites on home page*/
 
 .choice {
-  padding-top: 85px;
-  padding-bottom: 75px;
+  padding-top: 30px;
+  padding-bottom: 30px;
   background-color: #d8e4f1;
 }
 
-.choice .container::after {
-  display: table;
-  clear: both; /*снять обтекание с обеих сторон*/
-  content: "";
+.matherials-list{
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-.choice-item {
+.matherials-list{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.matherials-list li{
   position: relative;
-  float: left;
-  width: 300px;
-  margin-right: 40px;
-}
-
-.choice-item:last-child {
-  margin-right: 0;
-}
-
-.choice-title {
-  margin: 0;
-  margin-bottom: 28px;
+  margin-bottom: 24px;
+  padding-left: 35px;
   text-transform: uppercase;
+  font-weight: 600;
   font-size: 18px;
-  line-height: 24px;
-}
-
-.choice-item p {
-  margin: 0;
+  line-height: 22px;
   color: #404040;
-  font-size: 18px;
+}
+
+.matherials-list li::before {
+  content: "";
+  position: absolute;
+  top: 10px;
+  left: 0;
+  width: 27px;
+  border-bottom: 3px solid #00114a;
+}
+
+.about{
+  margin-bottom: 24px;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 22px;
+}
+
+.about-body{
+  color: #404040;
+  font-size: 20px;
   line-height: 24px;
 }
 
-.choice-icon {
-  position: absolute;
-  top: -118px;
-  left: 0;
-  width: 100px;
-  height: 108px;
-  background-image: url("../img/sprite.png");
-}
-
-.choice-icon-theory {
-  background-position: -5px -5px;
-}
-
-.choice-icon-practice {
-  background-position: -115px -5px;
-}
-
-.choice-icon-matherials {
-  background-position: -225px -5px;
-}
-
-.choice a {
-  color: #1f2022;
-  text-decoration: none;
-}
-
-.choice a:hover {
-  text-decoration: underline;
-}
-
-.choice a:active {
-  text-decoration: none;
-  opacity: 0.3;
-}
 
 /*Forms*/
 
